@@ -7,6 +7,8 @@ using namespace std;
 
 class Map {
 public:
+	friend class Continent;
+	friend class Country;
 	Map(); //default ctor
 	Map(string name, string author, string imageFile, string wrap, string scroll, string warn); //ctor for loading from file
 	~Map(); //default dtor
@@ -26,6 +28,7 @@ private:
 
 class Continent {
 public:
+	friend class Country;
 	Continent(); //default ctor
 	Continent(string continentName, int continentValue); 
 	~Continent(); //default dtor
@@ -39,6 +42,7 @@ private:
 
 class Country {
 public:
+	friend class Player;
 	Country(); //default ctor
 	Country(string countryName, int x, int y, string continentName, string listOfAdjacencies);
 	~Country(); //default dtor

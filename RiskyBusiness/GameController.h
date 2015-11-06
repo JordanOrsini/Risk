@@ -21,6 +21,6 @@ public:
 	void fortificationPhase(Player* player);
 	//int rollDice();
 private:
-	MapController MC;
-	PlayerController PC;
+	MapController* MC;
+	PlayerController* PC;
 };
