@@ -30,6 +30,7 @@ void GameController::startUpPhase() {
 
 	// TO-DO: check if player number and number of countries make sense
 
+	PC->addPlayerToGame(numOfPlayers);
 }
 
 void GameController::runGame() {

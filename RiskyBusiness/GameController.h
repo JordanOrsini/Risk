@@ -20,6 +20,7 @@ public:
 	//void battlePhase();
 	void fortificationPhase(Player* player);
 	//int rollDice();
+	void cleanUp();
 private:
 	MapController* MC;
 	PlayerController* PC;
