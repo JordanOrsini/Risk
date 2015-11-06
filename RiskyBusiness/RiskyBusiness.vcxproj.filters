@@ -44,5 +44,14 @@
     <ClCompile Include="GameController.cpp">
       <Filter>CONTROLLER</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerController.cpp">
+      <Filter>CONTROLLER</Filter>
+    </ClCompile>
+    <ClCompile Include="MapController.cpp">
+      <Filter>CONTROLLER</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>MODEL</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

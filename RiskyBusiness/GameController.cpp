@@ -14,6 +14,7 @@ GameController::~GameController() {
 /// 
 void GameController::startUpPhase() {
 
+	PC->addPlayerToGame(numOfPlayers);
 }
 
 void GameController::runGame() {

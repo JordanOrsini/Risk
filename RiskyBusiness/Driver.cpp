@@ -13,4 +13,6 @@ int main() {
 		//GC.battlePhase();
 		GC.fortificationPhase();
 	}*/
+
+	GC.cleanUp(); //call destructors and all
 }
