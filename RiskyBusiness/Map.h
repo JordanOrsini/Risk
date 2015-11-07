@@ -37,7 +37,7 @@ public:
 	vector<Country*> subCountries;
 private:
 	string name;
-	int value;
+	int bonusValue;
 };
 
 class Country {

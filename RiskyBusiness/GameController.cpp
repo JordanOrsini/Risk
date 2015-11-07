@@ -42,8 +42,25 @@ void GameController::runGame() {
 	*/
 }
 
+/** Reinforcements are distributed as follows:
+*	- The total number of countries owned by a player is divided by 3 and rounded down. If this is less than 3, then it is rounded up to 3 armies
+*	- If the player owned an entire continent, they get a bonus depending on the bonus of that continent
+*/
 void GameController::reinforcementPhase(Player* player) {
+	int numberOfCountriesOwned;
+	int reinforcements = 0;
 
+	numberOfCountriesOwned = player->countriesOwned.size();
+
+	reinforcements = numberOfCountriesOwned / 3;
+
+	if (reinforcements < 3) {
+		reinforcements = 3;
+	}
+
+	reinforcements += player->getContinentBonus();
+
+	//TO-DO: prompt user to distrubute reinforcements
 }
 
 //void GameController::battlePhase() {}
