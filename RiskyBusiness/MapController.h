@@ -9,7 +9,13 @@ public:
 	void createMap();
 	void editMap();
 	void saveMapToFile();
-	void testMap(); //test for correctness
+	bool testMap(); //test for correctness
+
+					//New
+	bool testMapHasCountries();
+	bool testMapIsConnected();
+	bool testEachContinentIsConnected();
+	bool testContinentsAreValid();
 private:
 	Map* map;
 };
