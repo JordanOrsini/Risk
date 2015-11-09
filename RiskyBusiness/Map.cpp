@@ -81,7 +81,7 @@ Continent::Continent() {}
 Continent::Continent(string continentName, int continentValue)
 {
 	name = continentName;
-	value = continentValue;
+	bonusValue = continentValue;
 }
 
 // Default Destructor

@@ -1,7 +1,7 @@
 #include "PlayerController.h"
 
 PlayerController::PlayerController() {
-
+	whoseTurn = 0;
 }
 
 PlayerController::~PlayerController() {
@@ -18,4 +18,14 @@ void PlayerController::addPlayerToGame(int numOfPlayers) {
 		Player* player = new Player(playerName);
 		playerList.push_back(player);
 	}
+}
+
+Player* PlayerController::getWhoseTurn() {
+	if (whoseTurn == (playerList.size() - 1)) {
+		whoseTurn = 0;
+		return playerList[whoseTurn];
+	}
+
+	whoseTurn++;
+	return playerList[whoseTurn];
 }

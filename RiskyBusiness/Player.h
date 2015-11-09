@@ -11,11 +11,14 @@ public:
 	Player(string playerName);
 	~Player();
 	string getPlayerName() { return playerName; };
-	void setOwns(Country *country);
-	bool iOwn(Country *country);
-	int getArmyCountByCountry(Country* cName);
+	void setOwnsCountry(Country *country) { countriesOwned.push_back(country); };
+	void setOwnsContinent(Continent *continent) { continentsOwned.push_back(continent); };
+	bool iOwnCountry(Country *country);
+	bool iOwnContinent(Continent *continent);
+	int getArmyCountByCountry(Country* country);
 	int getContinentBonus();
 	vector<Country*> countriesOwned;
+	vector<Continent*> continentsOwned;
 private:
 	string playerName;
 };
