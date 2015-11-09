@@ -127,6 +127,7 @@
   <ItemGroup>
     <ClCompile Include="Driver.cpp" />
     <ClCompile Include="GameController.cpp" />
+    <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapController.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerController.cpp" />

@@ -430,7 +430,7 @@ void MapController::saveMapToFile()
 	output << endl << "[Continents]" << endl;
 	for (std::size_t i = 0; i < (*map).allContinents.size(); i++)
 	{
-		output << (*(*map).allContinents[i]).getName() << "=" << (*(*map).allContinents[i]).getValue() << endl;
+		output << (*(*map).allContinents[i]).getName() << "=" << (*(*map).allContinents[i]).getBonusValue() << endl;
 	}
 
 	output << endl << "[Territories]" << endl;

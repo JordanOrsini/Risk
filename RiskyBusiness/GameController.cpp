@@ -34,12 +34,17 @@ void GameController::startUpPhase() {
 }
 
 void GameController::runGame() {
-	/* loop {
-	currentPlayer = PC.getWhoseTurn();
-	reinforcementPhase(currentPlayer);
-	fortificationPhase(currentPlayer);
-	}
-	*/
+	bool quitFlag = false;
+	Player* currentPlayer = new Player();
+
+	do {
+	currentPlayer = PC->getWhoseTurn();
+	//reinforcementPhase(currentPlayer); //uncomment once implemented
+	//fortificationPhase(currentPlayer); //uncomment once implemented
+
+	//ask if want to quit
+
+	} while (!quitFlag);
 }
 
 /** Reinforcements are distributed as follows:
@@ -66,5 +71,9 @@ void GameController::reinforcementPhase(Player* player) {
 //void GameController::battlePhase() {}
 
 void GameController::fortificationPhase(Player* player) {
+
+}
+
+void GameController::cleanUp() {
 
 }
