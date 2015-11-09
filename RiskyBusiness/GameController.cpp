@@ -31,6 +31,8 @@ void GameController::startUpPhase() {
 	// TO-DO: check if player number and number of countries make sense
 
 	PC->addPlayerToGame(numOfPlayers);
+
+	//TO-DO: randomly assign troops and set troops per person according to number of players
 }
 
 void GameController::runGame() {
