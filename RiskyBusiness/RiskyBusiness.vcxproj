@@ -118,6 +118,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Board.h" />
     <ClInclude Include="GameController.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapController.h" />
@@ -125,6 +126,7 @@
     <ClInclude Include="PlayerController.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Board.cpp" />
     <ClCompile Include="Driver.cpp" />
     <ClCompile Include="GameController.cpp" />
     <ClCompile Include="Map.cpp" />
