@@ -49,6 +49,10 @@ void GameController::runGame() {
 void GameController::reinforcementPhase(Player* player) {
 	int numberOfCountriesOwned;
 	int reinforcements = 0;
+	string countrySelected;
+	int troopsToAdd = 0;
+	bool countryFound = false;
+	int countryIndex = 0;
 
 	numberOfCountriesOwned = player->countriesOwned.size();
 
@@ -60,7 +64,58 @@ void GameController::reinforcementPhase(Player* player) {
 
 	reinforcements += player->getContinentBonus();
 
-	//TO-DO: prompt user to distrubute reinforcements
+	/**
+	While there are still reinforcements to place, will display contents of the contriesOwned vector of the player and
+	will ask for a country name.
+	Will check to see if this country name is in the vector. If found will ask for reinforcements to add.
+	Will value is valid (not more than reinforcements allowed) will add this value to current armies existing on the country.
+	*/
+	while (reinforcements != 0)
+	{
+		cout << "Select country to add reinforcements to: ";
+		
+		//Prints out contents of player's countriedOwned vector.
+		for (int i = 0; i < player->countriesOwned.size(); i++)
+		{
+			cout << player->countriesOwned[i]->getName() << " ";
+		}
+		cout << endl;
+		
+		cin >> countrySelected;
+		
+		//Iterates through vector looking for country name inputted by user.
+		for (int i = 0; i < player->countriesOwned.size(); i++)
+		{
+			//If found will ask how many troops to place.
+			if (countrySelected == player->countriesOwned[i]->getName())
+			{
+				countryFound = true;
+				countryIndex = i;
+				cout << "How many troops would you like to place?" << endl;
+				cin >> troopsToAdd;
+
+				//If troopstoAdd are greater than reinforcements allowed, asks user to reinput.
+				while (troopsToAdd > reinforcements)
+				{
+					cout << "Invalid input! Must select a value less than or equal to " << reinforcements << endl;
+					cin >> troopsToAdd;
+				}
+				
+				//Decrements reinforcements by troopsToAdd inputed by player.
+				reinforcements -= troopsToAdd;
+
+				//Modifies armies located on selected country according to reinforcements to be placed.
+				player->countriesOwned[countryIndex]->setArmyCount(player->countriesOwned[countryIndex]->getArmyCount() + troopsToAdd);
+			}
+		}
+		
+		if (countryFound == false)
+		{
+			cout << "Invalid country input! No changes will be made.";
+		}
+		
+	}
+	
 }
 
 //void GameController::battlePhase() {}
