@@ -70,10 +70,10 @@ void GameController::reinforcementPhase(Player* player) {
 	reinforcements += player->getContinentBonus();
 
 	/**
-	While there are still reinforcements to place, will display contents of the contriesOwned vector of the player and
-	will ask for a country name.
-	Will check to see if this country name is in the vector. If found will ask for reinforcements to add.
-	Will value is valid (not more than reinforcements allowed) will add this value to current armies existing on the country.
+	*	While there are still reinforcements to place, will display contents of the contriesOwned vector of the player and
+	*	will ask for a country name.
+	*	Will check to see if this country name is in the vector. If found will ask for reinforcements to add.
+	*	If value is valid (not more than reinforcements allowed) will add this value to current armies existing on the country.
 	*/
 	while (reinforcements != 0)
 	{
@@ -100,7 +100,7 @@ void GameController::reinforcementPhase(Player* player) {
 				cin >> troopsToAdd;
 
 				//If troopstoAdd are greater than reinforcements allowed, asks user to reinput.
-				while (troopsToAdd > reinforcements)
+				while (troopsToAdd > reinforcements || troopsToAdd < 1)
 				{
 					cout << "Invalid input! Must select a value less than or equal to " << reinforcements << endl;
 					cin >> troopsToAdd;
@@ -125,8 +125,110 @@ void GameController::reinforcementPhase(Player* player) {
 
 //void GameController::battlePhase() {}
 
-void GameController::fortificationPhase(Player* player) {
+/**
+*	Fortification phase. Will give user option to enter the phase.
+*	Will ask user to select a country he owns.
+*	Will ask user how many troops he would like to move. (Must leave at least 1 army on country.
+*	Will ask user to select an adjacent country to complete the move.
+*	Will decrement troops on initial country selected accordingly.
+*	Will increment troops on adjacent country selected if owned by player accordingly.
+*/
+void GameController::fortificationPhase(Player* player) 
+{
+	char yesNo;
+	string fortificationCountry;
+	bool fortCountryFound = false;
+	int fortCountryIndex = 0;
+	int troopsToMove = 0;
+	bool fortMoveFound = false;
+	
+	//Asks user to enter fortification phase.
+	cout << "Would you like to enter fortification phase? (y/n)";
+	cin >> yesNo;
 
+	//Input validation on user input. 'Y' or 'y' will begin performing a fortification.
+	if (yesNo == 'Y' || yesNo == 'y')
+	{
+		//Prints out countries owned by player.
+		cout << "Select a country to move troops from: ";
+		for (int i = 0; i < player->countriesOwned.size(); i++)
+		{
+			cout << player->countriesOwned[i]->getName() << " ";
+		}
+		cout << endl;
+
+		cin >> fortificationCountry;
+
+		//Iterates over countries owned to check if it contains user inputed country name.
+		for (int i = 0; i < player->countriesOwned.size(); i++)
+		{
+			//If country is found.
+			if (fortificationCountry == player->countriesOwned[i]->getName())
+			{
+				fortCountryFound = true;
+				fortCountryIndex = i;
+				
+				//Asks user how many troops to move.
+				cout << "How many troops would you like to move?" << endl;
+				cin >> troopsToMove;
+
+				//If troopsToMove is less than one or more than the armies on the country -1 (must leave at least 1 army),
+				//asks for another input.
+				while (troopsToMove >= player->countriesOwned[fortCountryIndex]->getArmyCount() || troopsToMove < 1)
+				{
+					cout << "Invalid input! Must select a value less than " << player->countriesOwned[fortCountryIndex]->getArmyCount() << endl;
+					cin >> troopsToMove;
+				}
+
+				cout << "Select an adjacent country to complete the move: ";
+
+				//Loops over all adjacent countries to user selected country above.
+				for (int i = 0; i < player->countriesOwned[fortCountryIndex]->adjacentCountries.size(); i++)
+				{
+					//Will only print out the adjacent country if the user's player owns it.
+					if (player->iOwnCountry(player->countriesOwned[fortCountryIndex]->adjacentCountries[i]))
+					{
+						cout << player->countriesOwned[fortCountryIndex]->adjacentCountries[i]->getName() << " ";
+					}
+					
+				}
+
+				cin >> fortificationCountry;
+
+				//Will search player's contries owned to see if player owns the adjacent country selected.
+				for (int i = 0; i < player->countriesOwned.size(); i++)
+				{
+					//If adjacent country selected is owned by the player (fortification is valid)
+					if (fortificationCountry == player->countriesOwned[i]->getName())
+					{
+						fortMoveFound = true;
+						
+						//Decrements number of troops on first selected country.
+						player->countriesOwned[fortCountryIndex]->setArmyCount(player->countriesOwned[fortCountryIndex]->getArmyCount() - troopsToMove);
+						
+						//Increments number of troops on selected player owned adjacent country.
+						player->countriesOwned[fortCountryIndex]->adjacentCountries[i]->setArmyCount(player->countriesOwned[fortCountryIndex]->adjacentCountries[i]->getArmyCount() + troopsToMove);
+
+					}
+				}
+
+				//If the adjacent country entered by user is not found in the countriesOwned vector.
+				if (fortMoveFound == false)
+				{
+					cout << "Invalid country move. Fortification phase will now end.";
+				}
+				
+				
+			}
+		}
+
+		//If the initial country selected to move troops from is not found in the player's countriesOwned vector.
+		if (fortCountryFound == false)
+		{
+			cout << "Invalid country input! No changes will be made. Fortification phase will now end.";
+		}
+		
+	}
 }
 
 void GameController::cleanUp() {
