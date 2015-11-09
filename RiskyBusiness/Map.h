@@ -54,7 +54,7 @@ public:
 	int getValue() { return value; };
 private:
 	string name;
-	int bonusValue;
+	int value;
 };
 
 
