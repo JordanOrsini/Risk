@@ -2,6 +2,8 @@
 //CONTROLLER
 #include "MapController.h"
 #include "PlayerController.h"
+#include <cstdlib>
+#include <ctime>
 
 class GameController {
 public:
