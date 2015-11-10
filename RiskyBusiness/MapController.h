@@ -16,6 +16,7 @@ public:
 	bool testMapIsConnected();
 	bool testEachContinentIsConnected();
 	bool testContinentsAreValid();
+	Map* getMap();
 private:
 	Map* map;
 };

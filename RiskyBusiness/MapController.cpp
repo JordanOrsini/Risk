@@ -609,3 +609,7 @@ bool MapController::testEachContinentIsConnected()
 	}
 	return returnVal;
 }
+
+Map* MapController::getMap() {
+	return map;
+}

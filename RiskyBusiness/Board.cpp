@@ -1,18 +1,9 @@
 #include "Board.h"
 
-Board::Board(int startX, int startY, int endX, int endY)
+Board::Board(int width, int height)
 {
-	this->startX = startX;
-	this->startY = startY;
-	this->endX = endX;
-	this->endY = endY;
-}
-
-Board::Board() {
-	this->startX = 1;
-	this->startY = 1;
-	this->endX = 70;
-	this->endY = 30;
+	this->endX = this->width = width;
+	this->endY = this-> height = height;
 }
 
 void Board::setNumRows(int rows) {
@@ -32,6 +23,13 @@ void Board::setColWidth(int c, int height) {
 }
 
 void Board::drawBoard() {
+	cout.flush();
+	GetConsoleScreenBufferInfo(this->hStd, &SBInfo);
+
+	this->startX = 1;
+	this->startY = SBInfo.dwCursorPosition.Y;
+	this->endY = this->height + this->startY;
+
 	this->drawBorders();
 
 	// draw vertical lines
@@ -114,6 +112,8 @@ void Board::drawBoard() {
 			this->gotoXYPrint(this->endX, pos, (char)(180));
 		}
 	}
+	
+	this->gotoXYPrint(0, this->endY + 2, "");
 
 }
 
@@ -139,6 +139,18 @@ void Board::drawBorders() {
 
 }
 
+void Board::clearBoard() {
+	system("cls");
+}
+
+int Board::getStartX() {
+	return startX;
+}
+
+int Board::getStartY() {
+	return startY;
+}
+
 void Board::gotoXY(int x, int y)
 {
 	COORD ord;
@@ -159,13 +171,6 @@ void Board::gotoXYPrint(int x, int y, char chr)
 	cout << chr;
 }
 
-void Board::clearBoard() {
-	for (int i = startX;i < endX + 10; i++) {
-		for (int j = startY; j < endY + 3; j++) {
-			gotoXYPrint(i, j, (char)255);
-		}
-	}
-}
 Board::~Board()
 {
 }
