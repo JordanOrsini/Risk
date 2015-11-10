@@ -3,9 +3,10 @@
 #include <string>
 #include <iostream>
 #include <vector>
+#include "Subject.h"
 using namespace std;
 
-class Country {
+class Country: public Subject{
 public:
 	friend class Player;
 	Country(); //default ctor

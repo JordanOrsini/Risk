@@ -64,6 +64,7 @@ bool Map::mapIsConnected() { return true; }
 void Map::addContinent(Continent* cName)
 {
 	allContinents.push_back(cName);
+	notify();
 }
 
 // Add a country (already created) to the map

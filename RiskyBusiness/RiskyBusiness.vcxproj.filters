@@ -45,6 +45,12 @@
     <ClInclude Include="MapView.h">
       <Filter>VIEW</Filter>
     </ClInclude>
+    <ClInclude Include="Subject.h">
+      <Filter>MODEL</Filter>
+    </ClInclude>
+    <ClInclude Include="Observer.h">
+      <Filter>VIEW</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Driver.cpp">
@@ -70,6 +76,9 @@
     </ClCompile>
     <ClCompile Include="MapView.cpp">
       <Filter>VIEW</Filter>
+    </ClCompile>
+    <ClCompile Include="Subject.cpp">
+      <Filter>MODEL</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
