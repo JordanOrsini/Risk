@@ -50,17 +50,17 @@ void GameController::startUpPhase() {
 	for (int i = 0; i < MC->getMap()->allCountries.size() - countryPerPlayerRemaining; i++)
 	{
 		randomNumber = rand() % numOfPlayers;
-		while (PC->getPlayerList()[randomNumber]->countriesOwned.size() == maxCountriesPerPlayer)
+		while (PC->getPlayerList().at(randomNumber)->countriesOwned.size() == maxCountriesPerPlayer)
 		{
 			randomNumber = rand() % numOfPlayers;
 		}
-		PC->getPlayerList()[randomNumber]->setOwnsCountry(MC->getMap()->allCountries[i]);
+		PC->getPlayerList().at(randomNumber)->setOwnsCountry(MC->getMap()->allCountries.at(i));
 	}
 
 	for (int i = (MC->getMap()->allCountries.size() - countryPerPlayerRemaining); i < MC->getMap()->allCountries.size(); i++)
 	{
 		randomNumber = rand() % numOfPlayers;
-		PC->getPlayerList()[randomNumber]->setOwnsCountry(MC->getMap()->allCountries[i]);
+		PC->getPlayerList().at(randomNumber)->setOwnsCountry(MC->getMap()->allCountries.at(i));
 	}
 }
 
