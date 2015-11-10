@@ -1,8 +1,10 @@
 #include "MapView.h"
 
-MapView::MapView()
+MapView::MapView(MapController* inputMap)
 {
-	mapC.loadMapFromFile();
+	mapC = inputMap;
+	(*mapC).loadMapFromFile();
+
 	this->board = new Board(1, 1, endX, endY);
 	this->board->setNumCols(4); // 4 columns
 	this->board->setNumRows(5); // 5 rows
@@ -16,7 +18,7 @@ void MapView::update() {
 }
 
 void MapView::displayBoard() {
-	vector<Country*> allCountries = mapC.getMap()->allCountries;
+	vector<Country*> allCountries = (*mapC).getMap()->allCountries;
 	int k = 0;
 	int offset = 0;
 	int numOfFillableColumns = 3;

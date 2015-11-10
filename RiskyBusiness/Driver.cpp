@@ -4,10 +4,10 @@
 int main() {
 	srand(time(0)); //used to randomize number when rand() is used
 
-	MapView mapView;
-	mapView.displayBoard();
-
 	GameController GC;
+
+	MapView mapView(GC.getMC());
+	mapView.displayBoard();
 
 	GC.startUpPhase();
 

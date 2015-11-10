@@ -16,6 +16,8 @@ public:
 	void fortificationPhase(Player* player);
 	//int rollDice();
 	void cleanUp();
+	MapController* getMC() { return MC; }
+
 private:
 	MapController* MC;
 	PlayerController* PC;

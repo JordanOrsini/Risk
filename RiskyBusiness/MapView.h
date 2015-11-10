@@ -6,7 +6,7 @@
 class MapView: public Observer
 {
 public:
-	MapView();
+	MapView(MapController* inputMap);
 	~MapView();
 	void update(); // calls display() when triggered by the subject (observer pattern)
 	void displayBoard();
@@ -16,6 +16,6 @@ private:
 	int rowHeight;
 	int colWidth;
 	Board* board;
-	MapController mapC;
+	MapController* mapC;
 };
 
