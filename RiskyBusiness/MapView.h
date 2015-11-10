@@ -1,12 +1,12 @@
 #pragma once
 #include "Board.h"
 #include "Observer.h"
-#include "MapController.h"
+#include "GameController.h"
 
 class MapView: public Observer
 {
 public:
-	MapView(MapController* inputMap);
+	MapView(GameController* gameC);
 	~MapView();
 	void update(); // calls display() when triggered by the subject (observer pattern)
 	void displayBoard();
@@ -20,5 +20,6 @@ private:
 	int colWidth;
 	Board* board;
 	MapController* mapC;
+	GameController* gameC;
 };
 

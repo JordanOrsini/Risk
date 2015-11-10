@@ -69,12 +69,18 @@ void GameController::runGame() {
 	Player* currentPlayer = new Player();
 
 	do {
+<<<<<<< HEAD
 	currentPlayer = PC->getWhoseTurn();
 	reinforcementPhase(currentPlayer); //uncomment once implemented
 	fortificationPhase(currentPlayer); //uncomment once implemented
+=======
+	currentPlayer = PC->getTurn();
+	//reinforcementPhase(currentPlayer); //uncomment once implemented
+	//fortificationPhase(currentPlayer); //uncomment once implemented
+>>>>>>> Print map only for current player.
 
 	//ask if want to quit
-
+	PC->nextTurn();
 	} while (!quitFlag);
 }
 

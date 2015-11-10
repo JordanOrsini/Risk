@@ -8,7 +8,8 @@ public:
 	~PlayerController();
 	void addPlayerToGame(int numberOfPlayers);
 	bool removePlayerFromGame(Player* player);
-	Player* getWhoseTurn();
+	Player* nextTurn();
+	Player* getTurn();
 	vector<Player*> getPlayerList() { return playerList; };
 	//void attack(Player* attackingPlayer, Player* defendingPlayer);
 private:

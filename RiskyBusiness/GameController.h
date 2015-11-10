@@ -17,6 +17,7 @@ public:
 	//int rollDice();
 	void cleanUp();
 	MapController* getMC() { return MC; }
+	PlayerController* getPC() { return PC; }
 
 private:
 	MapController* MC;

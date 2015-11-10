@@ -18,10 +18,15 @@ void PlayerController::addPlayerToGame(int numOfPlayers) {
 	}
 }
 
-Player* PlayerController::getWhoseTurn() {
+Player* PlayerController::getTurn() {
+	if (playerList.size() == 0)
+		return nullptr;
+	return playerList.at(whoseTurn);
+}
+Player* PlayerController::nextTurn() {
 	if (whoseTurn == playerList.size()) {
 		whoseTurn = 0;
-		return playerList[whoseTurn++];
+		return playerList.at(whoseTurn++);
 	}
-	return playerList[whoseTurn++];
+	return playerList.at(whoseTurn++);
 }

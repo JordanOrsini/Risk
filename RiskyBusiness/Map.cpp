@@ -76,11 +76,9 @@ void Map::addCountry(Country* cName)
 
 void Map::createAdjacencies(string country1, string country2)
 {
-	
 	getCountryPointerByName(country1)->addAdjCountry(getCountryPointerByName(country2));
 	getCountryPointerByName(country2)->addAdjCountry(getCountryPointerByName(country1));
-
-	//notify
+	this->notify();
 }
 
 // -------------------------------------------------------CONTINENT CLASS IMPLEMENTATION-------------------------------------------------------//

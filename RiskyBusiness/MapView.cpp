@@ -1,9 +1,11 @@
 #include "MapView.h"
 
-MapView::MapView(MapController* inputMap)
+MapView::MapView(GameController* gameC)
 {
-	mapC = inputMap;
-	(*mapC).loadMapFromFile();
+	this->gameC = gameC;
+	this->mapC = this->gameC->getMC();
+	this->mapC->loadMapFromFile();
+	mapC->getMap()->attach(this);
 
 	this->board = new Board(1, 1, endX, endY);
 	this->board->setNumCols(4); // 4 columns
@@ -18,11 +20,19 @@ void MapView::update() {
 }
 
 void MapView::displayBoard() {
-	vector<Country*> allCountries = (*mapC).getMap()->allCountries;
+	Player* currentPlayer = gameC->getPC()->getTurn();
+	vector<Country*> countries;
+	if (currentPlayer == nullptr) {
+		countries = mapC->getMap()->allCountries;
+	}
+	else {
+		countries = currentPlayer->countriesOwned;
+	}
+	
 	int k = 0;
 	int offset = 0;
 	int numOfFillableColumns = 3;
-	while (k < allCountries.size()) {
+	while (k < countries.size()) {
 		this->board->drawBoard();
 		this->board->gotoXYPrint(4, ((rowHeight) / 2) + this->board->getStartY(), "Country");
 		this->board->gotoXYPrint(4, ((rowHeight) / 2) + (rowHeight) + this->board->getStartY(), "Continent");
@@ -30,8 +40,8 @@ void MapView::displayBoard() {
 		this->board->gotoXYPrint(4, ((rowHeight) / 2) + 3 * (rowHeight) + this->board->getStartY(), "Armies");
 		this->board->gotoXYPrint(4, ((rowHeight) / 2) + 4 * (rowHeight) + this->board->getStartY(), "Neighbors");
 
-		if (offset + numOfFillableColumns >= allCountries.size()) {
-			numOfFillableColumns = allCountries.size() - offset;
+		if (offset + numOfFillableColumns >= countries.size()) {
+			numOfFillableColumns = countries.size() - offset;
 		}
 		int x, y;
 		string country;
@@ -40,7 +50,7 @@ void MapView::displayBoard() {
 		for (int i = 0; i < numOfFillableColumns; i++) {
 			x = ((colWidth) + i * (colWidth) + 3);
 			y = (((rowHeight) / 2) - 2) + this->board->getStartY();
-			country = allCountries.at(offset)->getName();
+			country = countries.at(offset)->getName();
 			int test = colWidth;
 
 			if (country.length() >= (colWidth)) {
@@ -54,7 +64,7 @@ void MapView::displayBoard() {
 		for (int i = 0; i < numOfFillableColumns; i++) {
 			x = ((colWidth) + i * (colWidth) + 3);
 			y = (((rowHeight) / 2) - 2) + (rowHeight) + this->board->getStartY();
-			continent = allCountries.at(offset)->getParentContinentName();
+			continent = countries.at(offset)->getParentContinentName();
 			if (continent.length() >= (colWidth)) {
 				continent = continent.substr(0, (colWidth) - 3) + ".";
 			}
@@ -65,17 +75,24 @@ void MapView::displayBoard() {
 		// print country owner
 		string owner = "";
 		offset = k;
+		Player* player;
 		for (int i = 0; i < numOfFillableColumns; i++) {
 			x = ((colWidth) + i * (colWidth) + 3);
 			y = (((rowHeight) / 2) - 2) + 2 * (rowHeight) + this->board->getStartY();
-			//owner = allCountries.at(i)->owner->getPlayerName();
-			owner = "N/A";
+			player = countries.at(k)->owner;
+			if (player == nullptr) {
+				owner = "N/A";
+			}
+			else {
+				owner = player->getPlayerName();
+			}
 			if (owner.length() >= (colWidth)) {
 				owner = owner.substr(0, (colWidth) - 3) + ".";
 			}
 			offset++;
 			this->board->gotoXYPrint(x, y, owner);
 		}
+		player = nullptr;
 
 		//print num of armies on country
 		int armies;
@@ -83,7 +100,7 @@ void MapView::displayBoard() {
 		for (int i = 0; i < numOfFillableColumns; i++) {
 			x = ((colWidth) + i * (colWidth) + 3);
 			y = (((rowHeight) / 2) - 2) + 3 * (rowHeight) + this->board->getStartY();
-			armies = allCountries.at(offset)->getArmyCount();
+			armies = countries.at(offset)->getArmyCount();
 			offset++;
 			this->board->gotoXYPrint(x, y, to_string(armies));
 		}
@@ -93,7 +110,7 @@ void MapView::displayBoard() {
 		for (int i = 0; i < numOfFillableColumns; i++) {
 			x = ((colWidth) + i * (colWidth) + 3);
 			y = (((rowHeight) / 2) - 2) + 4 * (rowHeight) + this->board->getStartY();
-			adjCountries = allCountries.at(offset)->adjacentCountries;
+			adjCountries = countries.at(offset)->adjacentCountries;
 			for (int j = 0; j < adjCountries.size(); j++) {
 				country = adjCountries.at(j)->getName();
 				if (country.length() >= (colWidth)) {
