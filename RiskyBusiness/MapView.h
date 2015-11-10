@@ -11,6 +11,7 @@ public:
 	void update(); // calls display() when triggered by the subject (observer pattern)
 	void displayBoard();
 	void editMap(); 
+	void preGameMapCreation(); 
 
 private:
 	int endX = 69;

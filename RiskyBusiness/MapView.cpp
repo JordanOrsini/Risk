@@ -208,8 +208,85 @@ void MapView::editMap()
 		// EXIT EDITING PHASE
 		if (userInput == "4")
 		{
-			cout << "Ending editing session. Test map again for correctness...\n";
+			cout << "Ending editing session.\n";
 			break;
+		}
+
+	}
+}
+
+void MapView::preGameMapCreation()
+{
+	char userInput; 
+	bool mapIsCorrect = false; 
+
+	// Note that this mapController is temporary, it is not used for gameplay rather it is used for the pregame option of creating/editing a map
+	MapController tempMC; 
+
+	cout << "Before you start the game, would you like to create a map or edit one from a file?\n"; 
+	cout << "Enter 'y' for yes, anything else for no:"; 
+	cin >> userInput; 
+
+	if (userInput == 'y') {
+		cout << "\nWhat would you like to do:\n\t1) Create a map from scratch\n\t2) Edit a map from a file\n"; 
+		
+		while (1) {
+			cout << "Enter 1 or 2: ";
+			cin >> userInput;
+
+			if (userInput == '1' || userInput == '2')
+				break; 
+		}
+		
+
+		if (userInput == '1')
+		{
+			string mapName;
+			string author;
+
+			cout << endl << "Enter your name: ";
+			cin >> author;
+			cout << endl << "Enter the name of the new map: ";
+			cin >> mapName;
+
+			tempMC.createMap(author, mapName); 
+
+			cout << endl << "Congratulations, you have created a new blank map.\nPlease note that an empty map cannot be saved as valid.\n\n";
+		}
+
+		if (userInput == '2')
+		{
+			tempMC.loadMapFromFile(); 
+		}
+
+
+		//Edit map, only save to file if it is correct
+		while (1)
+		{
+			editMap();
+
+			cout << "Testing that the map satisfies these preconditions:\n\t- The map is a connected graph\n\t- The continents are connected subgraphs"; 
+			mapIsCorrect = tempMC.testMap();
+			
+			if (mapIsCorrect)
+			{
+				cout << "The map meets the preconditions for correctness.\n";
+				break; 
+			}
+			else
+			{
+				cout << "The map has errors. Would you like to continue editing? Note that only verified maps can be saved to file.\nEnter 'y' for yes, anything else for no: "; 
+				cin >> userInput; 
+				if (userInput == 'y')
+					break; 
+			}
+
+		}
+
+		if (mapIsCorrect)
+		{
+			cout << "Saving map to file...\n"; 
+			tempMC.saveMapToFile(); 
 		}
 
 	}

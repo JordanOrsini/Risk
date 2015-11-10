@@ -286,19 +286,9 @@ void MapController::loadMapFromFile()
 
 
 // Method to create map from scratch
-void MapController::createMap()
+void MapController::createMap(string author, string mapName)
 {
-	string mapName;
-	string author;
-
-	cout << endl << "Enter your name: ";
-	cin >> author;
-	cout << endl << "Enter the name of the new map: ";
-	cin >> mapName;
-
 	map = new Map(mapName, author);
-
-	cout << endl << "Congratulations, you have created a new blank map.\nPlease note that an empty map cannot be saved as valid.\n\n";
 }
 
 void MapController::createContinent(string name, int bonusValue)
@@ -459,7 +449,6 @@ void MapController::editMap()
 // Method to save the current map to an output file
 void MapController::saveMapToFile()
 {
-	cout << "\n\nSAVING MAP TO FILE\n" << "----------------------------\n";
 
 	ofstream output((*map).getName() + ".map");
 	output << "[Map]" << endl;
@@ -492,8 +481,6 @@ void MapController::saveMapToFile()
 // Method to test the currently loaded map for correctness. 
 bool MapController::testMap()
 {
-	cout << endl << "TESTING MAP FOR CORRECTNESS" << endl << "----------------------------" << endl << endl;
-
 	return testMapHasCountries() && testContinentsAreValid() && testMapIsConnected() && testEachContinentIsConnected();
 }
 

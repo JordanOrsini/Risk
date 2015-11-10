@@ -8,7 +8,7 @@ public:
 	MapController();
 	~MapController();
 	void loadMapFromFile();
-	void createMap();
+	void createMap(string author, string mapName);
 	void editMap();
 	void saveMapToFile();
 	bool testMap(); //test for correctness
