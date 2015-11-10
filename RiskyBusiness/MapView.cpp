@@ -10,6 +10,11 @@ MapView::MapView()
 	this->colWidth = this->board->getColumnWidth();
 }
 
+void MapView::update() {
+	this->board->clearBoard();
+	this->displayBoard();
+}
+
 void MapView::displayBoard() {
 	vector<Country*> allCountries = mapC.getMap()->allCountries;
 	int k = 0;
@@ -100,8 +105,7 @@ void MapView::displayBoard() {
 
 		k += 3;
 		
-		this->board->gotoXYPrint(0, this->board->getHeight() + this->board->getStartY() + 2, "");
-		
+		this->board->gotoXYPrint(0, this->board->getHeight() + this->board->getStartY() + 2, "");	
 	}
 }
 
