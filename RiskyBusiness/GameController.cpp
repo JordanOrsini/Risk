@@ -50,7 +50,7 @@ void GameController::startUpPhase() {
 	for (int i = 0; i < MC->getMap()->allCountries.size() - countryPerPlayerRemaining; i++)
 	{
 		randomNumber = rand() % numOfPlayers;
-		while (PC->getPlayerList()[randomNumber]->countriesOwned.size() == maxCountriesPerPlayer);
+		while (PC->getPlayerList()[randomNumber]->countriesOwned.size() == maxCountriesPerPlayer)
 		{
 			randomNumber = rand() % numOfPlayers;
 		}
@@ -70,8 +70,8 @@ void GameController::runGame() {
 
 	do {
 	currentPlayer = PC->getWhoseTurn();
-	//reinforcementPhase(currentPlayer); //uncomment once implemented
-	//fortificationPhase(currentPlayer); //uncomment once implemented
+	reinforcementPhase(currentPlayer); //uncomment once implemented
+	fortificationPhase(currentPlayer); //uncomment once implemented
 
 	//ask if want to quit
 
@@ -113,7 +113,7 @@ void GameController::reinforcementPhase(Player* player) {
 		//Prints out contents of player's countriedOwned vector.
 		for (int i = 0; i < player->countriesOwned.size(); i++)
 		{
-			cout << player->countriesOwned[i]->getName() << " ";
+			cout << "|" << player->countriesOwned[i]->getName() << "| ";
 		}
 		cout << endl;
 		
@@ -127,7 +127,7 @@ void GameController::reinforcementPhase(Player* player) {
 			{
 				countryFound = true;
 				countryIndex = i;
-				cout << "How many troops would you like to place?" << endl;
+				cout << "You have " << reinforcements << " reinforcements. How many troops would you like to place?" << endl;
 				cin >> troopsToAdd;
 
 				//If troopstoAdd are greater than reinforcements allowed, asks user to reinput.
@@ -174,7 +174,7 @@ void GameController::fortificationPhase(Player* player)
 	bool fortMoveFound = false;
 	
 	//Asks user to enter fortification phase.
-	cout << "Would you like to enter fortification phase? (y/n)";
+	cout << "Would you like to enter fortification phase? (y/n) ";
 	cin >> yesNo;
 
 	//Input validation on user input. 'Y' or 'y' will begin performing a fortification.
@@ -184,7 +184,7 @@ void GameController::fortificationPhase(Player* player)
 		cout << "Select a country to move troops from: ";
 		for (int i = 0; i < player->countriesOwned.size(); i++)
 		{
-			cout << player->countriesOwned[i]->getName() << " ";
+			cout << "|" << player->countriesOwned[i]->getName() << "| ";
 		}
 		cout << endl;
 
@@ -200,7 +200,7 @@ void GameController::fortificationPhase(Player* player)
 				fortCountryIndex = i;
 				
 				//Asks user how many troops to move.
-				cout << "How many troops would you like to move?" << endl;
+				cout << "You have " << player->countriesOwned[fortCountryIndex]->getArmyCount() -1 << "troops available to move. How many troops would you like to move? " << endl;
 				cin >> troopsToMove;
 
 				//If troopsToMove is less than one or more than the armies on the country -1 (must leave at least 1 army),
@@ -219,7 +219,7 @@ void GameController::fortificationPhase(Player* player)
 					//Will only print out the adjacent country if the user's player owns it.
 					if (player->iOwnCountry(player->countriesOwned[fortCountryIndex]->adjacentCountries[i]))
 					{
-						cout << player->countriesOwned[fortCountryIndex]->adjacentCountries[i]->getName() << " ";
+						cout << "|" << player->countriesOwned[fortCountryIndex]->adjacentCountries[i]->getName() << "| ";
 					}
 					
 				}
