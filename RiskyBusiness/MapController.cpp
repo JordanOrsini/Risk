@@ -334,11 +334,10 @@ bool MapController::addNeighborToCountry(string country, string newNeighbor)
 
 	// Test that neighbor exists
 	if ((*map).getCountryPointerByName(newNeighbor) == NULL)
-		return false
+		return false;
 
 	// Good to go, update both countries so they know they are each other's neighbor
-	(*(*map).getCountryPointerByName(country)).addAdjCountry((*map).getCountryPointerByName(newNeighbor));
-	(*(*map).getCountryPointerByName(newNeighbor)).addAdjCountry((*map).getCountryPointerByName(country));
+	(*map).createAdjacencies(country, newNeighbor); 
 
 	return true; 
 }

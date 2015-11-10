@@ -69,6 +69,8 @@ public:
 	Country* getCountryPointerByName(string name);
 	bool mapIsConnected();
 	void addContinent(Continent* cName);
+	void createAdjacencies(string country1, string country2); 
+
 	vector<Continent*> allContinents;
 	vector<Country*> allCountries;
 
