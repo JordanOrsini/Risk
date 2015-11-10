@@ -301,6 +301,49 @@ void MapController::createMap()
 	cout << endl << "Congratulations, you have created a new blank map.\nPlease note that an empty map cannot be saved as valid.\n\n";
 }
 
+void MapController::createContinent(string name, int bonusValue)
+{
+	// Create continent and add it to the map
+	Continent* newContinent = new Continent(name, bonusValue);
+	(*map).addContinent(newContinent);
+}
+
+bool MapController::addCountryToContinent(string countryName, int x, int y, string continentName)
+{
+	// Test that continent actually exists, otherwise return false
+	if ((*map).getContinentPointerByName(continentName) == NULL)
+		return false; 
+
+	// Create country 
+	Country* newCountry = new Country(countryName, x, y, continentName, "");
+
+	// Add it to the map
+	(*map).addCountry(newCountry);
+
+	// Add it to the continent
+	(*(*map).getContinentPointerByName(continentName)).addCountry(newCountry);
+
+	return true; 
+}
+
+bool MapController::addNeighborToCountry(string country, string newNeighbor)
+{
+	// Test that country exists
+	if ((*map).getCountryPointerByName(country) == NULL)
+		return false; 
+
+	// Test that neighbor exists
+	if ((*map).getCountryPointerByName(newNeighbor) == NULL)
+		return false
+
+	// Good to go, update both countries so they know they are each other's neighbor
+	(*(*map).getCountryPointerByName(country)).addAdjCountry((*map).getCountryPointerByName(newNeighbor));
+	(*(*map).getCountryPointerByName(newNeighbor)).addAdjCountry((*map).getCountryPointerByName(country));
+
+	return true; 
+}
+
+
 // Method edit existing map (the map that is currently loaded)
 void MapController::editMap()
 {
