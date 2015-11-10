@@ -28,9 +28,6 @@ void GameController::startUpPhase() {
 
 	// TO-DO: ask for user-saved file and load
 
-	cout << "\n\nHow many players will be playing?" << endl;
-	cin >> numOfPlayers;
-
 	while (true)
 	{
 		cout << "\n\nHow many players will be playing?" << endl;
