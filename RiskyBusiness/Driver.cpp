@@ -5,7 +5,7 @@ int main() {
 	srand(time(0)); //used to randomize number when rand() is used
 
 	// Pregame map creatio n
-	MapView tempView(); 
+	MapView tempView; 
 
 	// Start actual game
 	GameController* GC = new GameController();

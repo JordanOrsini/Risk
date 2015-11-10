@@ -139,7 +139,7 @@ MapView::~MapView()
 	board = nullptr;
 }
 
-void MapView::editMap()
+void MapView::editMap(MapController* tempMC)
 {
 	string userInput;
 	string name, continentName, x, y, value, str;
@@ -171,7 +171,7 @@ void MapView::editMap()
 			cin >> value;
 
 			// Create continent and get MapController to add it to the map
-			mapC->createContinent(continentName, atoi(value.c_str())); 
+			tempMC->createContinent(continentName, atoi(value.c_str())); 
 
 			cout << endl << continentName << " was added to the map." << endl << endl;
 		}
@@ -194,7 +194,7 @@ void MapView::editMap()
 				cout << "Enter a y-axis value: ";
 				cin >> y;
 
-				functionResult = (*mapC).addCountryToContinent(name, atoi(x.c_str()), atoi(y.c_str()), continentName); 
+				functionResult = (*tempMC).addCountryToContinent(name, atoi(x.c_str()), atoi(y.c_str()), continentName); 
 				if (functionResult)
 					break;
 				else
@@ -215,7 +215,7 @@ void MapView::editMap()
 				cout << "Enter the name of the neighbor country";
 				cin >> str;
 
-				functionResult = mapC->addNeighborToCountry(name, str); 
+				functionResult = tempMC->addNeighborToCountry(name, str); 
 				if (functionResult)
 				{
 					cout << "Added new neighbor.\n";
@@ -243,7 +243,7 @@ void MapView::preGameMapCreation()
 	bool mapIsCorrect = false; 
 
 	// Note that this mapController is temporary, it is not used for gameplay rather it is used for the pregame option of creating/editing a map
-	MapController tempMC; 
+	MapController* tempMC = new MapController(); 
 
 	cout << "Before you start the game, would you like to create a map or edit one from a file?\n"; 
 	cout << "Enter 'y' for yes, anything else for no:"; 
@@ -271,24 +271,24 @@ void MapView::preGameMapCreation()
 			cout << endl << "Enter the name of the new map: ";
 			cin >> mapName;
 
-			tempMC.createMap(author, mapName); 
+			tempMC->createMap(author, mapName); 
 
 			cout << endl << "Congratulations, you have created a new blank map.\nPlease note that an empty map cannot be saved as valid.\n\n";
 		}
 
 		if (userInput == '2')
 		{
-			tempMC.loadMapFromFile(); 
+			tempMC->loadMapFromFile(); 
 		}
 
 
 		//Edit map, only save to file if it is correct
 		while (1)
 		{
-			editMap();
+			editMap(tempMC);
 
 			cout << "Testing that the map satisfies these preconditions:\n\t- The map is a connected graph\n\t- The continents are connected subgraphs"; 
-			mapIsCorrect = tempMC.testMap();
+			mapIsCorrect = tempMC->testMap();
 			
 			if (mapIsCorrect)
 			{
@@ -308,8 +308,11 @@ void MapView::preGameMapCreation()
 		if (mapIsCorrect)
 		{
 			cout << "Saving map to file...\n"; 
-			tempMC.saveMapToFile(); 
+			tempMC->saveMapToFile(); 
 		}
 
 	}
+
+	delete tempMC;
+	tempMC = nullptr;
 }
