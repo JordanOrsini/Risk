@@ -104,7 +104,7 @@ void GameController::reinforcementPhase(Player* player) {
 		reinforcements = 3;
 	}
 
-	reinforcements += player->getContinentBonus();
+	reinforcements += player->getContinentBonus(MC->getMap());
 
 	/**
 	*	While there are still reinforcements to place, will display contents of the contriesOwned vector of the player and
