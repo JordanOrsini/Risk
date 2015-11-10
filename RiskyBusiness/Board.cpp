@@ -1,32 +1,44 @@
 #include "Board.h"
 
-Board::Board(int width, int height)
+Board::Board(int startX, int startY, int endX, int endY)
 {
-	this->endX = this->width = width;
-	this->endY = this-> height = height;
+	this->startX = startX;
+	this->startY = startY;
+	this->endX = endX;
+	this->endY = endY;
+	this->width = endX - startX;
+	this->height = endY - startY;
 }
 
 void Board::setNumRows(int rows) {
 	this->numRows = rows;
+	this->rowHeight = this->height / this->numRows;
 }
 
 void Board::setNumCols(int columns) {
 	this->numCols = columns;
+	this->colWidth = this->width / this->numCols;
 }
 
-void Board::setRowHeight(int r, int height) {
-	this->rowHeights[r] = height;
+int Board::getColumnWidth() {
+	return this->colWidth;
 }
 
-void Board::setColWidth(int c, int height) {
-	this->colWidths[c] = height;
+int Board::getRowHeight() {
+	return this->rowHeight;
+}
+
+int Board::getHeight() {
+	return this->height;
+}
+
+int Board::getWidth() {
+	return this->width;
 }
 
 void Board::drawBoard() {
 	cout.flush();
 	GetConsoleScreenBufferInfo(this->hStd, &SBInfo);
-
-	this->startX = 1;
 	this->startY = SBInfo.dwCursorPosition.Y;
 	this->endY = this->height + this->startY;
 
@@ -36,8 +48,8 @@ void Board::drawBoard() {
 	int pos = this->startX;
 	for (int i = 0; i < this->numCols; i++)
 	{
-		pos += this->colWidths[i];
-		if (pos > this->endX)
+		pos += this->colWidth;
+		if (pos >= this->endX)
 			pos = this->endX;
 
 		for (int j = this->startY; j <= this->endY; j++)
@@ -65,7 +77,7 @@ void Board::drawBoard() {
 	pos = this->startY;
 	for (int i = 0; i < this->numRows; i++)
 	{
-		pos += this->rowHeights[i];
+		pos += this->rowHeight;
 		if (pos > this->endY)
 			pos = this->endY;
 
@@ -76,7 +88,7 @@ void Board::drawBoard() {
 			int xpos = this->startX;
 			for (int k = 0; k < this->numCols; k++)
 			{
-				xpos += this->colWidths[k];
+				xpos += this->colWidth;
 				if (xpos == j)
 				{
 					this->gotoXY(xpos, pos);

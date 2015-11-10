@@ -9,9 +9,11 @@ public:
 	~MapView();
 	void displayBoard();
 private:
-	int width = 68;
-	int height = 35;
-	Board* board = new Board( width, height);
+	int endX = 69;
+	int endY = 36;
+	int rowHeight;
+	int colWidth;
+	Board* board;
 	MapController mapC;
 };
 
