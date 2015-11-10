@@ -64,13 +64,14 @@ bool Map::mapIsConnected() { return true; }
 void Map::addContinent(Continent* cName)
 {
 	allContinents.push_back(cName);
-	notify();
+	this->notify();
 }
 
 // Add a country (already created) to the map
 void Map::addCountry(Country* cName)
 {
 	allCountries.push_back(cName);
+	this->notify();
 }
 
 // -------------------------------------------------------CONTINENT CLASS IMPLEMENTATION-------------------------------------------------------//

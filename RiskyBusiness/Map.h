@@ -6,7 +6,7 @@
 #include "Subject.h"
 using namespace std;
 
-class Country: public Subject{
+class Country{
 public:
 	friend class Player;
 	Country(); //default ctor
@@ -59,7 +59,7 @@ private:
 };
 
 
-class Map {
+class Map: public Subject {
 public:
 	friend class Continent;
 	friend class Country;
@@ -74,6 +74,7 @@ public:
 
 
 	// new
+	//TODO add add adj countrie to map class
 	Map(string name, string author);
 	void addCountry(Country* cName);
 	Continent* getContinentPointerByName(string name);
