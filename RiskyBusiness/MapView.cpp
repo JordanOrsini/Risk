@@ -1,5 +1,10 @@
 #include "MapView.h"
 
+MapView::MapView()
+{
+	preGameMapCreation(); 
+}
+
 MapView::MapView(GameController* gameC)
 {
 	this->gameC = gameC;

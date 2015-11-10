@@ -6,6 +6,7 @@
 class MapView: public Observer
 {
 public:
+	MapView(); 
 	MapView(GameController* gameC);
 	~MapView();
 	void update(); // calls display() when triggered by the subject (observer pattern)
