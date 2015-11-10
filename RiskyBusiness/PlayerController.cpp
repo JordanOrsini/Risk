@@ -19,11 +19,9 @@ void PlayerController::addPlayerToGame(int numOfPlayers) {
 }
 
 Player* PlayerController::getWhoseTurn() {
-	if (whoseTurn == (playerList.size() - 1)) {
+	if (whoseTurn == playerList.size()) {
 		whoseTurn = 0;
-		return playerList[whoseTurn];
+		return playerList[whoseTurn++];
 	}
-
-	whoseTurn++;
-	return playerList[whoseTurn];
+	return playerList[whoseTurn++];
 }
