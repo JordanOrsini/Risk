@@ -2,8 +2,8 @@
 
 /// Default constructor
 GameController::GameController() {
-	MapController* MC = new MapController();
-	PlayerController* PC = new PlayerController();
+	this->MC = new MapController();
+	this->PC = new PlayerController();
 }
 
 /// Destructor 

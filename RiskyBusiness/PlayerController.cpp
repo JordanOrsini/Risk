@@ -11,12 +11,10 @@ PlayerController::~PlayerController() {
 void PlayerController::addPlayerToGame(int numOfPlayers) {
 
 	string playerName;
-
 	for (int i = 0; i < numOfPlayers; i++) {
 		cout << "What is the player's name?" << endl;
 		cin >> playerName;
-		Player* player = new Player(playerName);
-		playerList.push_back(player);
+		this->playerList.push_back(new Player(playerName));
 	}
 }
 
