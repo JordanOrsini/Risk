@@ -22,6 +22,8 @@ GameController::~GameController() {
 */
 void GameController::startUpPhase() {
 	int numOfPlayers;
+	int maxCountriesPerPlayer;
+	int randomNumber;
 
 	// TO-DO: ask for user-saved file and load
 
@@ -31,6 +33,15 @@ void GameController::startUpPhase() {
 	// TO-DO: check if player number and number of countries make sense
 
 	PC->addPlayerToGame(numOfPlayers);
+
+	maxCountriesPerPlayer = (MC->getMap()->allCountries.size() / numOfPlayer) + 1;
+
+	for (int i = 0; i < MC->getMap()->allCountries.size(); i++)
+	{
+		randomNumber = rand() % numOfPlayers;
+		PC->getPlayerList()[randomNumber]->setOwnsCountry(MC->getMap()->allCountries[i]);
+	}
+
 
 	//TO-DO: randomly assign troops and set troops per person according to number of players
 }
@@ -118,7 +129,7 @@ void GameController::reinforcementPhase(Player* player) {
 		
 		if (countryFound == false)
 		{
-			cout << "Invalid country input! No changes will be made.";
+			cout << "Invalid country input! No changes will be made." << endl;
 		}
 		
 	}
@@ -213,15 +224,13 @@ void GameController::fortificationPhase(Player* player)
 
 					}
 				}
-
-				//If the adjacent country entered by user is not found in the countriesOwned vector.
-				if (fortMoveFound == false)
-				{
-					cout << "Invalid country move. Fortification phase will now end.";
-				}
-				
-				
 			}
+		}
+
+		//If the adjacent country entered by user is not found in the countriesOwned vector.
+		if (fortMoveFound == false)
+		{
+			cout << "Invalid country move. Fortification phase will now end.";
 		}
 
 		//If the initial country selected to move troops from is not found in the player's countriesOwned vector.
