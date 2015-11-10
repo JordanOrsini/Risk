@@ -24,26 +24,47 @@ void GameController::startUpPhase() {
 	int numOfPlayers;
 	int maxCountriesPerPlayer;
 	int randomNumber;
+	int countryPerPlayerRemaining;
 
 	// TO-DO: ask for user-saved file and load
 
 	cout << "\n\nHow many players will be playing?" << endl;
 	cin >> numOfPlayers;
 
-	// TO-DO: check if player number and number of countries make sense
-
+	while (true)
+	{
+		cout << "\n\nHow many players will be playing?" << endl;
+		cin >> numOfPlayers;
+		if (numOfPlayers > MC->getMap()->allCountries.size())
+		{
+			cout << "Invalid number of players" << endl;
+		}
+		else
+		{
+			break;
+		}
+	}
+	
 	PC->addPlayerToGame(numOfPlayers);
 
-	maxCountriesPerPlayer = (MC->getMap()->allCountries.size() / numOfPlayer) + 1;
+	maxCountriesPerPlayer = (MC->getMap()->allCountries.size() / numOfPlayers);
+	countryPerPlayerRemaining = MC->getMap()->allCountries.size() % numOfPlayers;
 
-	for (int i = 0; i < MC->getMap()->allCountries.size(); i++)
+	for (int i = 0; i < MC->getMap()->allCountries.size() - countryPerPlayerRemaining; i++)
+	{
+		randomNumber = rand() % numOfPlayers;
+		while (PC->getPlayerList()[randomNumber]->countriesOwned.size() == maxCountriesPerPlayer);
+		{
+			randomNumber = rand() % numOfPlayers;
+		}
+		PC->getPlayerList()[randomNumber]->setOwnsCountry(MC->getMap()->allCountries[i]);
+	}
+
+	for (int i = (MC->getMap()->allCountries.size() - countryPerPlayerRemaining); i < MC->getMap()->allCountries.size(); i++)
 	{
 		randomNumber = rand() % numOfPlayers;
 		PC->getPlayerList()[randomNumber]->setOwnsCountry(MC->getMap()->allCountries[i]);
 	}
-
-
-	//TO-DO: randomly assign troops and set troops per person according to number of players
 }
 
 void GameController::runGame() {
