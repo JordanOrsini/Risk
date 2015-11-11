@@ -5,12 +5,14 @@ Subject::Subject() {
 }
 void Subject::notify() {
 	list<Observer *>::iterator i = observers->begin();
-	for (;i != observers->end(); ++i)
+	for (; i != observers->end(); i++) {
 		(*i)->update();
+	}
 }
 
 void Subject::attach(Observer* o) {
 	observers->push_back(o);
+	notify();
 }
 
 void Subject::detatch(Observer* o) {
