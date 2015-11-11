@@ -255,6 +255,7 @@ void GameController::fortificationPhase(Player* player)
 	bool fortCountryFound = false;
 	bool fortTroopsEnough = false;
 	bool fortOwnNeighboor = false;
+	bool fortifySuccess = false;
 	int fortCountryIndex = 0;
 	int troopsToMove = 0;
 	bool fortMoveFound = false;
@@ -354,6 +355,7 @@ void GameController::fortificationPhase(Player* player)
 								MC->getMap()->notify();
 
 								cout << troopsToMove << " troops successfully moved from the country of " << player->countriesOwned.at(fortCountryIndex)->getName() << " to the country of " << player->countriesOwned.at(i)->getName() << "." << endl;
+								fortifySuccess = true;
 							}
 						}
 					}
@@ -377,6 +379,10 @@ void GameController::fortificationPhase(Player* player)
 		}
 		else
 		{
+			break;
+		}
+
+		if (fortifySuccess) {
 			break;
 		}
 	}
