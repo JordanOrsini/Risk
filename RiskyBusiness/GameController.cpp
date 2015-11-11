@@ -93,7 +93,6 @@ void GameController::startUpPhase() {
 			//Iterates through vector looking for country name inputted by user.
 			for (int j = 0; j < PC->getPlayerList().at(i)->countriesOwned.size(); j++)
 			{
-				startupCountryFound = false;
 				//If found will ask how many troops to place.
 				if (startupCountrySelected == PC->getPlayerList().at(i)->countriesOwned.at(j)->getName())
 				{
@@ -126,6 +125,7 @@ void GameController::startUpPhase() {
 			if (startupCountryFound == false)
 			{
 				cout << "\nInvalid country input! No changes will be made." << endl;
+				system("pause");
 			}
 		
 		}
@@ -200,7 +200,6 @@ void GameController::reinforcementPhase(Player* player) {
 		//Iterates through vector looking for country name inputted by user.
 		for (int i = 0; i < player->countriesOwned.size(); i++)
 		{
-			countryFound = false;
 			//If found will ask how many troops to place.
 			if (countrySelected == player->countriesOwned.at(i)->getName())
 			{
@@ -254,94 +253,131 @@ void GameController::fortificationPhase(Player* player)
 	char yesNo;
 	string fortificationCountry;
 	bool fortCountryFound = false;
+	bool fortTroopsEnough = false;
+	bool fortOwnNeighboor = false;
 	int fortCountryIndex = 0;
 	int troopsToMove = 0;
 	bool fortMoveFound = false;
 	
-	//Asks user to enter fortification phase.
-	cout << "\nWould you like to enter fortification phase? (y/n) ";
-	cin >> yesNo;
 
-	//Input validation on user input. 'Y' or 'y' will begin performing a fortification.
-	if (yesNo == 'Y' || yesNo == 'y')
+	
+	while (true)
 	{
-		MC->getMap()->notify();
-		cout << "\nFortification phase for player \"" << player->getPlayerName() << "\"" << endl << endl;
-		cout << "Select a country to move troops from: " << endl;
+		fortCountryFound = false;
+		fortTroopsEnough = false;
+		fortOwnNeighboor = false;
 		
-		if (cin.peek() == '\n') {
-			cin.ignore(1, '\n');
-		}
-		getline(cin, fortificationCountry);
+		//Asks user to enter fortification phase.
+		cout << "\nWould you like to enter fortification phase? (y/n) ";
+		cin >> yesNo;
 
-		//Iterates over countries owned to check if it contains user inputed country name.
-		for (int i = 0; i < player->countriesOwned.size(); i++)
+		//Input validation on user input. 'Y' or 'y' will begin performing a fortification.
+		if (yesNo == 'Y' || yesNo == 'y')
 		{
-			fortCountryFound = false;
-			//If country is found.
-			if (fortificationCountry == player->countriesOwned.at(i)->getName())
+
+			MC->getMap()->notify();
+			cout << "\nFortification phase for player \"" << player->getPlayerName() << "\"" << endl << endl;
+			cout << "Select a country to move troops from: " << endl;
+
+			if (cin.peek() == '\n') {
+				cin.ignore(1, '\n');
+			}
+			getline(cin, fortificationCountry);
+
+			//CHECK 1
+			for (int i = 0; i < player->countriesOwned.size(); i++)
 			{
-				fortCountryFound = true;
-				fortCountryIndex = i;
-
-				//if (player->countriesOwned.at(fortCountryIndex)->getArmyCount() < 2)
-				//{
-					//cout << "Invalid "
-				//}
-				
-				//Asks user how many troops to move.
-				cout << "You have " << player->countriesOwned.at(fortCountryIndex)->getArmyCount() << " troops, " << player->countriesOwned.at(fortCountryIndex)->getArmyCount() -1 << " are available to move. How many troops would you like to move? " << endl;
-				cin >> troopsToMove;
-
-				//If troopsToMove is less than one or more than the armies on the country -1 (must leave at least 1 army),
-				//asks for another input.
-				while (troopsToMove >= player->countriesOwned.at(fortCountryIndex)->getArmyCount() || troopsToMove < 1)
+				if (fortificationCountry == player->countriesOwned.at(i)->getName())
 				{
-					cout << "Invalid input! Must select a value less than " << player->countriesOwned.at(fortCountryIndex)->getArmyCount() << endl;
-					cin >> troopsToMove;
+					fortCountryFound = true;
+					fortCountryIndex = i;
 				}
+			}
 
-				MC->getMap()->notify();
-				cout << "Select an adjacent country to complete the move: ";
-				if (cin.peek() == '\n') {
-					cin.ignore(1, '\n');
-				}
-				getline(cin, fortificationCountry);
+			//CHECK 2
+			if (player->countriesOwned.at(fortCountryIndex)->getArmyCount() > 1)
+			{
+				fortTroopsEnough = true;
+			}
 
-				//Will search player's contries owned to see if player owns the adjacent country selected.
+			//CHECK 3
+			fortOwnNeighboor = player->checkCountryHasNeighborsUOwn(player->countriesOwned.at(fortCountryIndex));
+
+			if (fortCountryFound && fortTroopsEnough && fortOwnNeighboor)
+			{
+				//Iterates over countries owned to check if it contains user inputed country name.
 				for (int i = 0; i < player->countriesOwned.size(); i++)
 				{
-					fortMoveFound = false;
-					//If adjacent country selected is owned by the player (fortification is valid)
+					//If country is found.
 					if (fortificationCountry == player->countriesOwned.at(i)->getName())
 					{
-						fortMoveFound = true;
-						
-						//Decrements number of troops on first selected country.
-						player->countriesOwned.at(fortCountryIndex)->setArmyCount(player->countriesOwned.at(fortCountryIndex)->getArmyCount() - troopsToMove);
-						
-						//Increments number of troops on selected player owned adjacent country.
-						player->countriesOwned.at(fortCountryIndex)->adjacentCountries.at(i)->setArmyCount(player->countriesOwned.at(fortCountryIndex)->adjacentCountries.at(i)->getArmyCount() + troopsToMove);
+						fortCountryFound = true;
+						fortCountryIndex = i;
+
+						//Asks user how many troops to move.
+						cout << "You have " << player->countriesOwned.at(fortCountryIndex)->getArmyCount() << " troops, " << player->countriesOwned.at(fortCountryIndex)->getArmyCount() - 1 << " are available to move. How many troops would you like to move? " << endl;
+						cin >> troopsToMove;
+
+						//If troopsToMove is less than one or more than the armies on the country -1 (must leave at least 1 army),
+						//asks for another input.
+						while (troopsToMove >= player->countriesOwned.at(fortCountryIndex)->getArmyCount() || troopsToMove < 1)
+						{
+							cout << "Invalid input! Must select a value less than " << player->countriesOwned.at(fortCountryIndex)->getArmyCount() << endl;
+							cin >> troopsToMove;
+						}
 
 						MC->getMap()->notify();
 
-						cout << troopsToMove << " troops successfully moved from the country of " << player->countriesOwned.at(fortCountryIndex)->getName() << " to the country of " << player->countriesOwned.at(fortCountryIndex)->adjacentCountries.at(i)->getName() << "." << endl;
+						cout << "Select an adjacent country to complete the move: ";
+
+						if (cin.peek() == '\n') {
+							cin.ignore(1, '\n');
+						}
+						getline(cin, fortificationCountry);
+
+						//Will search player's contries owned to see if player owns the adjacent country selected.
+
+
+						for (int i = 0; i < player->countriesOwned.size(); i++)
+						{
+							//If adjacent country selected is owned by the player (fortification is valid)
+							if (fortificationCountry == player->countriesOwned.at(i)->getName())
+							{
+								fortMoveFound = true;
+
+								//Decrements number of troops on first selected country.
+								player->countriesOwned.at(fortCountryIndex)->setArmyCount(player->countriesOwned.at(fortCountryIndex)->getArmyCount() - troopsToMove);
+
+								//Increments number of troops on selected player owned adjacent country.
+								player->countriesOwned.at(fortCountryIndex)->adjacentCountries.at(i)->setArmyCount(player->countriesOwned.at(fortCountryIndex)->adjacentCountries.at(i)->getArmyCount() + troopsToMove);
+
+								MC->getMap()->notify();
+
+								cout << troopsToMove << " troops successfully moved from the country of " << player->countriesOwned.at(fortCountryIndex)->getName() << " to the country of " << player->countriesOwned.at(fortCountryIndex)->adjacentCountries.at(i)->getName() << "." << endl;
+							}
+						}
 					}
 				}
 			}
-		}
 
-		//If the adjacent country entered by user is not found in the countriesOwned vector.
-		if (fortMoveFound == false)
-		{
-			cout << "Invalid country move. Fortification phase will now end.";
-		}
+			//If the adjacent country entered by user is not found in the countriesOwned vector.
+			if (fortMoveFound == false)
+			{
+				cout << "Invalid country move. Fortification phase will now end.";
+				system("pause");
+			}
 
-		//If the initial country selected to move troops from is not found in the player's countriesOwned vector.
-		if (fortCountryFound == false)
-		{
-			cout << "Invalid country input! No changes will be made. Fortification phase will now end.";
+			//If the initial country selected to move troops from is not found in the player's countriesOwned vector.
+			if (fortCountryFound == false)
+			{
+				cout << "Invalid country input! No changes will be made. Fortification phase will now end.";
+				system("pause");
+			}
+
 		}
-		
+		else
+		{
+			break;
+		}
 	}
 }
