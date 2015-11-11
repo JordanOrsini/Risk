@@ -89,6 +89,7 @@ void GameController::startUpPhase() {
 				cin.ignore(1, '\n');
 			}
 			getline(cin, startupCountrySelected);
+			cout.flush();
 			//Iterates through vector looking for country name inputted by user.
 			for (int j = 0; j < PC->getPlayerList().at(i)->countriesOwned.size(); j++)
 			{
