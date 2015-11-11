@@ -166,7 +166,7 @@ void MapView::editMap(MapController* tempMC)
 		if (userInput == "1")
 		{
 			cout << "Enter the name of the new continent: ";
-			cin >> continentName;
+			getline(cin, continentName); 
 			cout << "Enter the bonus value of owning the continent: ";
 			cin >> value;
 
@@ -186,10 +186,10 @@ void MapView::editMap(MapController* tempMC)
 			while (1)
 			{
 				cout << "Enter the name of the continent to add a new country to: ";
-				cin >> continentName;
+				getline(cin, continentName);
 
 				cout << "Enter the name of the new country: ";
-				cin >> name;
+				getline(cin, name); 
 
 				cout << "Enter an x-axis value: ";
 				cin >> x;
@@ -213,10 +213,10 @@ void MapView::editMap(MapController* tempMC)
 			while (1)
 			{
 				cout << "Enter the name of the country you wish to add neighbors: ";
-				cin >> name;
+				getline(cin, name); 
 
 				cout << "Enter the name of the neighbor country";
-				cin >> str;
+				getline(cin, str); 
 
 				functionResult = tempMC->addNeighborToCountry(name, str); 
 				if (functionResult)
