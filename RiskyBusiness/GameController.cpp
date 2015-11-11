@@ -80,15 +80,10 @@ void GameController::startUpPhase() {
 	for (int i = 0; i < numOfPlayers; i++)
 	{
 		remainingStartupTroops = startingArmies - PC->getPlayerList().at(i)->countriesOwned.size();
+		MC->getMap()->notify();
+
 		while (remainingStartupTroops != 0)
 		{
-			//Prints out contents of player's countriedOwned vector.
-		/*	for (int j = 0; j < PC->getPlayerList().at(i)->countriesOwned.size(); j++)
-			{
-				cout << "|" << PC->getPlayerList().at(i)->countriesOwned.at(j)->getName() << "| ";
-			}
-			cout << endl; */
-			MC->getMap()->notify();
 			cout << "\nPlayer \"" << PC->getPlayerList().at(i)->getPlayerName() << "\", \n\nSelect country to add remaining troops to: " << endl << endl;
 			cin >> startupCountrySelected;
 			cout.flush();
@@ -116,6 +111,10 @@ void GameController::startUpPhase() {
 
 					//Modifies armies located on selected country according to reinforcements to be placed.
 					PC->getPlayerList().at(i)->countriesOwned.at(startupCountryIndex)->setArmyCount(PC->getPlayerList().at(i)->countriesOwned.at(startupCountryIndex)->getArmyCount() + startupTroopsToAdd);
+					
+					MC->getMap()->notify();
+					cout << startupTroopsToAdd << " troops were added successfully to " << PC->getPlayerList().at(i)->countriesOwned.at(startupCountryIndex)->getName() << "." << endl;
+					system("pause");
 				}
 
 			}
@@ -173,19 +172,19 @@ void GameController::reinforcementPhase(Player* player) {
 	*	Will check to see if this country name is in the vector. If found will ask for reinforcements to add.
 	*	If value is valid (not more than reinforcements allowed) will add this value to current armies existing on the country.
 	*/
-	cout << "\nReinforcment phase for player \"" << player->getPlayerName() << "\"" << endl;
 	
 	while (reinforcements != 0)
 	{
-		cout << "\nSelect country to add reinforcements to: " << endl << endl;
-		
-		//Prints out contents of player's countriedOwned vector.
+		/*//Prints out contents of player's countriedOwned vector.
 		for (int i = 0; i < player->countriesOwned.size(); i++)
 		{
 			cout << "|" << player->countriesOwned.at(i)->getName() << "| ";
 		}
-		cout << endl;
-		
+		cout << endl;*/
+		MC->getMap()->notify();
+
+		cout << "\nReinforcment phase for player \"" << player->getPlayerName() << "\"" << endl;
+		cout << "\nSelect country to add reinforcements to: " << endl << endl;
 		cin >> countrySelected;
 		
 		//Iterates through vector looking for country name inputted by user.
@@ -196,7 +195,7 @@ void GameController::reinforcementPhase(Player* player) {
 			{
 				countryFound = true;
 				countryIndex = i;
-				cout << "You have " << reinforcements << " reinforcements. How many troops would you like to place?" << endl;
+				cout << "\nYou have " << reinforcements << " reinforcements. How many troops would you like to place?" << endl;
 				cin >> troopsToAdd;
 
 				//If troopstoAdd are greater than reinforcements allowed, asks user to reinput.
@@ -211,6 +210,10 @@ void GameController::reinforcementPhase(Player* player) {
 
 				//Modifies armies located on selected country according to reinforcements to be placed.
 				player->countriesOwned.at(countryIndex)->setArmyCount(player->countriesOwned.at(countryIndex)->getArmyCount() + troopsToAdd);
+			
+				MC->getMap()->notify();
+
+				cout << troopsToAdd << " troops were added successfully to " << player->countriesOwned.at(countryIndex)->getName() << "." << endl;
 			}
 		}
 		
@@ -249,15 +252,18 @@ void GameController::fortificationPhase(Player* player)
 	//Input validation on user input. 'Y' or 'y' will begin performing a fortification.
 	if (yesNo == 'Y' || yesNo == 'y')
 	{
-		cout << "\nFortification phase for player \"" << player->getPlayerName() << "\"" << endl << endl;
-		//Prints out countries owned by player.
-		cout << "Select a country to move troops from: " << endl;
+		
+		/*//Prints out countries owned by player.
 		for (int i = 0; i < player->countriesOwned.size(); i++)
 		{
 			cout << "|" << player->countriesOwned.at(i)->getName() << "| ";
 		}
-		cout << endl;
-
+		cout << endl;*/
+		
+		MC->getMap()->notify();
+		cout << "\nFortification phase for player \"" << player->getPlayerName() << "\"" << endl << endl;
+		cout << "Select a country to move troops from: " << endl;
+		
 		cin >> fortificationCountry;
 
 		//Iterates over countries owned to check if it contains user inputed country name.
@@ -281,10 +287,8 @@ void GameController::fortificationPhase(Player* player)
 					cin >> troopsToMove;
 				}
 
-				cout << "Select an adjacent country to complete the move: ";
-
 				//Loops over all adjacent countries to user selected country above.
-				for (int i = 0; i < player->countriesOwned.at(fortCountryIndex)->adjacentCountries.size(); i++)
+				/*for (int i = 0; i < player->countriesOwned.at(fortCountryIndex)->adjacentCountries.size(); i++)
 				{
 					//Will only print out the adjacent country if the user's player owns it.
 					if (player->iOwnCountry(player->countriesOwned.at(fortCountryIndex)->adjacentCountries[i]))
@@ -292,8 +296,9 @@ void GameController::fortificationPhase(Player* player)
 						cout << "|" << player->countriesOwned.at(fortCountryIndex)->adjacentCountries.at(i)->getName() << "| ";
 					}
 					
-				}
-
+				}*/
+				MC->getMap()->notify();
+				cout << "Select an adjacent country to complete the move: ";
 				cin >> fortificationCountry;
 
 				//Will search player's contries owned to see if player owns the adjacent country selected.
@@ -310,6 +315,9 @@ void GameController::fortificationPhase(Player* player)
 						//Increments number of troops on selected player owned adjacent country.
 						player->countriesOwned.at(fortCountryIndex)->adjacentCountries.at(i)->setArmyCount(player->countriesOwned.at(fortCountryIndex)->adjacentCountries.at(i)->getArmyCount() + troopsToMove);
 
+						MC->getMap()->notify();
+
+						cout << troopsToMove << " troops successfully moved from the country of " << player->countriesOwned.at(fortCountryIndex)->getName() << " to the country of " << player->countriesOwned.at(fortCountryIndex)->adjacentCountries.at(i)->getName() << "." << endl;
 					}
 				}
 			}
