@@ -16,6 +16,7 @@ public:
 	bool iOwnContinent(Continent *continent);
 	int getArmyCountByCountry(Country* country);
 	int getContinentBonus(Map* map);
+	bool checkCountryHasNeighborsUOwn(Country* country);
 	vector<Country*> countriesOwned;
 	
 private:

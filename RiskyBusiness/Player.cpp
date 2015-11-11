@@ -47,3 +47,12 @@ int Player::getContinentBonus(Map * map) {
 	return bonus; 
 }
 
+bool Player::checkCountryHasNeighborsUOwn(Country* country)
+{
+	for (int i = 0; i < country->adjacentCountries.size(); i++)
+	{
+		if (country->adjacentCountries[i]->owner == this)
+			return true; 
+	}
+	return false; 
+}
