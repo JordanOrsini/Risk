@@ -15,6 +15,4 @@ int main() {
 	GC->startUpPhase();
 
 	GC->runGame();
-
-	GC->cleanUp(); //call destructors and all
 }

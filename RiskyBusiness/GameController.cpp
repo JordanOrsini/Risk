@@ -93,6 +93,7 @@ void GameController::startUpPhase() {
 			//Iterates through vector looking for country name inputted by user.
 			for (int j = 0; j < PC->getPlayerList().at(i)->countriesOwned.size(); j++)
 			{
+				startupCountryFound = false;
 				//If found will ask how many troops to place.
 				if (startupCountrySelected == PC->getPlayerList().at(i)->countriesOwned.at(j)->getName())
 				{
@@ -124,7 +125,7 @@ void GameController::startUpPhase() {
 		
 			if (startupCountryFound == false)
 			{
-				cout << "Invalid country input! No changes will be made." << endl;
+				cout << "\nInvalid country input! No changes will be made." << endl;
 			}
 		
 		}
@@ -134,17 +135,26 @@ void GameController::startUpPhase() {
 }
 
 void GameController::runGame() {
-	bool quitFlag = false;
 	Player* currentPlayer = new Player();
+	char quitInput;
 
-	do {
-	currentPlayer = PC->getTurn();
-	reinforcementPhase(currentPlayer); 
-	fortificationPhase(currentPlayer);
+	while(true)
+	{
+		currentPlayer = PC->getTurn();
+		reinforcementPhase(currentPlayer); 
+		fortificationPhase(currentPlayer);
 
-	//ask if want to quit
-	PC->nextTurn();
-	} while (!quitFlag);
+		cout << "Quit game? (y/n)";
+		cin >> quitInput;
+
+		if (quitInput == 'y' || quitInput == 'Y')
+		{
+			break;
+		}
+		PC->nextTurn();
+	} 
+	cout << "Thanks for playing!" << endl;
+	system("pause");
 }
 
 /** Reinforcements are distributed as follows:
@@ -190,6 +200,7 @@ void GameController::reinforcementPhase(Player* player) {
 		//Iterates through vector looking for country name inputted by user.
 		for (int i = 0; i < player->countriesOwned.size(); i++)
 		{
+			countryFound = false;
 			//If found will ask how many troops to place.
 			if (countrySelected == player->countriesOwned.at(i)->getName())
 			{
@@ -253,14 +264,6 @@ void GameController::fortificationPhase(Player* player)
 	//Input validation on user input. 'Y' or 'y' will begin performing a fortification.
 	if (yesNo == 'Y' || yesNo == 'y')
 	{
-		
-		/*//Prints out countries owned by player.
-		for (int i = 0; i < player->countriesOwned.size(); i++)
-		{
-			cout << "|" << player->countriesOwned.at(i)->getName() << "| ";
-		}
-		cout << endl;*/
-		
 		MC->getMap()->notify();
 		cout << "\nFortification phase for player \"" << player->getPlayerName() << "\"" << endl << endl;
 		cout << "Select a country to move troops from: " << endl;
@@ -273,6 +276,7 @@ void GameController::fortificationPhase(Player* player)
 		//Iterates over countries owned to check if it contains user inputed country name.
 		for (int i = 0; i < player->countriesOwned.size(); i++)
 		{
+			fortCountryFound = false;
 			//If country is found.
 			if (fortificationCountry == player->countriesOwned.at(i)->getName())
 			{
@@ -291,16 +295,6 @@ void GameController::fortificationPhase(Player* player)
 					cin >> troopsToMove;
 				}
 
-				//Loops over all adjacent countries to user selected country above.
-				/*for (int i = 0; i < player->countriesOwned.at(fortCountryIndex)->adjacentCountries.size(); i++)
-				{
-					//Will only print out the adjacent country if the user's player owns it.
-					if (player->iOwnCountry(player->countriesOwned.at(fortCountryIndex)->adjacentCountries[i]))
-					{
-						cout << "|" << player->countriesOwned.at(fortCountryIndex)->adjacentCountries.at(i)->getName() << "| ";
-					}
-					
-				}*/
 				MC->getMap()->notify();
 				cout << "Select an adjacent country to complete the move: ";
 				if (cin.peek() == '\n') {
@@ -311,6 +305,7 @@ void GameController::fortificationPhase(Player* player)
 				//Will search player's contries owned to see if player owns the adjacent country selected.
 				for (int i = 0; i < player->countriesOwned.size(); i++)
 				{
+					fortMoveFound = false;
 					//If adjacent country selected is owned by the player (fortification is valid)
 					if (fortificationCountry == player->countriesOwned.at(i)->getName())
 					{
@@ -343,8 +338,4 @@ void GameController::fortificationPhase(Player* player)
 		}
 		
 	}
-}
-
-void GameController::cleanUp() {
-
 }
