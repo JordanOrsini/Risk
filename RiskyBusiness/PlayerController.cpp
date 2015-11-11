@@ -24,9 +24,11 @@ Player* PlayerController::getTurn() {
 	return playerList.at(whoseTurn);
 }
 Player* PlayerController::nextTurn() {
-	if (whoseTurn == playerList.size()) {
+	if (whoseTurn == playerList.size() - 1) {
 		whoseTurn = 0;
-		return playerList.at(whoseTurn++);
 	}
-	return playerList.at(whoseTurn++);
+	else {
+		whoseTurn++;
+	}
+	return playerList.at(whoseTurn);
 }
