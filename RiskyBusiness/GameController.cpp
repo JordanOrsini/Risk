@@ -376,13 +376,12 @@ void GameController::fortificationPhase(Player* player)
 				system("pause");
 			}
 
+			if (fortifySuccess) {
+				break;
+			}
 		}
 		else
 		{
-			break;
-		}
-
-		if (fortifySuccess) {
 			break;
 		}
 	}
