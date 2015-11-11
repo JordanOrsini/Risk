@@ -227,7 +227,7 @@ void MapView::editMap(MapController* tempMC)
 				}
 				getline(cin, name); 
 
-				cout << "Enter the name of the neighbor country";
+				cout << "Enter the name of the neighbor country: ";
 				if (cin.peek() == '\n') {
 					cin.ignore(1, '\n');
 				}
