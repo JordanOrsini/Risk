@@ -282,7 +282,6 @@ void MapController::loadMapFromFile()
 	cout << "The map has been successfully loaded." << endl << endl;
 
 	fileReader.close();
-	this->map->notify();
 }
 
 
