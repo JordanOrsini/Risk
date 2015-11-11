@@ -9,10 +9,10 @@ MapView::MapView(GameController* gameC)
 {
 	this->gameC = gameC;
 	this->mapC = this->gameC->getMC();
+	this->board = new Board(1, 1, endX, endY);
 	this->mapC->loadMapFromFile();
 	mapC->getMap()->attach(this);
 
-	this->board = new Board(1, 1, endX, endY);
 	this->board->setNumCols(4); // 4 columns
 	this->board->setNumRows(5); // 5 rows
 	this->rowHeight = this->board->getRowHeight();
