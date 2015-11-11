@@ -80,10 +80,10 @@ void GameController::startUpPhase() {
 	for (int i = 0; i < numOfPlayers; i++)
 	{
 		remainingStartupTroops = startingArmies - PC->getPlayerList().at(i)->countriesOwned.size();
-		MC->getMap()->notify();
 
 		while (remainingStartupTroops != 0)
 		{
+			MC->getMap()->notify();
 			cout << "\nPlayer \"" << PC->getPlayerList().at(i)->getPlayerName() << "\", \n\nSelect country to add remaining troops to: (" << remainingStartupTroops << " troops to be placed.)" << endl << endl;
 			if (cin.peek() == '\n') {
 				cin.ignore(1, '\n');
@@ -225,6 +225,7 @@ void GameController::reinforcementPhase(Player* player) {
 				MC->getMap()->notify();
 
 				cout << troopsToAdd << " troops were added successfully to " << player->countriesOwned.at(countryIndex)->getName() << "." << endl;
+				break;
 			}
 		}
 		
@@ -282,6 +283,11 @@ void GameController::fortificationPhase(Player* player)
 			{
 				fortCountryFound = true;
 				fortCountryIndex = i;
+
+				//if (player->countriesOwned.at(fortCountryIndex)->getArmyCount() < 2)
+				//{
+					//cout << "Invalid "
+				//}
 				
 				//Asks user how many troops to move.
 				cout << "You have " << player->countriesOwned.at(fortCountryIndex)->getArmyCount() << " troops, " << player->countriesOwned.at(fortCountryIndex)->getArmyCount() -1 << " are available to move. How many troops would you like to move? " << endl;
