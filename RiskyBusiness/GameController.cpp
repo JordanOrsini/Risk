@@ -349,11 +349,11 @@ void GameController::fortificationPhase(Player* player)
 								player->countriesOwned.at(fortCountryIndex)->setArmyCount(player->countriesOwned.at(fortCountryIndex)->getArmyCount() - troopsToMove);
 
 								//Increments number of troops on selected player owned adjacent country.
-								player->countriesOwned.at(fortCountryIndex)->adjacentCountries.at(i)->setArmyCount(player->countriesOwned.at(fortCountryIndex)->adjacentCountries.at(i)->getArmyCount() + troopsToMove);
+								player->countriesOwned.at(i)->setArmyCount(player->countriesOwned.at(i)->getArmyCount() + troopsToMove);
 
 								MC->getMap()->notify();
 
-								cout << troopsToMove << " troops successfully moved from the country of " << player->countriesOwned.at(fortCountryIndex)->getName() << " to the country of " << player->countriesOwned.at(fortCountryIndex)->adjacentCountries.at(i)->getName() << "." << endl;
+								cout << troopsToMove << " troops successfully moved from the country of " << player->countriesOwned.at(fortCountryIndex)->getName() << " to the country of " << player->countriesOwned.at(i)->getName() << "." << endl;
 							}
 						}
 					}
@@ -363,14 +363,14 @@ void GameController::fortificationPhase(Player* player)
 			//If the adjacent country entered by user is not found in the countriesOwned vector.
 			if (fortMoveFound == false)
 			{
-				cout << "Invalid country move. Fortification phase will now end.";
+				cout << "Invalid country move. Fortification phase will now end." << endl;
 				system("pause");
 			}
 
 			//If the initial country selected to move troops from is not found in the player's countriesOwned vector.
 			if (fortCountryFound == false)
 			{
-				cout << "Invalid country input! No changes will be made. Fortification phase will now end.";
+				cout << "Invalid country input! No changes will be made. Fortification phase will now end." << endl;
 				system("pause");
 			}
 
