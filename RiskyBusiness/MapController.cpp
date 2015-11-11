@@ -291,17 +291,27 @@ void MapController::createMap(string author, string mapName)
 	map = new Map(mapName, author);
 }
 
-void MapController::createContinent(string name, int bonusValue)
+bool MapController::createContinent(string name, int bonusValue)
 {
+	// Check that continent does not already exists
+	if (map->getContinentPointerByName(name) != NULL)
+		return false; 
+
 	// Create continent and add it to the map
 	Continent* newContinent = new Continent(name, bonusValue);
 	(*map).addContinent(newContinent);
+
+	return true; 
 }
 
 bool MapController::addCountryToContinent(string countryName, int x, int y, string continentName)
 {
 	// Test that continent actually exists, otherwise return false
 	if ((*map).getContinentPointerByName(continentName) == NULL)
+		return false; 
+
+	// Check that country doesn't already exists
+	if (map->getCountryPointerByName(countryName) != NULL)
 		return false; 
 
 	// Create country 

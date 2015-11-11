@@ -171,9 +171,12 @@ void MapView::editMap(MapController* tempMC)
 			cin >> value;
 
 			// Create continent and get MapController to add it to the map
-			tempMC->createContinent(continentName, atoi(value.c_str())); 
+			functionResult = tempMC->createContinent(continentName, atoi(value.c_str())); 
 
-			cout << endl << continentName << " was added to the map." << endl << endl;
+			if (functionResult)
+				cout << endl << continentName << " was added to the map." << endl << endl;
+			else
+				cout << "Error: the continent already exists\n"; 
 		}
 
 		// CREATE A NEW COUNTRY
@@ -198,7 +201,7 @@ void MapView::editMap(MapController* tempMC)
 				if (functionResult)
 					break;
 				else
-					cout << "Error: The continent does not exist\n"; 
+					cout << "Error: The continent does not exist or the country already exists\n"; 
 			}
 
 			cout << endl << name << " was added to the map." << endl << endl;
@@ -299,7 +302,7 @@ void MapView::preGameMapCreation()
 			{
 				cout << "The map has errors. Would you like to continue editing? Note that only verified maps can be saved to file.\nEnter 'y' for yes, anything else for no: "; 
 				cin >> userInput; 
-				if (userInput == 'y')
+				if (userInput != 'y')
 					break; 
 			}
 
