@@ -85,8 +85,10 @@ void GameController::startUpPhase() {
 		while (remainingStartupTroops != 0)
 		{
 			cout << "\nPlayer \"" << PC->getPlayerList().at(i)->getPlayerName() << "\", \n\nSelect country to add remaining troops to: " << endl << endl;
-			cin >> startupCountrySelected;
-			cout.flush();
+			if (cin.peek() == '\n') {
+				cin.ignore(1, '\n');
+			}
+			getline(cin, startupCountrySelected);
 			//Iterates through vector looking for country name inputted by user.
 			for (int j = 0; j < PC->getPlayerList().at(i)->countriesOwned.size(); j++)
 			{
@@ -175,17 +177,14 @@ void GameController::reinforcementPhase(Player* player) {
 	
 	while (reinforcements != 0)
 	{
-		/*//Prints out contents of player's countriedOwned vector.
-		for (int i = 0; i < player->countriesOwned.size(); i++)
-		{
-			cout << "|" << player->countriesOwned.at(i)->getName() << "| ";
-		}
-		cout << endl;*/
 		MC->getMap()->notify();
 
 		cout << "\nReinforcment phase for player \"" << player->getPlayerName() << "\"" << endl;
 		cout << "\nSelect country to add reinforcements to: " << endl << endl;
-		cin >> countrySelected;
+		if (cin.peek() == '\n') {
+			cin.ignore(1, '\n');
+		}
+		getline(cin, countrySelected);
 		
 		//Iterates through vector looking for country name inputted by user.
 		for (int i = 0; i < player->countriesOwned.size(); i++)
@@ -264,7 +263,10 @@ void GameController::fortificationPhase(Player* player)
 		cout << "\nFortification phase for player \"" << player->getPlayerName() << "\"" << endl << endl;
 		cout << "Select a country to move troops from: " << endl;
 		
-		cin >> fortificationCountry;
+		if (cin.peek() == '\n') {
+			cin.ignore(1, '\n');
+		}
+		getline(cin, fortificationCountry);
 
 		//Iterates over countries owned to check if it contains user inputed country name.
 		for (int i = 0; i < player->countriesOwned.size(); i++)
@@ -299,7 +301,10 @@ void GameController::fortificationPhase(Player* player)
 				}*/
 				MC->getMap()->notify();
 				cout << "Select an adjacent country to complete the move: ";
-				cin >> fortificationCountry;
+				if (cin.peek() == '\n') {
+					cin.ignore(1, '\n');
+				}
+				getline(cin, fortificationCountry);
 
 				//Will search player's contries owned to see if player owns the adjacent country selected.
 				for (int i = 0; i < player->countriesOwned.size(); i++)
