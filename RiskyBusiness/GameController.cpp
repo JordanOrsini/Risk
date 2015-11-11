@@ -84,7 +84,7 @@ void GameController::startUpPhase() {
 
 		while (remainingStartupTroops != 0)
 		{
-			cout << "\nPlayer \"" << PC->getPlayerList().at(i)->getPlayerName() << "\", \n\nSelect country to add remaining troops to: " << endl << endl;
+			cout << "\nPlayer \"" << PC->getPlayerList().at(i)->getPlayerName() << "\", \n\nSelect country to add remaining troops to: (" << remainingStartupTroops << " troops to be placed.)" << endl << endl;
 			if (cin.peek() == '\n') {
 				cin.ignore(1, '\n');
 			}
@@ -181,7 +181,7 @@ void GameController::reinforcementPhase(Player* player) {
 		MC->getMap()->notify();
 
 		cout << "\nReinforcment phase for player \"" << player->getPlayerName() << "\"" << endl;
-		cout << "\nSelect country to add reinforcements to: " << endl << endl;
+		cout << "\nSelect country to add reinforcements to: (" << reinforcements << " troops left to add.)" << endl << endl;
 		if (cin.peek() == '\n') {
 			cin.ignore(1, '\n');
 		}
