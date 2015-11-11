@@ -39,9 +39,11 @@ void GameController::startUpPhase() {
 	{
 		cout << "\n\nHow many players will be playing?" << endl;
 		cin >> numOfPlayers;
-		if (numOfPlayers > MC->getMap()->allCountries.size())
+		if (numOfPlayers > MC->getMap()->allCountries.size() || cin.fail() || numOfPlayers == 0)
 		{
 			cout << "Invalid number of players" << endl;
+			cin.clear();
+			cin.ignore(256, '\n');
 		}
 		else
 		{
@@ -135,8 +137,8 @@ void GameController::runGame() {
 
 	do {
 	currentPlayer = PC->getTurn();
-	reinforcementPhase(currentPlayer); //uncomment once implemented
-	fortificationPhase(currentPlayer); //uncomment once implemented
+	reinforcementPhase(currentPlayer); 
+	fortificationPhase(currentPlayer);
 
 	//ask if want to quit
 	PC->nextTurn();
