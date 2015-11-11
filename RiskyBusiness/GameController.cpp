@@ -220,6 +220,7 @@ void GameController::reinforcementPhase(Player* player) {
 		if (countryFound == false)
 		{
 			cout << "Invalid country input! No changes will be made." << endl;
+			system("pause");
 		}
 		
 	}
