@@ -1,4 +1,5 @@
 #include "MapView.h"
+#include <limits>
 
 MapView::MapView()
 {
@@ -165,6 +166,9 @@ void MapView::editMap(MapController* tempMC)
 		if (userInput == "1")
 		{
 			cout << "Enter the name of the new continent: ";
+			if (cin.peek() == '\n') {
+				cin.ignore(1, '\n');
+			}
 			getline(cin, continentName); 
 			cout << "Enter the bonus value of owning the continent: ";
 			cin >> value;
@@ -185,9 +189,15 @@ void MapView::editMap(MapController* tempMC)
 			while (1)
 			{
 				cout << "Enter the name of the continent to add a new country to: ";
+				if (cin.peek() == '\n') {
+					cin.ignore(1, '\n');
+				}
 				getline(cin, continentName);
 
 				cout << "Enter the name of the new country: ";
+				if (cin.peek() == '\n') {
+					cin.ignore(1, '\n');
+				}
 				getline(cin, name); 
 
 				cout << "Enter an x-axis value: ";
@@ -212,9 +222,15 @@ void MapView::editMap(MapController* tempMC)
 			while (1)
 			{
 				cout << "Enter the name of the country you wish to add neighbors: ";
+				if (cin.peek() == '\n') {
+					cin.ignore(1, '\n');
+				}
 				getline(cin, name); 
 
 				cout << "Enter the name of the neighbor country";
+				if (cin.peek() == '\n') {
+					cin.ignore(1, '\n');
+				}
 				getline(cin, str); 
 
 				functionResult = tempMC->addNeighborToCountry(name, str); 
@@ -269,7 +285,10 @@ void MapView::preGameMapCreation()
 			string author;
 
 			cout << endl << "Enter your name: ";
-			cin >> author;
+			if (cin.peek() == '\n') {
+				cin.ignore(1, '\n');
+			}
+			getline(cin, author); 
 			cout << endl << "Enter the name of the new map: ";
 			cin >> mapName;
 
