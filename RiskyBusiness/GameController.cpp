@@ -83,13 +83,17 @@ void GameController::startUpPhase() {
 
 		while (remainingStartupTroops != 0)
 		{
+			startupCountryFound = false;
+			
 			MC->getMap()->notify();
 			cout << "\nPlayer \"" << PC->getPlayerList().at(i)->getPlayerName() << "\", \n\nSelect country to add remaining troops to: (" << remainingStartupTroops << " troops to be placed.)" << endl << endl;
+			
 			if (cin.peek() == '\n') {
 				cin.ignore(1, '\n');
 			}
 			getline(cin, startupCountrySelected);
 			cout.flush();
+			
 			//Iterates through vector looking for country name inputted by user.
 			for (int j = 0; j < PC->getPlayerList().at(i)->countriesOwned.size(); j++)
 			{
@@ -99,13 +103,13 @@ void GameController::startUpPhase() {
 					startupCountryFound = true;
 					startupCountryIndex = j;
 				
-					cout << "\nHow many troops would you like to add? " << remainingStartupTroops << " troops remaining to be placed." << endl;
+					cout << "\nHow many troops would you like to add? " << remainingStartupTroops << " troops remaining to be placed." << endl << endl;
 					cin >> startupTroopsToAdd;
 
 					//If troopstoAdd are greater than reinforcements allowed, asks user to reinput.
 					while (startupTroopsToAdd > remainingStartupTroops || startupTroopsToAdd < 1)
 					{
-						cout << "Invalid input! Must select a value less than or equal to " << remainingStartupTroops << endl;
+						cout << "\nInvalid input! Must select a value less than or equal to " << remainingStartupTroops << endl << endl;
 						cin >> startupTroopsToAdd;
 					}
 				
@@ -116,7 +120,7 @@ void GameController::startUpPhase() {
 					PC->getPlayerList().at(i)->countriesOwned.at(startupCountryIndex)->setArmyCount(PC->getPlayerList().at(i)->countriesOwned.at(startupCountryIndex)->getArmyCount() + startupTroopsToAdd);
 					
 					MC->getMap()->notify();
-					cout << startupTroopsToAdd << " troops were added successfully to " << PC->getPlayerList().at(i)->countriesOwned.at(startupCountryIndex)->getName() << "." << endl;
+					cout << startupTroopsToAdd << " troops were added successfully to " << PC->getPlayerList().at(i)->countriesOwned.at(startupCountryIndex)->getName() << "." << endl << endl;
 					system("pause");
 				}
 
@@ -124,7 +128,7 @@ void GameController::startUpPhase() {
 		
 			if (startupCountryFound == false)
 			{
-				cout << "\nInvalid country input! No changes will be made." << endl;
+				cout << "\nInvalid country input! No changes will be made." << endl << endl;
 				system("pause");
 			}
 		
@@ -144,7 +148,7 @@ void GameController::runGame() {
 		reinforcementPhase(currentPlayer); 
 		fortificationPhase(currentPlayer);
 
-		cout << "Quit game? (y/n)";
+		cout << "\nQuit game? (y/n)";
 		cin >> quitInput;
 
 		if (quitInput == 'y' || quitInput == 'Y')
@@ -153,7 +157,7 @@ void GameController::runGame() {
 		}
 		PC->nextTurn();
 	} 
-	cout << "Thanks for playing!" << endl;
+	cout << "\nThanks for playing!" << endl << endl;
 	system("pause");
 }
 
@@ -188,9 +192,11 @@ void GameController::reinforcementPhase(Player* player) {
 	
 	while (reinforcements != 0)
 	{
+		countryFound = false;
+		
 		MC->getMap()->notify();
 
-		cout << "\nReinforcment phase for player \"" << player->getPlayerName() << "\"" << endl;
+		cout << "\nReinforcment phase for player \"" << player->getPlayerName() << "\"," << endl;
 		cout << "\nSelect country to add reinforcements to: (" << reinforcements << " troops left to add.)" << endl << endl;
 		if (cin.peek() == '\n') {
 			cin.ignore(1, '\n');
@@ -205,13 +211,13 @@ void GameController::reinforcementPhase(Player* player) {
 			{
 				countryFound = true;
 				countryIndex = i;
-				cout << "\nYou have " << reinforcements << " reinforcements. How many troops would you like to place?" << endl;
+				cout << "\nYou have " << reinforcements << " reinforcements. How many troops would you like to place?" << endl << endl;
 				cin >> troopsToAdd;
 
 				//If troopstoAdd are greater than reinforcements allowed, asks user to reinput.
 				while (troopsToAdd > reinforcements || troopsToAdd < 1)
 				{
-					cout << "Invalid input! Must select a value less than or equal to " << reinforcements << endl;
+					cout << "\nInvalid input! Must select a value less than or equal to " << reinforcements << endl << endl;
 					cin >> troopsToAdd;
 				}
 				
@@ -223,14 +229,15 @@ void GameController::reinforcementPhase(Player* player) {
 			
 				MC->getMap()->notify();
 
-				cout << troopsToAdd << " troops were added successfully to " << player->countriesOwned.at(countryIndex)->getName() << "." << endl;
+				cout << troopsToAdd << " troops were added successfully to " << player->countriesOwned.at(countryIndex)->getName() << "." << endl << endl;
+				system("pause");
 				break;
 			}
 		}
 		
 		if (countryFound == false)
 		{
-			cout << "Invalid country input! No changes will be made." << endl;
+			cout << "\nInvalid country input! No changes will be made." << endl << endl;
 			system("pause");
 		}
 		
@@ -275,8 +282,8 @@ void GameController::fortificationPhase(Player* player)
 		{
 
 			MC->getMap()->notify();
-			cout << "\nFortification phase for player \"" << player->getPlayerName() << "\"" << endl << endl;
-			cout << "Select a country to move troops from: " << endl;
+			cout << "\nFortification phase for player \"" << player->getPlayerName() << "\"," << endl << endl;
+			cout << "Select a country to move troops from: " << endl << endl;
 
 			if (cin.peek() == '\n') {
 				cin.ignore(1, '\n');
@@ -305,20 +312,20 @@ void GameController::fortificationPhase(Player* player)
 			if (fortCountryFound && fortTroopsEnough && fortOwnNeighboor)
 			{
 				//Asks user how many troops to move.
-				cout << "You have " << player->countriesOwned.at(fortCountryIndex)->getArmyCount() << " troops, " << player->countriesOwned.at(fortCountryIndex)->getArmyCount() - 1 << " are available to move. How many troops would you like to move? " << endl;
+				cout << "\nYou have " << player->countriesOwned.at(fortCountryIndex)->getArmyCount() << " troops, " << player->countriesOwned.at(fortCountryIndex)->getArmyCount() - 1 << " are available to move. How many troops would you like to move? " << endl << endl;
 				cin >> troopsToMove;
 
 				//If troopsToMove is less than one or more than the armies on the country -1 (must leave at least 1 army),
 				//asks for another input.
 				while (troopsToMove >= player->countriesOwned.at(fortCountryIndex)->getArmyCount() || troopsToMove < 1)
 				{
-					cout << "Invalid input! Must select a value less than " << player->countriesOwned.at(fortCountryIndex)->getArmyCount() << endl;
+					cout << "\nInvalid input! Must select a value less than " << player->countriesOwned.at(fortCountryIndex)->getArmyCount() << endl << endl;
 					cin >> troopsToMove;
 				}
 
 				MC->getMap()->notify();
 
-				cout << "Select an adjacent country to complete the move: ";
+				cout << "Select an adjacent country to complete the move:" << endl << endl;
 
 				if (cin.peek() == '\n')
 				{
@@ -351,17 +358,9 @@ void GameController::fortificationPhase(Player* player)
 			//If the adjacent country entered by user is not found in the countriesOwned vector.
 			if (fortMoveFound == false)
 			{
-				cout << "Invalid country move. Fortification phase will now end." << endl;
+				cout << "\nInvalid country input! For a country to be valid you must own it, own an adjacent country next to it and have more than 1 army on it! " << endl << endl;
 				system("pause");
 			}
-
-			//If the initial country selected to move troops from is not found in the player's countriesOwned vector.
-			if (fortCountryFound == false)
-			{
-				cout << "Invalid country input! No changes will be made. Fortification phase will now end." << endl;
-				system("pause");
-			}
-
 		}
 		else
 		{
