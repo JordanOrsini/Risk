@@ -51,6 +51,9 @@
     <ClInclude Include="Observer.h">
       <Filter>VIEW</Filter>
     </ClInclude>
+    <ClInclude Include="SaveLoadAdapter.h">
+      <Filter>CONTROLLER</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Driver.cpp">
@@ -79,6 +82,9 @@
     </ClCompile>
     <ClCompile Include="Subject.cpp">
       <Filter>MODEL</Filter>
+    </ClCompile>
+    <ClCompile Include="SaveLoadAdapter.cpp">
+      <Filter>CONTROLLER</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

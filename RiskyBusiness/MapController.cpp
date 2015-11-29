@@ -1,4 +1,5 @@
 #include "MapController.h"
+#include "SaveLoadAdapter.h"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -21,236 +22,55 @@ MapController::~MapController()
 // Method to read map from user specified input file
 void MapController::loadMapFromFile()
 {
+	AbstractSaveLoadAdapter * adapter;
+
+	// Ask user for *.map or *.altmap file
 	string mapFile;
-	string mapName;
 	fstream fileReader;
 
-	// Ask user for *.map file
+	// Decide which adapter to use for the loader
 	while (1)
 	{
-		cout << "Please type in the name of the *.map file: ";
+		cout << "Please type in the name of the map file: ";
 		cin >> mapFile;
-		cout << "The name of the map file is: " << mapFile << endl;
 
-		if (mapFile.find(".map") == string::npos) {
-			cout << "The file is not a *.map file." << endl;
-			cout << "Try a different name." << endl << endl;
+		if (mapFile.find(".map") == string::npos && mapFile.find(".altmap") == string::npos){
+			cout << "The file is not a *.map or *.altmap file." << endl;
+			cout << "Try a different file." << endl << endl;
 		}
-		else {
-			fileReader.open(mapFile, ios::in);
-			if (fileReader.good() == 0)
-				cout << "There was an error reading the file. Try again." << endl << endl;
+		else{
+			if (mapFile.find(".altmap") == string::npos) // Have a *.map file
+			{
+				fileReader.open(mapFile, ios::in);
+				if (fileReader.good() == 0)
+					cout << "There was an error reading the file. Try again." << endl << endl;
+				else
+				{
+					cout << "File successfully opened." << endl << endl;
+					adapter = new LegacySaveLoadAdapter();
+					break;
+				}
+			}
 			else
 			{
-				cout << "File successfully opened." << endl << endl;
-				break;
+				fileReader.open(mapFile, ios::in);
+				if (fileReader.good() == 0)
+					cout << "There was an error reading the file. Try again." << endl << endl;
+				else
+				{
+					cout << "File successfully opened." << endl << endl;
+					adapter = new NewSaveLoadAdapter();
+					break;
+				}
+				fileReader.close();
 			}
 		}
 	}
 
-	// Get map name from map file name
-	mapName = mapFile.substr(0, mapFile.find(".map"));
+	// Load the file
+	map = adapter->load(mapFile);
 
-	//------------ READ IN WORLD MAP DATA ------------//
-	string line;			// Used to read in one line from the file at a time
-	string temp;			// Temporary string
-	int pos;				// Temporariliy store the length of the string
-
-	string author;			// These temporarily store data about the Map to be used in the constructor
-	string imageFile;
-	string wrap;
-	string scroll;
-	string warn;
-
-	// First line of file should be: "[Map]"
-	getline(fileReader, line);
-	if (line.compare("[Map]") != 0)
-	{
-		cout << "ERROR:" << endl << "The first line of the input file should be [Map]." << endl;
-		cout << "Exiting program..." << endl;
-		system("pause");
-		exit(1);
-	}
-
-	cout << endl << "LOADING MAP FROM FILE" << endl << "----------------------" << endl << endl;
-	cout << "Map \"" << mapName << "\" Information: " << endl;
-
-
-	//Read in info until there is no more
-	getline(fileReader, line);
-	while (line != "")
-	{
-		pos = line.find("=");
-		temp = line.substr(0, pos + 1);
-
-		if (temp.compare("author=") == 0)
-		{
-			pos = 7;
-			author = line.substr(pos);
-			cout << "\t -author: " << author << endl;
-		}
-
-		if (temp.compare("image=") == 0)
-		{
-			pos = 6;
-			imageFile = line.substr(pos);
-			cout << "\t -image: " << imageFile << endl;
-		}
-
-		if (temp.compare("wrap=") == 0)
-		{
-			pos = 5;
-			wrap = line.substr(pos);
-			cout << "\t -wrap: " << wrap << endl;
-		}
-
-		if (temp.compare("scroll=") == 0)
-		{
-			pos = 7;
-			scroll = line.substr(pos);
-			cout << "\t -scroll: " << scroll << endl;
-		}
-		if (temp.compare("warn=") == 0)
-		{
-			pos = 5;
-			warn = line.substr(pos);
-			cout << "\t -warn: " << warn << endl;
-		}
-
-		getline(fileReader, line);
-	}
-
-	cout << endl;
-
-	// create the map
-	map = new Map(mapName, author, imageFile, wrap, scroll, warn);
-
-
-	//------------ READ IN CONTINENT DATA ------------//
-	string continentName;		// Temporarily stores data from input file
-	int continentValue;			// Temporarily stores data from input file
-	Continent* newContinent;		// Pointer to temporarily store new continents
-
-	while (line == "")
-		getline(fileReader, line);
-
-	// First line should be: "[Continents]"
-	if (line.compare("[Continents]") != 0)
-	{
-		cout << "ERROR:" << endl << "The next section of the input file after [Map] should be [Continents]." << endl;
-		cout << "Exiting program..." << endl;
-		system("pause");
-		exit(1);
-	}
-
-	cout << endl << "Continents: " << endl;
-
-	//Read in continents until there are no more
-	getline(fileReader, line);
-	while (line != "")
-	{
-		// Data is in file as "continentName=continentValue"
-		pos = line.find("=");
-		continentName = line.substr(0, pos);		// Parse out name
-		temp = line.substr(pos + 1);
-		continentValue = atoi(temp.c_str());		// Parse out value
-
-													// Create Continent and add it to the Map
-		newContinent = new Continent(continentName, continentValue);
-		(*map).addContinent(newContinent);
-
-		cout << "\t" << continentName << endl;
-
-		// Read in next line
-		getline(fileReader, line);
-	}
-
-	//------------ READ IN COUNTRY DATA ------------//
-	Country* newCountry;		// Pointer to temporarily store new country
-	Continent* tempContinent;	// Pointer to temporarily store address of Continents
-								//int pos;					// Keeps track of position of character in a string
-	string countryName;			// Following variables temporarily store data from input file. Used to create countries
-	string xAxis, yAxis;
-	int x, y;
-	string parentContinent;
-
-
-	while (line == "") {
-		getline(fileReader, line);
-	}
-
-	// First line should be: "[Territories]"
-	if (line.compare("[Territories]") != 0)
-	{
-		cout << "ERROR:" << endl << "The next section of the input file after [Continents] should be [Territories]." << endl;
-		cout << "Exiting program..." << endl;
-		system("pause");
-		exit(1);
-	}
-
-	cout << endl << "Countries: " << endl;
-
-	// Read in territories until there are no more
-	while (getline(fileReader, line))
-	{
-		if (line != "")
-		{
-			// get name
-			pos = line.find(",");
-			countryName = line.substr(0, pos);
-
-			// Check that the country has not already been added to the map. If it has, declare an error. 
-			Country * temp;
-			temp = (*map).getCountryPointerByName(countryName); // If the country does not exist, then temp SHOULD be null
-
-			if (temp != NULL)
-			{
-				cout << "ERROR:" << endl << "Country " << countryName << " has been declared more than once in the *.map file" << endl;
-				cout << "Exiting program..." << endl;
-				system("pause");
-				exit(1);
-			}
-
-			//get xAxis
-			line = line.substr(pos + 1);
-			pos = line.find(",");
-			xAxis = line.substr(0, pos);
-			x = atoi(xAxis.c_str());
-
-			//get yAxis
-			line = line.substr(pos + 1);
-			pos = line.find(",");
-			yAxis = line.substr(0, pos);
-			y = atoi(yAxis.c_str());
-
-			//get continent
-			line = line.substr(pos + 1);
-			pos = line.find(",");
-			parentContinent = line.substr(0, pos);
-
-			//check that the continent exists
-			tempContinent = (*map).getContinentPointerByName(parentContinent);
-
-			if (tempContinent == NULL)
-			{
-				cout << "ERROR:" << endl << "Country " << countryName << " has been declared to have parent continent " << parentContinent << " which does not exist" << endl;
-				cout << "Exiting program..." << endl;
-				system("pause");
-				exit(1);
-			}
-
-			// keep rest of string to initialize adjacent countries later
-			line = line.substr(pos + 1);
-
-			// Create new country and add it to the Map and correct continent
-			newCountry = new Country(countryName, x, y, parentContinent, line);
-			(*map).addCountry(newCountry);
-			(*tempContinent).addCountry(newCountry);
-
-		}
-	}
-
-	// Link each territory with thier neighbour
+	// After map info has been loaded, link each territory with thier neighbour to create a connected map
 	Country* countryToAddNeighbors;						// Placeholder for easier reading
 	Country* newNeighbor;								// Placeholder for easier reading
 	string newNeighborStr;								// Placeholder for easier reading
@@ -261,14 +81,14 @@ void MapController::loadMapFromFile()
 	{
 
 		countryToAddNeighbors = (*map).allCountries[i];
-		for (std::size_t i = 0; i < (*countryToAddNeighbors).tempAdjCountryNames.size(); i++) {
+		for (std::size_t i = 0; i < (*countryToAddNeighbors).tempAdjCountryNames.size(); i++){
 			newNeighborStr = (*countryToAddNeighbors).tempAdjCountryNames[i];
 			newNeighbor = (*map).getCountryPointerByName(newNeighborStr);
 
 			//Check that neighbor exists!
 			if (newNeighbor == NULL)
 			{
-				cout << "ERROR:" << endl << "Country " << countryName << " has been declared to have neighbor country " << newNeighborStr << " which does not exist" << endl;
+				cout << "ERROR:" << endl << "Country " << countryToAddNeighbors->getName() << " has been declared to have neighbor country " << newNeighborStr << " which does not exist" << endl;
 				cout << "Exiting program..." << endl;
 				system("pause");
 				exit(1);
@@ -281,7 +101,6 @@ void MapController::loadMapFromFile()
 	//------------ END OF INITIALIZATION ------------//
 	cout << "The map has been successfully loaded." << endl << endl;
 
-	fileReader.close();
 }
 
 
@@ -459,33 +278,30 @@ void MapController::editMap()
 // Method to save the current map to an output file
 void MapController::saveMapToFile()
 {
+	AbstractSaveLoadAdapter * adapter;
 
-	ofstream output((*map).getName() + ".map");
-	output << "[Map]" << endl;
-	output << "author=" << (*map).getAuthor() << endl;
-	output << "image=" << (*map).getImage() << endl;
-	output << "wrap=" << (*map).getWrap() << endl;
-	output << "scroll=" << (*map).getScroll() << endl;
-	output << "warn=" << (*map).getWarn() << endl;
+	// Ask user which file format to use
+	string input;
+	cout << "\n\nSAVING MAP TO FILE\n";
+	cout << "Would you like to save the map as: \n\t(1) *.map file format or \n\t(2) *.altmap file format \nEnter 1 or 2:";
+	cin >> input;
 
-	output << endl << "[Continents]" << endl;
-	for (std::size_t i = 0; i < (*map).allContinents.size(); i++)
+	while (input != "1" && input != "2")
 	{
-		output << (*(*map).allContinents[i]).getName() << "=" << (*(*map).allContinents[i]).getBonusValue() << endl;
+		cout << "Please enter 1 or 2:";
+		cin >> input;
 	}
 
-	output << endl << "[Territories]" << endl;
-	for (std::size_t i = 0; i < (*map).allCountries.size(); i++)
-	{
-		output << (*(*map).allCountries[i]).getName() << "," << (*(*map).allCountries[i]).getX() << "," << (*(*map).allCountries[i]).getY() << "," << (*(*map).allCountries[i]).getParentContinentName();
-		for (std::size_t k = 0; k < (*(*map).allCountries[i]).adjacentCountries.size(); k++)
-		{
-			output << "," << (*(*(*map).allCountries[i]).adjacentCountries[k]).getName();
-		}
-		output << endl;
-	}
+	// Use the decision to determine which adapter to use
+	if (input == "1")
+		adapter = new LegacySaveLoadAdapter();
+	else
+		adapter = new NewSaveLoadAdapter();
 
-	output.close();
+
+	// Save the map
+	adapter->save(map);
+
 }
 
 // Method to test the currently loaded map for correctness. 
