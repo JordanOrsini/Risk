@@ -422,7 +422,7 @@ void LegacySaveLoadAdapter::save(Map* map)
 	output << endl << "[Continents]" << endl;
 	for (std::size_t i = 0; i < (*map).allContinents.size(); i++)
 	{
-		output << (*(*map).allContinents[i]).getName() << "=" << (*(*map).allContinents[i]).getValue() << endl;
+		output << (*(*map).allContinents[i]).getName() << "=" << (*(*map).allContinents[i]).getBonusValue() << endl;
 	}
 
 	output << endl << "[Territories]" << endl;
@@ -465,7 +465,7 @@ void NewSaveLoadAdapter::save(Map * map)
 		// List each continent, name and value
 		output << endl << "--CONTINENT--" << endl;
 		output << "name=" << (*(*map).allContinents[i]).getName() << endl;
-		output << "value=" << (*(*map).allContinents[i]).getValue() << endl;
+		output << "value=" << (*(*map).allContinents[i]).getBonusValue() << endl;
 
 		// Follow by listing all of that continent's territories
 		for (std::size_t j = 0; j < (*(*map).allContinents[i]).subCountries.size(); j++)
