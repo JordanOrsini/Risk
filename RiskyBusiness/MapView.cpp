@@ -13,7 +13,7 @@ MapView::MapView(GameController* gameC)
 	this->board = new Board(1, 1, endX, endY);
 	this->mapC->loadMapFromFile();
 
-	this->board->setNumCols(4); // 4 columns
+	this->board->setNumCols(8); // 8 columns
 	this->board->setNumRows(5); // 5 rows
 	this->rowHeight = this->board->getRowHeight();
 	this->colWidth = this->board->getColumnWidth();
@@ -26,18 +26,14 @@ void MapView::update() {
 }
 
 void MapView::displayBoard() {
-	Player* currentPlayer = gameC->getPC()->getTurn();
 	vector<Country*> countries;
-	if (currentPlayer == nullptr) {
-		countries = mapC->getMap()->allCountries;
-	}
-	else {
-		countries = currentPlayer->countriesOwned;
-	}
+	countries = mapC->getMap()->allCountries;
 	
 	int k = 0;
 	int offset = 0;
-	int numOfFillableColumns = 3;
+	int numOfFillableColumns = 7;
+	int color = 10; // green (default color)
+	Player* player;
 	while (k < countries.size()) {
 		this->board->drawBoard();
 		this->board->gotoXYPrint(4, ((rowHeight) / 2) + this->board->getStartY(), "Country");
@@ -57,12 +53,15 @@ void MapView::displayBoard() {
 			x = (colWidth + (i * colWidth) + 3);
 			y = ((rowHeight / 2) - 2) + this->board->getStartY();
 			country = countries.at(offset)->getName();
-
-			if (country.length() >= colWidth) {
+			player = countries.at(offset)->owner;
+			if (player != nullptr)
+				color = player->getColor();
+			if (country.length() >= (colWidth - 3)) {
 				country = country.substr(0, colWidth - 3) + "."; // Northwest territories will become Northwest Terr.
 			}
 			offset++;
-			this->board->gotoXYPrint(x, y, country);
+			this->board->gotoXYPrint(x, y, country, color);
+			color = 10;
 		}
 		offset = k;
 		string continent = "";
@@ -80,22 +79,24 @@ void MapView::displayBoard() {
 		// print country owner
 		string owner = "";
 		offset = k;
-		Player* player;
 		for (int i = 0; i < numOfFillableColumns; i++) {
 			x = (colWidth + (i * colWidth) + 3);
 			y = ((rowHeight / 2) - 2) + (2 * rowHeight) + this->board->getStartY();
-			player = countries.at(k)->owner;
+			player = countries.at(offset)->owner;
 			if (player == nullptr) {
 				owner = "N/A";
 			}
 			else {
 				owner = player->getPlayerName();
+				color = player->getColor();
 			}
 			if (owner.length() >= (colWidth)) {
 				owner = owner.substr(0, (colWidth) - 3) + ".";
 			}
 			offset++;
-			this->board->gotoXYPrint(x, y, owner);
+			this->board->gotoXYPrint(x, y, owner, color);
+			int color = 10;
+
 		}
 		player = nullptr;
 
@@ -118,16 +119,20 @@ void MapView::displayBoard() {
 			adjCountries = countries.at(offset)->adjacentCountries;
 			for (int j = 0; j < adjCountries.size(); j++) {
 				country = adjCountries.at(j)->getName();
-				if (country.length() >= (colWidth)) {
-					country = country.substr(0, (colWidth) - 4) + "."; // Northwest territories will become Northwest Terr.
+				player = adjCountries.at(j)->owner;
+				if (player != nullptr)
+					color = player->getColor();
+				if (country.length() >= (colWidth - 3)) {
+					country = country.substr(0, (colWidth) - 3) + "."; // Northwest territories will become Northwest Terr.
 				}
-				this->board->gotoXYPrint(x, y, country);
+				this->board->gotoXYPrint(x, y, country, color);
+				color = 10;
 				++y;
 			}
 			offset++;
 		}
 
-		k += 3;
+		k += numOfFillableColumns;
 		
 		this->board->gotoXYPrint(0, this->board->getHeight() + this->board->getStartY() + 2, "");	
 	}

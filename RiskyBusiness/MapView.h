@@ -15,7 +15,7 @@ public:
 	void preGameMapCreation(); 
 
 private:
-	int endX = 69;
+	int endX = 145;
 	int endY = 36;
 	int rowHeight;
 	int colWidth;

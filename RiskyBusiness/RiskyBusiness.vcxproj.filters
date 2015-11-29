@@ -53,6 +53,8 @@
     </ClInclude>
     <ClInclude Include="SaveLoadAdapter.h">
       <Filter>CONTROLLER</Filter>
+    <ClInclude Include="Colors.h">
+      <Filter>CONTROLLER</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -85,6 +87,8 @@
     </ClCompile>
     <ClCompile Include="SaveLoadAdapter.cpp">
       <Filter>CONTROLLER</Filter>
+    <ClCompile Include="Colors.cpp">
+      <Filter>MODEL</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

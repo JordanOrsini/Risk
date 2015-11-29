@@ -24,6 +24,7 @@ public:
 	void clearBoard();
 	void gotoXYPrint(int x, int y, char chr);
 	void gotoXYPrint(int x, int y, string str);
+	void gotoXYPrint(int x, int y, string str, int color);
 	int getStartX();
 	int getStartY();
 
