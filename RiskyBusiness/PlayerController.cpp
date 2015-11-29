@@ -5,16 +5,21 @@ PlayerController::PlayerController() {
 }
 
 PlayerController::~PlayerController() {
-	//need to add deletes for players
+	for (int i = 0; i < this->playerList.size(); i++) {
+		delete this->playerList.at(i);
+	}
 }
 
 void PlayerController::addPlayerToGame(int numOfPlayers) {
-
+	Colors colors;
 	string playerName;
+	Player* player;
 	for (int i = 0; i < numOfPlayers; i++) {
 		cout << "What is the player's name?" << endl;
 		cin >> playerName;
-		this->playerList.push_back(new Player(playerName));
+		player = new Player(playerName);
+		player->setColor(colors.assignNewColor());
+		this->playerList.push_back(player);
 	}
 }
 

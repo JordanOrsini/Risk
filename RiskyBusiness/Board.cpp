@@ -173,7 +173,13 @@ void Board::gotoXY(int x, int y)
 
 void Board::gotoXYPrint(int x, int y, string str)
 {
+	this->gotoXYPrint(x, y, str, 10);
+}
+
+void Board::gotoXYPrint(int x, int y, string str, int color)
+{
 	this->gotoXY(x, y);
+	SetConsoleTextAttribute(this->hStd, color);
 	cout << str;
 }
 

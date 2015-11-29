@@ -11,6 +11,8 @@ public:
 	Player(string playerName);
 	~Player();
 	string getPlayerName() { return playerName; };
+	int getColor() { return color; };
+	void setColor(int color) { this->color = color; };
 	void setOwnsCountry(Country *country) { countriesOwned.push_back(country); country->owner = this; }
 	bool iOwnCountry(Country *country);
 	bool iOwnContinent(Continent *continent);
@@ -21,4 +23,5 @@ public:
 	
 private:
 	string playerName;
+	int color;
 };

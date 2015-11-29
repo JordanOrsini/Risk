@@ -2,9 +2,10 @@
 #include "MapView.h"
 
 int main() {
-	srand(time(0)); //used to randomize number when rand() is used
+	// Make sure to set your console screen size to full screen
 
-	// Pregame map creatio n
+	system("COLOR 0A"); // green on black
+	// Pregame map creation
 	MapView tempView; 
 
 	// Start actual game
