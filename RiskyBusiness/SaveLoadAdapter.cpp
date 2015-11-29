@@ -424,6 +424,7 @@ void LegacySaveLoadAdapter::save(Map* map)
 	{
 		output << (*(*map).allContinents[i]).getName() << "=" << (*(*map).allContinents[i]).getBonusValue() << endl;
 	}
+	//blah
 
 	output << endl << "[Territories]" << endl;
 
