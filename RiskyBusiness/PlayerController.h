@@ -2,6 +2,7 @@
 // CONTROLLER
 #include "Player.h"
 #include "Colors.h"
+#include "ConsoleHandler.h"
 
 class PlayerController {
 public:	
@@ -14,6 +15,7 @@ public:
 	vector<Player*> getPlayerList() { return playerList; };
 	//void attack(Player* attackingPlayer, Player* defendingPlayer);
 private:
+	ConsoleHandler* handle = ConsoleHandler::getInstance();
 	vector<Player*> playerList;
 	int whoseTurn; // refers to player list
 };

@@ -15,10 +15,13 @@ void PlayerController::addPlayerToGame(int numOfPlayers) {
 	string playerName;
 	Player* player;
 	for (int i = 0; i < numOfPlayers; i++) {
-		cout << "What is the player " << i + 1 <<"'s name?" << endl;
+		int color = colors.assignNewColor();
+		handle->print("What is the player ");
+		handle->print(to_string(i + 1), color);
+		handle->print("'s name?\n");
 		cin >> playerName;
 		player = new Player(playerName);
-		player->setColor(colors.assignNewColor());
+		player->setColor(color);
 		this->playerList.push_back(player);
 	}
 }

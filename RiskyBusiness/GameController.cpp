@@ -86,7 +86,8 @@ void GameController::startUpPhase() {
 			startupCountryFound = false;
 			
 			MC->getMap()->notify();
-			cout << "\nPlayer \"" << PC->getPlayerList().at(i)->getPlayerName() << "\", \n\nSelect country to add remaining troops to: (" << remainingStartupTroops << " troops to be placed.)" << endl << endl;
+			handle->print("\nPlayer \"" + PC->getPlayerList().at(i)->getPlayerName() + "\", \n", PC->getPlayerList().at(i)->getColor());
+			handle->print("Select country to add remaining troops to: (" + to_string(remainingStartupTroops) + " troops to be placed.)\n\n");
 			
 			if (cin.peek() == '\n') {
 				cin.ignore(1, '\n');
@@ -197,7 +198,9 @@ void GameController::reinforcementPhase(Player* player) {
 		
 		MC->getMap()->notify();
 
-		cout << "\nReinforcment phase for player \"" << player->getPlayerName() << "\"," << endl;
+		cout << "\nReinforcment phase for player \"";
+		handle->print(player->getPlayerName(), player->getColor());
+		cout<< "\"," << endl;
 		cout << "\nSelect country to add reinforcements to: (" << reinforcements << " troops left to add.)" << endl << endl;
 		if (cin.peek() == '\n') {
 			cin.ignore(1, '\n');
@@ -257,7 +260,9 @@ void GameController::battlePhase(Player* player)
 	bool playerOwnsAttackingCountry = false;
 
 	MC->getMap()->notify();
-	cout << "\nPlayer \"" << player->getPlayerName() << "\", \n\nWould you like to attack? (y/n)" << endl;
+	cout << "\nPlayer \"";
+	handle->print(player->getPlayerName(), player->getColor());
+	cout <<"\", \n\nWould you like to attack? (y/n)" << endl;
 	cin >> attackYesNo;
 
 	if (attackYesNo == 'y')
@@ -328,7 +333,9 @@ void GameController::fortificationPhase(Player* player)
 		{
 
 			MC->getMap()->notify();
-			cout << "\nFortification phase for player \"" << player->getPlayerName() << "\"," << endl << endl;
+			cout << "\nFortification phase for player \""; 
+			handle->print(player->getPlayerName(), player->getColor());
+			cout << "\"," << endl << endl;
 			cout << "Select a country to move troops from: " << endl << endl;
 
 			if (cin.peek() == '\n') {

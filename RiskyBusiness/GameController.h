@@ -2,6 +2,7 @@
 //CONTROLLER
 #include "MapController.h"
 #include "PlayerController.h"
+#include "ConsoleHandler.h"
 #include <cstdlib>
 #include <ctime>
 
@@ -19,6 +20,7 @@ public:
 	PlayerController* getPC() { return PC; }
 
 private:
+	ConsoleHandler* handle = ConsoleHandler::getInstance();
 	MapController* MC;
 	PlayerController* PC;
 };
