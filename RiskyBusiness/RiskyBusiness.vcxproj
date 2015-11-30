@@ -125,6 +125,10 @@
     <ClInclude Include="Colors.h" />
     <ClInclude Include="ConsoleHandler.h" />
     <ClInclude Include="GameController.h" />
+    <ClInclude Include="ILog.h" />
+    <ClInclude Include="LogDecorator.h" />
+    <ClInclude Include="Logger.h" />
+    <ClInclude Include="LogStartup.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapController.h" />
     <ClInclude Include="MapView.h" />
@@ -140,6 +144,9 @@
     <ClCompile Include="ConsoleHandler.cpp" />
     <ClCompile Include="Driver.cpp" />
     <ClCompile Include="GameController.cpp" />
+    <ClCompile Include="LogDecorator.cpp" />
+    <ClCompile Include="Logger.cpp" />
+    <ClCompile Include="LogStartup.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapController.cpp" />
     <ClCompile Include="MapView.cpp" />

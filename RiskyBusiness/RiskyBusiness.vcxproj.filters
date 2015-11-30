@@ -35,6 +35,9 @@
     <ClCompile Include="ConsoleHandler.cpp">
       <Filter>VIEWS</Filter>
     </ClCompile>
+    <ClCompile Include="LogStartup.cpp" />
+    <ClCompile Include="LogDecorator.cpp" />
+    <ClCompile Include="Logger.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Colors.h">
@@ -73,6 +76,10 @@
     <ClInclude Include="ConsoleHandler.h">
       <Filter>VIEWS</Filter>
     </ClInclude>
+    <ClInclude Include="ILog.h" />
+    <ClInclude Include="LogStartup.h" />
+    <ClInclude Include="LogDecorator.h" />
+    <ClInclude Include="Logger.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="MODELS">
