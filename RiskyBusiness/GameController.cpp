@@ -145,7 +145,8 @@ void GameController::runGame() {
 	while(true)
 	{
 		currentPlayer = PC->getTurn();
-		reinforcementPhase(currentPlayer); 
+		reinforcementPhase(currentPlayer);
+		battlePhase(currentPlayer);
 		fortificationPhase(currentPlayer);
 
 		cout << "\nQuit game? (y/n)";
@@ -245,7 +246,52 @@ void GameController::reinforcementPhase(Player* player) {
 	
 }
 
-//void GameController::battlePhase() {}
+/**
+*
+*/
+void GameController::battlePhase(Player* player) 
+{
+	char attackYesNo;
+	string attackerCountry;
+	Country* attackingCountry;
+	bool playerOwnsAttackingCountry = false;
+
+	MC->getMap()->notify();
+	cout << "\nPlayer \"" << player->getPlayerName() << "\", \n\nWould you like to attack? (y/n)" << endl;
+	cin >> attackYesNo;
+
+	if (attackYesNo == 'y')
+	{
+		//check if input is valid
+		while (!playerOwnsAttackingCountry)
+		{
+			cout << "\nSelect country to attack with:" << endl;
+			if (cin.peek() == '\n') 
+			{
+				cin.ignore(1, '\n');
+			}
+			getline(cin, attackerCountry);
+
+			// iterate through all countries owned by "player"
+			for (int i = 0; i < player->countriesOwned.size(); i++)
+			{
+				// if there is a match
+				if (player->countriesOwned.at(i)->getName().compare(attackerCountry) == 0)
+				{
+					playerOwnsAttackingCountry = true;
+					break;
+				}
+			}
+
+			if (!playerOwnsAttackingCountry)
+			{
+				cout << "\nInvalid country input! You do not own that country\n" << endl;
+			}
+		}
+		
+		//PC->attack()
+	}
+}
 
 /**
 *	Fortification phase. Will give user option to enter the phase.

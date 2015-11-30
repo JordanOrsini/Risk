@@ -12,7 +12,7 @@ public:
 	void startUpPhase();
 	void runGame();
 	void reinforcementPhase(Player* player);
-	//void battlePhase();
+	void battlePhase(Player* player);
 	void fortificationPhase(Player* player);
 	//int rollDice();
 	MapController* getMC() { return MC; }
