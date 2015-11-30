@@ -46,18 +46,18 @@ void ConsoleHandler::gotoXYPrint(int x, int y, char chr)
 
 void ConsoleHandler::print(string str, int color) {
 	this->setConsoleTextAttribute(color);
-	cout << str << endl;
+	cout << str;
 }
 
 void ConsoleHandler::print(char chr, int color) {
 	this->setConsoleTextAttribute(color);
-	cout << chr << endl;
+	cout << chr;
 }
 void ConsoleHandler::print(string str) {
-	cout << str << endl;
+	cout << str;
 }
 void ConsoleHandler::print(char chr) {
-	cout << chr << endl;
+	cout << chr;
 
 }
 

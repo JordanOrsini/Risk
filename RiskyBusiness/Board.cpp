@@ -147,11 +147,10 @@ void Board::drawBorders() {
 	this->handle->gotoXYPrint(this->endX, startY, (char)(191));
 	this->handle->gotoXYPrint(startX, endY, (char)(192));
 	this->handle->gotoXYPrint(endX, endY, (char)(217));
-
 }
 
 void Board::clearBoard() {
-	system("cls");
+	this->handle->clearConsole();
 }
 
 int Board::getStartX() {
