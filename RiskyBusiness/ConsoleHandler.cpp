@@ -35,17 +35,29 @@ void ConsoleHandler::gotoXYPrint(int x, int y, string str)
 void ConsoleHandler::gotoXYPrint(int x, int y, string str, int color)
 {
 	this->gotoXY(x, y);
-	this->setConsoleTextAttribute(color);
-	cout << str;
+	this->print(str, color);
 }
 
 void ConsoleHandler::gotoXYPrint(int x, int y, char chr)
 {
 	this->gotoXY(x, y);
-	cout << chr;
+	this->print(chr);
 }
 
 void ConsoleHandler::print(string str, int color) {
+	this->setConsoleTextAttribute(color);
+	cout << str << endl;
+}
+
+void ConsoleHandler::print(char chr, int color) {
+	this->setConsoleTextAttribute(color);
+	cout << chr << endl;
+}
+void ConsoleHandler::print(string str) {
+	cout << str << endl;
+}
+void ConsoleHandler::print(char chr) {
+	cout << chr << endl;
 
 }
 

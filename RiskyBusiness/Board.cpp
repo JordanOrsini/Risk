@@ -162,7 +162,6 @@ int Board::getStartY() {
 	return startY;
 }
 
-
 Board::~Board()
 {
 }

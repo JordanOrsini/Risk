@@ -9,7 +9,7 @@
 using namespace std;
 
 /*
- This class is used to print text with color
+ This class is used to handle any console related functions
 */
 class ConsoleHandler
 {
@@ -24,7 +24,11 @@ public:
 	void gotoXYPrint(int x, int y, char chr);
 	void gotoXYPrint(int x, int y, string str);
 	void gotoXYPrint(int x, int y, string str, int color);
+	void clearConsole() { system("cls"); };
 	void print(string str, int color);
+	void print(char chr, int color);
+	void print(string str);
+	void print(char chr);
 private:
 	ConsoleHandler() {};
 	HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
