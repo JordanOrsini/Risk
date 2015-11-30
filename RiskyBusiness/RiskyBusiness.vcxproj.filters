@@ -32,6 +32,9 @@
     <ClCompile Include="SaveLoadAdapter.cpp">
       <Filter>CONTROLLERS</Filter>
     </ClCompile>
+    <ClCompile Include="ConsoleHandler.cpp">
+      <Filter>VIEWS</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Colors.h">
@@ -66,6 +69,9 @@
     </ClInclude>
     <ClInclude Include="SaveLoadAdapter.h">
       <Filter>CONTROLLERS</Filter>
+    </ClInclude>
+    <ClInclude Include="ConsoleHandler.h">
+      <Filter>VIEWS</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

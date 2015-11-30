@@ -123,6 +123,7 @@
   <ItemGroup>
     <ClInclude Include="Board.h" />
     <ClInclude Include="Colors.h" />
+    <ClInclude Include="ConsoleHandler.h" />
     <ClInclude Include="GameController.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapController.h" />
@@ -136,6 +137,7 @@
   <ItemGroup>
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="Colors.cpp" />
+    <ClCompile Include="ConsoleHandler.cpp" />
     <ClCompile Include="Driver.cpp" />
     <ClCompile Include="GameController.cpp" />
     <ClCompile Include="Map.cpp" />

@@ -36,11 +36,11 @@ void MapView::displayBoard() {
 	Player* player;
 	while (k < countries.size()) {
 		this->board->drawBoard();
-		this->board->gotoXYPrint(4, ((rowHeight) / 2) + this->board->getStartY(), "Country");
-		this->board->gotoXYPrint(4, ((rowHeight) / 2) + (rowHeight) + this->board->getStartY(), "Continent");
-		this->board->gotoXYPrint(4, ((rowHeight) / 2) + 2 * (rowHeight) + this->board->getStartY(), "Owner");
-		this->board->gotoXYPrint(4, ((rowHeight) / 2) + 3 * (rowHeight) + this->board->getStartY(), "Armies");
-		this->board->gotoXYPrint(4, ((rowHeight) / 2) + 4 * (rowHeight) + this->board->getStartY(), "Neighbors");
+		this->handle->gotoXYPrint(4, ((rowHeight) / 2) + this->board->getStartY(), "Country");
+		this->handle->gotoXYPrint(4, ((rowHeight) / 2) + (rowHeight) + this->board->getStartY(), "Continent");
+		this->handle->gotoXYPrint(4, ((rowHeight) / 2) + 2 * (rowHeight) + this->board->getStartY(), "Owner");
+		this->handle->gotoXYPrint(4, ((rowHeight) / 2) + 3 * (rowHeight) + this->board->getStartY(), "Armies");
+		this->handle->gotoXYPrint(4, ((rowHeight) / 2) + 4 * (rowHeight) + this->board->getStartY(), "Neighbors");
 
 		if (offset + numOfFillableColumns >= countries.size()) {
 			numOfFillableColumns = countries.size() - offset;
@@ -60,7 +60,7 @@ void MapView::displayBoard() {
 				country = country.substr(0, colWidth - 3) + "."; // Northwest territories will become Northwest Terr.
 			}
 			offset++;
-			this->board->gotoXYPrint(x, y, country, color);
+			this->handle->gotoXYPrint(x, y, country, color);
 			color = 10;
 		}
 		offset = k;
@@ -73,7 +73,7 @@ void MapView::displayBoard() {
 				continent = continent.substr(0, colWidth - 3) + ".";
 			}
 			offset++;
-			this->board->gotoXYPrint(x, y, continent);
+			this->handle->gotoXYPrint(x, y, continent);
 		}
 
 		// print country owner
@@ -94,7 +94,7 @@ void MapView::displayBoard() {
 				owner = owner.substr(0, (colWidth) - 3) + ".";
 			}
 			offset++;
-			this->board->gotoXYPrint(x, y, owner, color);
+			this->handle->gotoXYPrint(x, y, owner, color);
 			int color = 10;
 
 		}
@@ -108,7 +108,7 @@ void MapView::displayBoard() {
 			y = ((rowHeight / 2) - 2) + (3 * rowHeight) + this->board->getStartY();
 			armies = countries.at(offset)->getArmyCount();
 			offset++;
-			this->board->gotoXYPrint(x, y, to_string(armies));
+			this->handle->gotoXYPrint(x, y, to_string(armies));
 		}
 
 		vector<Country*> adjCountries;
@@ -125,7 +125,7 @@ void MapView::displayBoard() {
 				if (country.length() >= (colWidth - 3)) {
 					country = country.substr(0, (colWidth) - 3) + "."; // Northwest territories will become Northwest Terr.
 				}
-				this->board->gotoXYPrint(x, y, country, color);
+				this->handle->gotoXYPrint(x, y, country, color);
 				color = 10;
 				++y;
 			}
@@ -134,7 +134,7 @@ void MapView::displayBoard() {
 
 		k += numOfFillableColumns;
 		
-		this->board->gotoXYPrint(0, this->board->getHeight() + this->board->getStartY() + 2, "");	
+		this->handle->gotoXYPrint(0, this->board->getHeight() + this->board->getStartY() + 2, "");	
 	}
 }
 

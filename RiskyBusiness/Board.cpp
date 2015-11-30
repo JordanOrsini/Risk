@@ -38,8 +38,7 @@ int Board::getWidth() {
 
 void Board::drawBoard() {
 	cout.flush();
-	GetConsoleScreenBufferInfo(this->hStd, &SBInfo);
-	this->startY = SBInfo.dwCursorPosition.Y;
+	this->startY = ConsoleHandler::getInstance()->getCusrsorPosition();
 	this->endY = this->height + this->startY;
 
 	this->drawBorders();
@@ -54,22 +53,22 @@ void Board::drawBoard() {
 
 		for (int j = this->startY; j <= this->endY; j++)
 		{
-			gotoXYPrint(pos, j, (char)(179));
+			this->handle->gotoXYPrint(pos, j, (char)(179));
 		}
 		if (pos == this->startX)
 		{
-			this->gotoXYPrint(this->startX, this->startY, (char)(218));
-			this->gotoXYPrint(this->startX, this->endY, (char)(192));
+			this->handle->gotoXYPrint(this->startX, this->startY, (char)(218));
+			this->handle->gotoXYPrint(this->startX, this->endY, (char)(192));
 		}
 		else if (pos == this->endX)
 		{
-			this->gotoXYPrint(this->endX, this->startY, (char)(191));
-			this->gotoXYPrint(this->endX, this->endY, (char)(217));
+			this->handle->gotoXYPrint(this->endX, this->startY, (char)(191));
+			this->handle->gotoXYPrint(this->endX, this->endY, (char)(217));
 		}
 		else
 		{
-			this->gotoXYPrint(pos, this->startY, (char)(194));
-			this->gotoXYPrint(pos, this->endY, (char)(193));
+			this->handle->gotoXYPrint(pos, this->startY, (char)(194));
+			this->handle->gotoXYPrint(pos, this->endY, (char)(193));
 		}
 	}
 
@@ -83,7 +82,7 @@ void Board::drawBoard() {
 
 		for (int j = this->startX; j <= this->endX; j++)
 		{
-			this->gotoXYPrint(j, pos, (char)(196));
+			this->handle->gotoXYPrint(j, pos, (char)(196));
 
 			int xpos = this->startX;
 			for (int k = 0; k < this->numCols; k++)
@@ -91,7 +90,7 @@ void Board::drawBoard() {
 				xpos += this->colWidth;
 				if (xpos == j)
 				{
-					this->gotoXY(xpos, pos);
+					this->handle->gotoXY(xpos, pos);
 					if (pos == this->endY)
 					{
 						cout << (char)(193);
@@ -110,22 +109,22 @@ void Board::drawBoard() {
 		}
 		if (pos == this->startY)
 		{
-			this->gotoXYPrint(this->startX, this->startY, (char)(218));
-			this->gotoXYPrint(this->endX, this->startY, (char)(191));
+			this->handle->gotoXYPrint(this->startX, this->startY, (char)(218));
+			this->handle->gotoXYPrint(this->endX, this->startY, (char)(191));
 		}
 		else if (pos == this->endY)
 		{
-			this->gotoXYPrint(this->startX, this->endY, (char)(192));
-			this->gotoXYPrint(this->endX, this->endY, (char)(217));
+			this->handle->gotoXYPrint(this->startX, this->endY, (char)(192));
+			this->handle->gotoXYPrint(this->endX, this->endY, (char)(217));
 		}
 		else
 		{
-			this->gotoXYPrint(this->startX, pos, (char)(195));
-			this->gotoXYPrint(this->endX, pos, (char)(180));
+			this->handle->gotoXYPrint(this->startX, pos, (char)(195));
+			this->handle->gotoXYPrint(this->endX, pos, (char)(180));
 		}
 	}
 	
-	this->gotoXYPrint(0, this->endY + 2, "");
+	this->handle->gotoXYPrint(0, this->endY + 2, "");
 
 }
 
@@ -133,21 +132,21 @@ void Board::drawBorders() {
 	//Horizontal lines
 	for (int i = this->startX; i <= this->endX; i++)
 	{
-		gotoXYPrint(i, this->startY, (char)(196));
-		gotoXYPrint(i, this->endY, (char)(196));
+		this->handle->gotoXYPrint(i, this->startY, (char)(196));
+		this->handle->gotoXYPrint(i, this->endY, (char)(196));
 	}
 	//Vertical lines
 	for (int i = this->startY; i <= this->endY; i++)
 	{
-		gotoXYPrint(this->startX, i, (char)(179));
-		gotoXYPrint(this->endX, i, (char)(179));
+		this->handle->gotoXYPrint(this->startX, i, (char)(179));
+		this->handle->gotoXYPrint(this->endX, i, (char)(179));
 	}
 
 	//Missing characters at the corners of the borders
-	gotoXYPrint(this->startX, this->startY, (char)(218));
-	gotoXYPrint(this->endX, startY, (char)(191));
-	gotoXYPrint(startX, endY, (char)(192));
-	gotoXYPrint(endX, endY, (char)(217));
+	this->handle->gotoXYPrint(this->startX, this->startY, (char)(218));
+	this->handle->gotoXYPrint(this->endX, startY, (char)(191));
+	this->handle->gotoXYPrint(startX, endY, (char)(192));
+	this->handle->gotoXYPrint(endX, endY, (char)(217));
 
 }
 
@@ -163,31 +162,6 @@ int Board::getStartY() {
 	return startY;
 }
 
-void Board::gotoXY(int x, int y)
-{
-	COORD ord;
-	ord.X = x;
-	ord.Y = y;
-	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), ord);
-}
-
-void Board::gotoXYPrint(int x, int y, string str)
-{
-	this->gotoXYPrint(x, y, str, 10);
-}
-
-void Board::gotoXYPrint(int x, int y, string str, int color)
-{
-	this->gotoXY(x, y);
-	SetConsoleTextAttribute(this->hStd, color);
-	cout << str;
-}
-
-void Board::gotoXYPrint(int x, int y, char chr)
-{
-	this->gotoXY(x, y);
-	cout << chr;
-}
 
 Board::~Board()
 {

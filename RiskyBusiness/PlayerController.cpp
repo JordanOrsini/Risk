@@ -15,7 +15,7 @@ void PlayerController::addPlayerToGame(int numOfPlayers) {
 	string playerName;
 	Player* player;
 	for (int i = 0; i < numOfPlayers; i++) {
-		cout << "What is the player's name?" << endl;
+		cout << "What is the player " << i + 1 <<"'s name?" << endl;
 		cin >> playerName;
 		player = new Player(playerName);
 		player->setColor(colors.assignNewColor());

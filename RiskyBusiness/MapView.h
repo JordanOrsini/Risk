@@ -2,6 +2,7 @@
 #include "Board.h"
 #include "Observer.h"
 #include "GameController.h"
+#include "ConsoleHandler.h"
 
 class MapView: public Observer
 {
@@ -22,5 +23,6 @@ private:
 	Board* board;
 	MapController* mapC;
 	GameController* gameC;
+	ConsoleHandler* handle = ConsoleHandler::getInstance();
 };
 

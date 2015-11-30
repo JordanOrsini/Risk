@@ -39,7 +39,7 @@ void GameController::startUpPhase() {
 	{
 		cout << "\n\nHow many players will be playing?" << endl;
 		cin >> numOfPlayers;
-		if (numOfPlayers > MC->getMap()->allCountries.size() || cin.fail() || numOfPlayers == 0)
+		if (numOfPlayers > MC->getMap()->allCountries.size() || cin.fail() || numOfPlayers <= 1)
 		{
 			cout << "Invalid number of players" << endl;
 			cin.clear();
