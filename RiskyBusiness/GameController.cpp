@@ -89,7 +89,7 @@ void GameController::reinforcementPhase(Player* player) {
 void GameController::battlePhase(Player* player) 
 {
 	// Whole function should be contained in while loop becuase you can attack as many times as you want
-
+	
 	// CHECK 1: Ask player if they want to attack
 	//		-if no, break; 
 
@@ -153,10 +153,9 @@ void GameController::fortificationPhase(Player* player)
 		{
 
 			MC->getMap()->notify();
-			cout << "\nFortification phase for player \""; 
-			handle->print(player->getPlayerName(), player->getColor());
-			cout << "\"," << endl << endl;
-			cout << "Select a country to move troops from: " << endl << endl;
+			cout << "\nFortification phase for "; 
+			handle->print("player \"" + player->getPlayerName() + "\"", player->getColor());
+			cout << "\nSelect a country to move troops from: " << endl << endl;
 
 			if (cin.peek() == '\n') {
 				cin.ignore(1, '\n');

@@ -2,6 +2,9 @@
 #include "MapView.h"
 
 int main() {
+
+	srand(time(0)); //needed to randomize numbers
+
 	// Make sure to set your console screen size to full screen
 
 	system("COLOR 0A"); // green on black
