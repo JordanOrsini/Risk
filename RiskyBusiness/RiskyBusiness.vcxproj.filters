@@ -80,6 +80,9 @@
     <ClInclude Include="LogStartup.h" />
     <ClInclude Include="LogDecorator.h" />
     <ClInclude Include="Logger.h" />
+    <ClInclude Include="Deck.h">
+      <Filter>MODELS</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="MODELS">

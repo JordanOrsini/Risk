@@ -5,6 +5,7 @@
 #include "ConsoleHandler.h"
 #include "LogStartup.h"
 #include "Logger.h"
+#include "Deck.h"
 #include <cstdlib>
 #include <ctime>
 
@@ -20,6 +21,9 @@ public:
 	//int rollDice();
 	MapController* getMC() { return MC; }
 	PlayerController* getPC() { return PC; }
+
+	// Let the deck be available to everyone
+	Deck deck; 
 
 private:
 	int getNumOfPlayers();
