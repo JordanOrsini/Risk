@@ -3,6 +3,8 @@
 #include "MapController.h"
 #include "PlayerController.h"
 #include "ConsoleHandler.h"
+#include "LogStartup.h"
+#include "Logger.h"
 #include <cstdlib>
 #include <ctime>
 
@@ -20,6 +22,10 @@ public:
 	PlayerController* getPC() { return PC; }
 
 private:
+	int getNumOfPlayers();
+	void assignCountries(vector<Player*> players);
+	void placeTroops(vector<Player*> players);
+	Country* findCountry(string country, vector<Country*> countries);
 	ConsoleHandler* handle = ConsoleHandler::getInstance();
 	MapController* MC;
 	PlayerController* PC;

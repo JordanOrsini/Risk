@@ -8,7 +8,7 @@ using namespace std;
 /*
 Log decorator interface
 */
-class ILog
+class ILog: public Observer
 {
 public:
 	ILog() {};
@@ -17,6 +17,7 @@ public:
 	int getStartupTroopsAdded() { return this->startupTroopsAdded; };
 	string getCountry() { return this->country; };
 	virtual void displayLog() = 0;
+	virtual void update() = 0;
 private:
 	int startupTroopsAdded;
 	string country;

@@ -18,6 +18,7 @@ MapView::MapView(GameController* gameC)
 	this->rowHeight = this->board->getRowHeight();
 	this->colWidth = this->board->getColumnWidth();
 	mapC->getMap()->attach(this);
+	mapC->getMap()->notify();
 }
 
 void MapView::update() {

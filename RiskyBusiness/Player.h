@@ -3,6 +3,8 @@
 #include <string>
 #include <vector>
 #include "Map.h"
+#include "Subject.h"
+
 using namespace std;
 
 class Player {
@@ -19,9 +21,11 @@ public:
 	int getArmyCountByCountry(Country* country);
 	int getContinentBonus(Map* map);
 	bool checkCountryHasNeighborsUOwn(Country* country);
+	Subject* getLogSubject() { return this->logSubject; };
 	vector<Country*> countriesOwned;
 	
 private:
 	string playerName;
+	Subject* logSubject;
 	int color;
 };

@@ -12,7 +12,6 @@ void Subject::notify() {
 
 void Subject::attach(Observer* o) {
 	observers->push_back(o);
-	notify();
 }
 
 void Subject::detatch(Observer* o) {

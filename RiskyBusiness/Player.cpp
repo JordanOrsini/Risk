@@ -1,15 +1,17 @@
 #include "Player.h"
 
 Player::Player() {
+	this->logSubject = new Subject();
 
 }
 
 Player::Player(string playerName) {
 	this->playerName = playerName;
+	this->logSubject = new Subject();
 }
 
 Player::~Player() {
-
+	delete this->logSubject;
 }
 
 bool Player::iOwnCountry(Country *country) {
