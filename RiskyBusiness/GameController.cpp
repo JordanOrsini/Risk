@@ -50,20 +50,15 @@ void GameController::runGame() {
 */
 void GameController::startUpPhase() {
 	this->assignCountries();
-	// TO-DO: ask for user-saved file and load
-	const double ARMY_MULTIPLIER = 1.5;
-	vector<Country*> allCountries = MC->getMap()->allCountries;
-	int numOfPlayers = PC->getPlayerList().size();
-	int startingArmies = (int)((allCountries.size() / numOfPlayers) * ARMY_MULTIPLIER);
 
 	//START OF STARTUP TROOPS PLACEMENT
 	Player* currentPlayer;
+	int numOfPlayers = PC->getPlayerList().size();
 	MC->getMap()->notify();
 	for (int i = 0; i < numOfPlayers; i++)
 	{
 		currentPlayer = PC->getPlayerList().at(i);
-		vector<Country*> ownedCountries = currentPlayer->countriesOwned;
-		int remainingStartupTroops = startingArmies - ownedCountries.size();
+		int remainingStartupTroops = this->getStartingArmies(currentPlayer->countriesOwned);
 		addTroopsToCountry(currentPlayer, remainingStartupTroops, "remaining");
 
 		PC->nextTurn();
@@ -83,16 +78,8 @@ void GameController::reinforcementPhase(Player* player) {
 	*	Will check to see if this country name is in the vector. If found will ask for reinforcements to add.
 	*	If value is valid (not more than reinforcements allowed) will add this value to current armies existing on the country.
 	*/
-	int numberOfCountriesOwned = player->countriesOwned.size();
-
-	int reinforcements = numberOfCountriesOwned / 3;
-
-	if (reinforcements < 3) {
-		reinforcements = 3;
-	}
-	reinforcements += player->getContinentBonus(MC->getMap());
-
-	addTroopsToCountry(player, reinforcements, "reinforments");	
+	
+	addTroopsToCountry(player, this->getReinforcmentTroops(player), "reinforments");	
 	
 }
 
@@ -362,8 +349,26 @@ void GameController::addTroopsToCountry(Player* player, int numOfTroops, string 
 	}
 }
 
-int GameController::getStartingArmies() {
-	return 0;
+int GameController::getStartingArmies(vector<Country*> ownedCountries) {
+	const double ARMY_MULTIPLIER = 1.5;
+	vector<Country*> allCountries = MC->getMap()->allCountries;
+	int numOfPlayers = PC->getPlayerList().size();
+	int startingArmies = (int)((allCountries.size() / numOfPlayers) * ARMY_MULTIPLIER);
+
+	return startingArmies - ownedCountries.size();
+}
+
+int GameController::getReinforcmentTroops(Player* player) {
+	int numberOfCountriesOwned = player->countriesOwned.size();
+
+	int reinforcements = numberOfCountriesOwned / 3;
+
+	if (reinforcements < 3) {
+		reinforcements = 3;
+	}
+	reinforcements += player->getContinentBonus(MC->getMap());
+
+	return reinforcements;
 }
 
 Country* GameController::findCountry(string country, vector<Country*> countries) {
