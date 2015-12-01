@@ -124,6 +124,7 @@
     <ClInclude Include="Board.h" />
     <ClInclude Include="Colors.h" />
     <ClInclude Include="ConsoleHandler.h" />
+    <ClInclude Include="Deck.h" />
     <ClInclude Include="GameController.h" />
     <ClInclude Include="ILog.h" />
     <ClInclude Include="LogDecorator.h" />
