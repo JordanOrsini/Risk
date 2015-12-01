@@ -88,34 +88,34 @@ void GameController::reinforcementPhase(Player* player) {
 */
 void GameController::battlePhase(Player* player) 
 {
-	char attackYesNo;
-	Country* attackingCountry;
-	bool playerOwnsAttackingCountry = false;
+	// Whole function should be contained in while loop becuase you can attack as many times as you want
 
-	cout << "\nPlayer \"";
-	handle->print(player->getPlayerName(), player->getColor());
-	cout <<"\", \n\nWould you like to attack? (y/n)" << endl;
-	cin >> attackYesNo;
-	Country* attackerCountry;
-	if (attackYesNo == 'y')
-	{
-		//check if input is valid
-		while (true)
-		{
-			cout << "\nSelect country to attack with:" << endl;
-			if (cin.peek() == '\n') 
-			{
-				cin.ignore(1, '\n');
-			}
-			string strAttackerCountry;
-			getline(cin, strAttackerCountry);
-			attackerCountry = this->findCountry(strAttackerCountry, player->countriesOwned);
-			if (attackerCountry != nullptr)
-				break;
-		}
-		
-		//PC->attack()
-	}
+	// CHECK 1: Ask player if they want to attack
+	//		-if no, break; 
+
+	// CHECK 2: Can you even attack a country?
+	//			- Must have country that has at least 2 armies adjacent to another player's country
+	//			- Check should be a function that returns a boolean
+	//		- If no, break; 
+
+	
+	// While (1)
+	//	 - Player chooses country to attack from
+	//	 - Choose number of armies (Max 3, min 1)
+	//   - Player chooses country to attack
+	//	 - Other player chooses number of defending armies (min 1, max 2)
+	//	 - CHECK 3: Is this a valid choice?
+	//	IF choice is valid, break; 
+
+	// Actual attack! Roll dice for each player, result of armies, etc. 
+
+	//Result: 
+	//	- Did you win the territory? If yes, move all attacking troops
+	//		- Did the attacked player lose the game? If yes get thier cards
+
+	//Ask player if they want to continue battling
+	// - If no, break; 
+
 }
 
 /**
