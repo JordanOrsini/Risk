@@ -23,8 +23,10 @@ public:
 
 private:
 	int getNumOfPlayers();
-	void assignCountries(vector<Player*> players);
-	void placeTroops(vector<Player*> players);
+	void assignCountries();
+	void addTroopsToCountry(Player* player, int numOfTroops, string str);
+	int getStartingArmies();
+	int getReinforcmentTroops();
 	Country* findCountry(string country, vector<Country*> countries);
 	ConsoleHandler* handle = ConsoleHandler::getInstance();
 	MapController* MC;

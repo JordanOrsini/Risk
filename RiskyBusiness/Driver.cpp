@@ -13,8 +13,6 @@ int main() {
 
 	MapView* mapView = new MapView(GC);
 
-	GC->startUpPhase();
-
 	GC->runGame();
 
 }
