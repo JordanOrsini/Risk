@@ -88,6 +88,163 @@ void GameController::reinforcementPhase(Player* player) {
 */
 void GameController::battlePhase(Player* player) 
 {
+	while (true)
+	{
+		string enterBattle;
+		string attackFrom;
+		bool battleOwnsCountry = false;
+		bool battleHasEnoughTroops = false;
+		int battleCountryIndex = 0;
+		int attackTargetIndex = 0;
+		string attackTo;
+		bool attackTargetValid = false;
+		int attackAmount = 0;
+		int defendAmount = 0;
+		bool countryTakeover = false;
+		int attackerTroopsLost = 0;
+		
+		cout << "Player \"";
+		handle->print(player->getPlayerName(), player->getColor());
+		cout << "\", enter attack phase? (y/n) ";
+		
+		if (cin.peek() == '\n')
+		{
+			cin.ignore(1, '\n');
+		}
+		getline(cin, enterBattle);
+
+		if (enterBattle == "y" || enterBattle == "Y")
+		{
+			cout << "\nPlayer \"";
+			handle->print(player->getPlayerName(), player->getColor());
+			cout << "\", select country to attack from: (country must have more than one army)" << endl << endl;
+			
+			if (cin.peek() == '\n')
+			{
+				cin.ignore(1, '\n');
+			}
+			getline(cin, attackFrom);
+
+
+
+			//Check 1 (player owns attackFrom)
+			for (int i = 0; i < player->countriesOwned.size(); i++)
+			{
+				if (attackFrom == player->countriesOwned.at(i)->getName())
+				{
+					battleOwnsCountry = true;
+					battleCountryIndex = i;
+				}
+			}
+
+			//Check 2 (player has more than 1 army on attackFrom)
+			if (player->countriesOwned.at(battleCountryIndex)->getArmyCount() > 1)
+			{
+				battleHasEnoughTroops = true;
+			}
+
+			//If both checks are passed.
+			if (battleOwnsCountry && battleHasEnoughTroops)
+			{
+
+				while (true)
+				{
+					cout << "\nPlayer \"";
+					handle->print(player->getPlayerName(), player->getColor());
+					cout << "\", select country to attack: (country must be adjacent to attacking country)" << endl << endl;
+
+					if (cin.peek() == '\n')
+					{
+						cin.ignore(1, '\n');
+					}
+					getline(cin, attackTo);
+
+					//Check 1 see if attackTo is adjacent to attackFrom
+					for (int i = 0; i < player->countriesOwned.at(battleCountryIndex)->adjacentCountries.size(); i++)
+					{
+						//If attack target selected is adjacent to attacking country (attack is valid)
+						if (attackTo == player->countriesOwned.at(battleCountryIndex)->adjacentCountries.at(i)->getName())
+						{
+							attackTargetValid = true;
+							attackTargetIndex = i;
+						}
+					}
+
+					if (attackTargetValid)
+					{
+						cout << "\nPlayer \"";
+						handle->print(player->getPlayerName(), player->getColor());
+						cout << "\", select 1-3 armies to attack with: (" << player->countriesOwned.at(battleCountryIndex)->getArmyCount() << " armies, " << player->countriesOwned.at(battleCountryIndex)->getArmyCount()-1 << " available to attack)" << endl << endl;
+						cin >> attackAmount;
+
+						//Error message if invalid armies is input for attacker(must be an integer 1-3, provided player has enough armies available(must leave at least one army behind))
+						while (attackAmount > player->countriesOwned.at(battleCountryIndex)->getArmyCount() - 1 || attackAmount < 1 || attackAmount > 3)
+						{
+							cout << "\nInvalid input, must select a value between 1-3: (" << player->countriesOwned.at(battleCountryIndex)->getArmyCount() - 1 << " available armies to attack)" << endl << endl;
+							cin >> attackAmount;
+						}
+
+						cout << "\nPlayer \"";
+						handle->print(player->countriesOwned.at(battleCountryIndex)->adjacentCountries.at(attackTargetIndex)->owner->getPlayerName(), player->countriesOwned.at(battleCountryIndex)->adjacentCountries.at(attackTargetIndex)->owner->getColor());
+						cout << "\", select 1-2 armies to defend with: (" << player->countriesOwned.at(battleCountryIndex)->adjacentCountries.at(attackTargetIndex)->getArmyCount() << " armies available)" << endl << endl;
+						cin >> defendAmount;
+
+						//Error message of invalid armies is input for defender (must be an integer 1-2, provided player has enough armies available)
+						while (defendAmount < 1 || defendAmount > 2 || defendAmount > player->countriesOwned.at(battleCountryIndex)->adjacentCountries.at(attackTargetIndex)->getArmyCount())
+						{
+							cout << "\nInvalid input, must select a value betweeen 1-2: (" << player->countriesOwned.at(battleCountryIndex)->adjacentCountries.at(attackTargetIndex)->getArmyCount() << " available armies to defend)" << endl << endl;
+							cin >> defendAmount;
+						}
+
+
+						//insert dice roll section here
+						//
+						//
+						//
+						//
+
+
+
+
+						//if player successfully takes over country
+						if (countryTakeover)
+						{
+
+						}
+
+						
+					}
+
+				}
+					
+
+
+
+
+
+
+
+
+
+
+			}
+
+
+			
+
+
+
+
+
+
+
+		}
+		else
+		{
+			break;
+		}
+	}
+	
 	// Whole function should be contained in while loop becuase you can attack as many times as you want
 	
 	// CHECK 1: Ask player if they want to attack
