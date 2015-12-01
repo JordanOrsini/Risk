@@ -31,6 +31,7 @@ private:
 	void addTroopsToCountry(Player* player, int numOfTroops, string str);
 	int getStartingArmies(vector<Country*> ownedCountries);
 	int getReinforcmentTroops(Player* player);
+	int getVictoryCardReinforcements(Player* player); 
 	Country* findCountry(string country, vector<Country*> countries);
 	ConsoleHandler* handle = ConsoleHandler::getInstance();
 	MapController* MC;

@@ -58,3 +58,14 @@ bool Player::checkCountryHasNeighborsUOwn(Country* country)
 	}
 	return false; 
 }
+
+void Player::getCard(Card* card)
+{
+	hand.push_back(card); 
+}
+
+void Player::disCard(int index)
+{
+	index--; 
+	hand.erase(hand.begin() + index); // Erases hand[index+1]
+}

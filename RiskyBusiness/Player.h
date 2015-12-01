@@ -4,6 +4,7 @@
 #include <vector>
 #include "Map.h"
 #include "Subject.h"
+#include "Deck.h"
 
 using namespace std;
 
@@ -23,6 +24,11 @@ public:
 	bool checkCountryHasNeighborsUOwn(Country* country);
 	Subject* getLogSubject() { return this->logSubject; };
 	vector<Country*> countriesOwned;
+
+	// Victory card
+	vector<Card *> hand; 
+	void getCard(Card* card); 
+	void disCard(int index); 
 	
 private:
 	string playerName;

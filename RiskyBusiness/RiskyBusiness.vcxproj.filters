@@ -38,6 +38,9 @@
     <ClCompile Include="LogStartup.cpp" />
     <ClCompile Include="LogDecorator.cpp" />
     <ClCompile Include="Logger.cpp" />
+    <ClCompile Include="Deck.cpp">
+      <Filter>MODELS</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Colors.h">

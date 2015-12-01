@@ -354,7 +354,121 @@ int GameController::getReinforcmentTroops(Player* player) {
 	}
 	reinforcements += player->getContinentBonus(MC->getMap());
 
+	// Get reinforcements from victory cards, if any
+	reinforcements += getVictoryCardReinforcements(player); 
+
 	return reinforcements;
+}
+
+int GameController::getVictoryCardReinforcements(Player* player) {
+
+	// Variables for user input
+	char Input;
+	int card1, card2, card3;
+
+	// Variables to store card type
+	int cardType1, cardType2, cardType3;
+
+	// Print out list of player's victory cards
+	handle->print(player->getPlayerName() + " has the following cards:\n\t", player->getColor());
+	for (int i = 0; i < player->hand.size(); i++)
+	{
+		handle->print(i + ":" + player->hand[i]->getTypeName() + " ", player->getColor());
+	}
+	cout << endl;
+
+	// Ask player if they want to use cards
+	handle->print("\nWould you like to exchange victory cards for reinforcements?\nEnter 'y' for yes and anything else for no", player->getColor());
+
+	cin >> Input;
+	if (Input == 'y' || Input == 'Y')
+	{
+		while (1)
+		{
+			handle->print("Please enter each of the indexes (followed by enter) of the cards you wish to exchange: ", player->getColor());
+			cin >> card1;
+			cin >> card2;
+			cin >> card3;
+
+			// Use the cards
+			//		-Check that they exist
+			//		-No duplicates
+			if (card1 >= 0 && card1 < player->hand.size()
+				&& card1 >= 0 && card2 < player->hand.size()
+				&& card1 >= 0 && card1 < player->hand.size()  // Cards are in bounds
+				&& card1 != card2 && card1 != card3
+				&& card2 != card3)							  // No duplicates
+			{
+				cardType1 = player->hand[card1]->getTypeIntValue();
+				cardType2 = player->hand[card2]->getTypeIntValue();
+				cardType3 = player->hand[card3]->getTypeIntValue();
+
+				// Now check that the three are valid (three of a kind or 1 of each)
+				if (cardType1 == cardType2 && cardType1 == cardType3)								// Three of a kind
+				{
+					// Delete three cards of cardType
+					for (int j = 0; j < 3; j++)
+					{
+						for (int k = 0; k < player->hand.size(); k++)
+						{
+							if (player->hand[k]->getTypeIntValue() == cardType1)
+							{
+								player->disCard(k);
+								break;
+							}
+						}
+					}
+					return 5;
+				}
+				else if (cardType1 != cardType2 && cardType1 != cardType3 && cardType2 != cardType3) // One of each
+				{
+					// Delete three cards of different cardTypes
+					for (int k = 0; k < player->hand.size(); k++)
+					{
+						if (player->hand[k]->getTypeIntValue() == cardType1)
+						{
+							player->disCard(k);
+							break;
+						}
+					}
+					for (int k = 0; k < player->hand.size(); k++)
+					{
+						if (player->hand[k]->getTypeIntValue() == cardType2)
+						{
+							player->disCard(k);
+							break;
+						}
+					}
+					for (int k = 0; k < player->hand.size(); k++)
+					{
+						if (player->hand[k]->getTypeIntValue() == cardType3)
+						{
+							player->disCard(k);
+							break;
+						}
+					}
+					return 5;
+				}
+				else
+				{
+					// Not valid
+					handle->print("The selection was not valid. You must choose \"three of a kind\" or \"one of each\"\n", player->getColor());
+					handle->print("\nTry again? Enter 'y' for yes and anything else for no", player->getColor());
+					cin >> Input;
+					if (Input == 'y' || Input == 'Y')
+					{ // Will loop again
+					}
+					else
+						break;
+				}
+			}
+			else
+				handle->print("There was an error with the selection, either indexes were duplicate or do not exist\n", player->getColor());
+
+
+		}
+	}
+	return 0; 
 }
 
 Country* GameController::findCountry(string country, vector<Country*> countries) {

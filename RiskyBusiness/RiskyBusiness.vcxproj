@@ -143,6 +143,7 @@
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="Colors.cpp" />
     <ClCompile Include="ConsoleHandler.cpp" />
+    <ClCompile Include="Deck.cpp" />
     <ClCompile Include="Driver.cpp" />
     <ClCompile Include="GameController.cpp" />
     <ClCompile Include="LogDecorator.cpp" />
