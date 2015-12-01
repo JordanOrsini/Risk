@@ -89,7 +89,6 @@ void GameController::reinforcementPhase(Player* player) {
 void GameController::battlePhase(Player* player) 
 {
 	char attackYesNo;
-	string attackerCountry;
 	Country* attackingCountry;
 	bool playerOwnsAttackingCountry = false;
 
@@ -97,34 +96,22 @@ void GameController::battlePhase(Player* player)
 	handle->print(player->getPlayerName(), player->getColor());
 	cout <<"\", \n\nWould you like to attack? (y/n)" << endl;
 	cin >> attackYesNo;
-
+	Country* attackerCountry;
 	if (attackYesNo == 'y')
 	{
 		//check if input is valid
-		while (!playerOwnsAttackingCountry)
+		while (true)
 		{
 			cout << "\nSelect country to attack with:" << endl;
 			if (cin.peek() == '\n') 
 			{
 				cin.ignore(1, '\n');
 			}
-			getline(cin, attackerCountry);
-
-			// iterate through all countries owned by "player"
-			for (int i = 0; i < player->countriesOwned.size(); i++)
-			{
-				// if there is a match
-				if (player->countriesOwned.at(i)->getName().compare(attackerCountry) == 0)
-				{
-					playerOwnsAttackingCountry = true;
-					break;
-				}
-			}
-
-			if (!playerOwnsAttackingCountry)
-			{
-				cout << "\nInvalid country input! You do not own that country\n" << endl;
-			}
+			string strAttackerCountry;
+			getline(cin, strAttackerCountry);
+			attackerCountry = this->findCountry(strAttackerCountry, player->countriesOwned);
+			if (attackerCountry != nullptr)
+				break;
 		}
 		
 		//PC->attack()
