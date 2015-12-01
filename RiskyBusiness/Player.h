@@ -24,6 +24,7 @@ public:
 	bool checkCountryHasNeighborsUOwn(Country* country);
 	Subject* getLogSubject() { return this->logSubject; };
 	vector<Country*> countriesOwned;
+	void attack();
 
 	// Victory card
 	vector<Card *> hand; 
