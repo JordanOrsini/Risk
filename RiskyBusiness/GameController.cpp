@@ -369,6 +369,13 @@ int GameController::getVictoryCardReinforcements(Player* player) {
 	// Variables to store card type
 	int cardType1, cardType2, cardType3;
 
+	// Don't even bother if player has less than three cards
+	if (player->hand.size() < 3) {
+		handle->print(player->getPlayerName() + " does not have enough victory cards to exchange for reinforcements. Victory card bonus = 0\n", player->getColor());
+		return 0;
+	}
+		
+
 	// Print out list of player's victory cards
 	handle->print(player->getPlayerName() + " has the following cards:\n\t", player->getColor());
 	for (int i = 0; i < player->hand.size(); i++)
