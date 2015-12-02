@@ -85,6 +85,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -113,6 +114,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -126,10 +128,7 @@
     <ClInclude Include="ConsoleHandler.h" />
     <ClInclude Include="Deck.h" />
     <ClInclude Include="GameController.h" />
-    <ClInclude Include="ILog.h" />
     <ClInclude Include="LogDecorator.h" />
-    <ClInclude Include="Logger.h" />
-    <ClInclude Include="LogStartup.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapController.h" />
     <ClInclude Include="MapView.h" />
@@ -148,8 +147,6 @@
     <ClCompile Include="Driver.cpp" />
     <ClCompile Include="GameController.cpp" />
     <ClCompile Include="LogDecorator.cpp" />
-    <ClCompile Include="Logger.cpp" />
-    <ClCompile Include="LogStartup.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapController.cpp" />
     <ClCompile Include="MapView.cpp" />

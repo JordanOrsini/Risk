@@ -3,8 +3,7 @@
 #include "MapController.h"
 #include "PlayerController.h"
 #include "ConsoleHandler.h"
-#include "LogStartup.h"
-#include "Logger.h"
+#include "LogDecorator.h"
 #include "Deck.h"
 #include <cstdlib>
 #include <ctime>
@@ -34,7 +33,10 @@ private:
 	int getVictoryCardReinforcements(Player* player); 
 	Country* findCountry(string country, vector<Country*> countries);
 	ConsoleHandler* handle = ConsoleHandler::getInstance();
+	ILog* getLogger(Player* player);
+	ILog* logger;
 	MapController* MC;
 	PlayerController* PC;
 	Deck* myDeck;
+	Subject* logSubject;
 };

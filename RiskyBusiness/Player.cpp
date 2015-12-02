@@ -1,18 +1,14 @@
 #include "Player.h"
 
 Player::Player() {
-	this->logSubject = new Subject();
-
 }
 
 Player::Player(string playerName) {
 	this->playerName = playerName;
-	this->logSubject = new Subject();
 	this->setStrategy(new UserStrategy());
 }
 
 Player::~Player() {
-	delete this->logSubject;
 }
 
 bool Player::iOwnCountry(Country *country) {
@@ -175,5 +171,7 @@ void Player::takeOver(Country* attack, Country* defend)
 }
 
 
-
-
+void Player::setLogMessage(string logMessage) {
+	this->logMessage = logMessage;
+	this->notify();
+}

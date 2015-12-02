@@ -1,4 +1,5 @@
 #include "GameController.h"
+#include <algorithm>
 
 /// Default constructor
 GameController::GameController() {
@@ -9,9 +10,9 @@ GameController::GameController() {
 /// Destructor 
 GameController::~GameController() {
 	delete MC;
-	MC = NULL;
 	delete PC;
-	PC = NULL;
+	delete logger;
+	delete logSubject;
 }
 
 
@@ -351,10 +352,6 @@ void GameController::addTroopsToCountry(Player* player, int numOfTroops, string 
 		selectedCountry->setArmyCount(selectedCountry->getArmyCount() + troopsToAdd);
 
 		MC->getMap()->notify();
-		/* ILog* logger = new LogStartup(new Logger());
-		logger->setCountry(PC->getPlayerList().at(i)->countriesOwned.at(startupCountryIndex)->getName());
-		logger->setStartupTroopsAdded(startupTroopsToAdd)
-		PC->getPlayerList().at(i)->getLogSubject()->attach(logger); */
 
 		cout << troopsToAdd << " troops were added successfully to " << selectedCountry->getName() << "." << endl << endl;
 	}
@@ -511,4 +508,52 @@ Country* GameController::findCountry(string country, vector<Country*> countries)
 	}
 
 	return nullptr;
+}
+
+ILog* GameController::getLogger(Player* player) {
+	vector<int> choices;
+
+	while (choices.size() < 2) {
+		handle->print(player->getPlayerName(), player->getColor());
+		cout << ", select logging options from the following list: \n";
+		cout << "\t1. Timestamped logs\n";
+		cout << "\t2. Player name\n";
+		cout << "\t3. Done\n";
+
+		int choice;
+		cin >> choice;
+
+		if (choice > 3 || choice < 1) {
+			cout << "Invalid input. Try again.\n";
+			continue;
+		}
+
+		if (find(choices.begin(), choices.end(), choice) != choices.end()) {
+			cout << "Choice already considered.\n";
+			continue;
+		}
+
+		if (choice == 3) {
+			break;
+		}
+		choices.push_back(choice);
+		cout << "Choice " << choice << " registerd.\n";
+	}
+
+	sort(choices.begin(), choices.end());
+
+	ILog* log = new Logger(player);
+	for (int i = 0; i < choices.size(); i++) {
+		switch (choices.at(i)) {
+		case 1:
+			log = new LogTimestamp(log);
+			break;
+		case 2:
+			log = new LogPlayerName(log);
+			break;
+		}
+	}
+
+	return log;
+	
 }

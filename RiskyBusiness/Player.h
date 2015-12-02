@@ -4,6 +4,7 @@
 #include <vector>
 #include "Map.h"
 #include "Subject.h"
+#include "LogDecorator.h"
 #include "Deck.h"
 #include "ConsoleHandler.h"
 
@@ -17,12 +18,13 @@ public:
 	string name;
 };
 
-class Player {
+class Player: public Subject {
 public:
 	Player();
 	Player(string playerName);
 	~Player();
 	string getPlayerName() { return playerName; };
+	void setLogMessage(string logMessage);
 	int getColor() { return color; };
 	void setColor(int color) { this->color = color; };
 	void setOwnsCountry(Country *country) { countriesOwned.push_back(country); country->owner = this; }
@@ -31,7 +33,6 @@ public:
 	int getArmyCountByCountry(Country* country);
 	int getContinentBonus(Map* map);
 	bool checkCountryHasNeighborsUOwn(Country* country);
-	Subject* getLogSubject() { return this->logSubject; };
 	vector<Country*> countriesOwned;
 	bool alive = true;
 	void takeOver(Country* attack, Country* defend);
@@ -50,10 +51,11 @@ public:
 	
 private:
 	string playerName;
-	Subject* logSubject;
+	string logMessage;
+	friend class Logger;
 	int color;
 	Strategy* strategy; 
-	Deck deck; 
+	Deck deck;
 };
 
 
