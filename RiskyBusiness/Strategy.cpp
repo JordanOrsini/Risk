@@ -441,6 +441,10 @@ void AggressiveStrategy::attack(Player* player)
 	Country* defend;
 	int attackAmount = 0; 
 	int defendAmount = 0; 
+	int attackerTroopsLost = 0;
+	int defenderTroopsLost = 0; 
+	bool alreadyHasCard = false;
+
 
 	//loop until no more countries fit attack description
 	while (1) {
@@ -472,10 +476,43 @@ void AggressiveStrategy::attack(Player* player)
 			attackAmount = attack->getArmyCount() - 1; 
 			if (attackAmount > 3)
 				attackAmount = 3; 
+			cout << "\nPlayer \"";
+			handle->print(attack->owner->getPlayerName() + " chooses to attack with " + attackAmount + " armies.", attack->owner->getColor());
 
 			// STEP 2.2: Get defender army count
+			cout << "\nPlayer \"";
+			handle->print(defend->owner->getPlayerName(), defend->owner->getColor());
+			while (1)
+			{
 
+				cout << "\", select 1-2 armies to attack with: (You have " << defend->getArmyCount() << " total armies)" << endl << endl;
+				cin >> defendAmount;
+
+				//Error message if invalid armies is input for defender(must be an integer 1-2, provided player has enough armies available)
+				if (defendAmount > defend->getArmyCount() - 1 || defendAmount < 1 || defendAmount > 2)
+					cout << "\nInvalid input" << endl;
+				else
+					break;
+			}
 			
+			// STEP 2.3: Attack with dice roll
+			attackerTroopsLost = 0;		//TEMPORARY
+			defenderTroopsLost = 0;		//TEMPORARY
+			
+			attack->setArmyCount(attack->getArmyCount() - attackerTroopsLost);  // decrement troops
+			defend->setArmyCount(defend->getArmyCount() - defenderTroopsLost);  // decrement troops
+
+			// STEP 2.4: If country has no more troops, take it over
+			if (defend->getArmyCount() == 0)
+			{
+				player->takeOver(attack, defend);
+
+				if (alreadyHasCard == false)
+				{
+					player->getCard();
+					alreadyHasCard = true;
+				}
+			}
 		}
 		else
 			break; // NO MORE COUNTRIES TO ATTACK
@@ -489,15 +526,24 @@ void AggressiveStrategy::attack(Player* player)
 // all adjacent enemy countries have significantly less armies ie. half or less
 void DefensiveStrategy::attack(Player* player)
 {
+	// Placeholders
+	Country* attack;
+	Country* defend;
+	Country* temp; 
+	int attackAmount = 0;
+	int defendAmount = 0;
+	int attackerTroopsLost = 0;
+	int defenderTroopsLost = 0;
+	bool alreadyHasCard = false;
 	bool result; 
 
 	//loop until no more countries fit attack description
 	while (1) {
-		Country* attack = NULL; // Placeholders
-		Country* defend = NULL;
-		Country* temp = NULL; 
+		attack = NULL; // Placeholders
+		defend = NULL;
+		temp = NULL; 
 
-		// Find first country that fits description
+		// STEP 1: FIND FIRST COUNTRY THAT FITS ATTACK DESCRIPTION (ATTACKER) 
 		for (int i = 0; i < player->countriesOwned.size(); i++)
 		{
 			result = true; 
@@ -515,11 +561,51 @@ void DefensiveStrategy::attack(Player* player)
 		}
 
 		if (attack != NULL) {
-			// Always attack first adjacent country in the list
+			// STEP 2: ALWAYS ATTACK FIRST COUNTRY IN ADJACENT LIST (ALL HAVE 1/2 THE ARMIES OR LESS)
 			defend = attack->adjacentCountries[0]; 
 			handle->print("Attacking " + defend->getName() + " from " + attack->getName() + "\n", player->getColor());
 
-			// INCOMPLETE
+			// STEP 2.1: Get attacker army count (Attacker will always use highest number of dice available)
+			attackAmount = attack->getArmyCount() - 1;
+			if (attackAmount > 3)
+				attackAmount = 3;
+			cout << "\nPlayer \"";
+			handle->print(attack->owner->getPlayerName() + " chooses to attack with " + attackAmount + " armies.", attack->owner->getColor());
+
+			// STEP 2.2: Get defender army count
+			cout << "\nPlayer \"";
+			handle->print(defend->owner->getPlayerName(), defend->owner->getColor());
+			while (1)
+			{
+
+				cout << "\", select 1-2 armies to attack with: (You have " << defend->getArmyCount() << " total armies)" << endl << endl;
+				cin >> defendAmount;
+
+				//Error message if invalid armies is input for defender(must be an integer 1-2, provided player has enough armies available)
+				if (defendAmount > defend->getArmyCount() - 1 || defendAmount < 1 || defendAmount > 2)
+					cout << "\nInvalid input" << endl;
+				else
+					break;
+			}
+
+			// STEP 2.3: Attack with dice roll
+			attackerTroopsLost = 0;		//TEMPORARY
+			defenderTroopsLost = 0;		//TEMPORARY
+
+			attack->setArmyCount(attack->getArmyCount() - attackerTroopsLost);  // decrement troops
+			defend->setArmyCount(defend->getArmyCount() - defenderTroopsLost);  // decrement troops
+
+			// STEP 2.4: If country has no more troops, take it over
+			if (defend->getArmyCount() == 0)
+			{
+				player->takeOver(attack, defend);
+
+				if (alreadyHasCard == false)
+				{
+					player->getCard();
+					alreadyHasCard = true;
+				}
+			}
 		}
 		else
 			break; // No countries to attack, end turn
