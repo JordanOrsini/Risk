@@ -71,6 +71,14 @@ void Player::disCard(int index)
 	hand.erase(hand.begin() + index); // Erases hand[index+1]
 }
 
+void Player::receiveCards(vector<Card*> playerDefeatCards)
+{
+	for (int i = 0; i < playerDefeatCards.size(); i++)
+	{
+		hand.push_back(playerDefeatCards.at(i));
+	}
+
+}
 
 
 

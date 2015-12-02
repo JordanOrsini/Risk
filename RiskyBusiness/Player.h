@@ -33,14 +33,19 @@ public:
 	bool checkCountryHasNeighborsUOwn(Country* country);
 	Subject* getLogSubject() { return this->logSubject; };
 	vector<Country*> countriesOwned;
+	bool alive = true;
+
 	void attack() { strategy->attack(this); };				// attack uses strategy pattern
 	void setStrategy(Strategy* str) { strategy = str; }
 	string getStrategy() { return strategy->name; }; 
+
 
 	// Victory card
 	vector<Card *> hand; 
 	void getCard(Card* card); 
 	void disCard(int index); 
+
+	void receiveCards(vector<Card*> playerDefeatCards);
 	
 private:
 	string playerName;

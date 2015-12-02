@@ -36,4 +36,5 @@ private:
 	ConsoleHandler* handle = ConsoleHandler::getInstance();
 	MapController* MC;
 	PlayerController* PC;
+	Deck* myDeck;
 };
