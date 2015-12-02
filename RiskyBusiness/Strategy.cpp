@@ -504,7 +504,7 @@ void AggressiveStrategy::attack(Player* player)
 			// STEP 2.4: If country has no more troops, take it over
 			if (defend->getArmyCount() == 0)
 			{
-				player->takeOver(attack, defend);
+				player->takeOver(attack, defend, attackAmount, attackerTroopsLost);
 
 				if (alreadyHasCard == false)
 				{
@@ -597,7 +597,7 @@ void DefensiveStrategy::attack(Player* player)
 			// STEP 2.4: If country has no more troops, take it over
 			if (defend->getArmyCount() == 0)
 			{
-				player->takeOver(attack, defend);
+				player->takeOver(attack, defend, attackAmount, attackerTroopsLost);
 
 				if (alreadyHasCard == false)
 				{
