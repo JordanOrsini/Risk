@@ -1,4 +1,6 @@
 #include "Player.h"
+#include <stdlib.h>     /* srand, rand */
+#include <time.h>       /* time */
 using namespace std; 
 using std::cout; 
 
@@ -714,5 +716,89 @@ void DefensiveStrategy::attack(Player* player)
 
 void RandomStrategy::attack(Player* player)
 {
-	//To do 
+
+	// Placeholders
+	Country* attack;
+	Country* defend;
+	int attackAmount = 0;
+	int defendAmount = 0;
+	int attackerTroopsLost = 0;
+	int defenderTroopsLost = 0;
+	bool alreadyHasCard = false;
+
+	// 50% chance it will attack, 50% chance it will not
+	srand(time(NULL));			// Initialize seed
+	int randomNum = rand() % 2;	// Generate 0 or 1
+
+
+	if (randomNum)
+	{
+		handle->print(player->getPlayerName() + " chose to randomly attack!!!", player->getColor());
+		// Initialize
+		attack = NULL;
+		defend = NULL;
+
+		// STEP 1: FIND FIRST COUNTRIES THAT FITS ATTACK DESCRIPTION (ATTACKER AND DEFENDER) 
+		for (int i = 0; i < player->countriesOwned.size(); i++)
+		{
+			attack = player->countriesOwned[i];
+			for (int j = 0; j < player->countriesOwned[i]->adjacentCountries.size(); j++) {
+				if (player->countriesOwned[i]->adjacentCountries[j]->getArmyCount() < attack->getArmyCount() && attack->getArmyCount() >= 2)
+				{
+					defend = player->countriesOwned[i]->adjacentCountries[j]; // Found an adjacent country with less armies
+					break;
+				}
+			}
+			if (defend != NULL)
+				break;
+		}
+
+		// STEP 2: IF WE HAVE A COUNTRY TO ATTACK FROM AND A COUNTRY TO ATTACK, THEN ATTACK
+		if (defend != NULL) {
+			handle->print("Attacking " + defend->getName() + " from " + attack->getName() + "\n", player->getColor());
+
+			// STEP 2.1: Get attacker army count (Attacker will always use highest number of dice available)
+			attackAmount = attack->getArmyCount() - 1;
+			if (attackAmount > 3)
+				attackAmount = 3;
+			cout << "\nPlayer \"";
+			cout << attack->owner->getPlayerName() << " chooses to attack with " << attackAmount << " armies.";
+			// STEP 2.2: Get defender army count
+			cout << "\nPlayer \"";
+			handle->print(defend->owner->getPlayerName(), defend->owner->getColor());
+			while (1)
+			{
+
+				cout << "\", select 1-2 armies to attack with: (You have " << defend->getArmyCount() << " total armies)" << endl << endl;
+				cin >> defendAmount;
+
+				//Error message if invalid armies is input for defender(must be an integer 1-2, provided player has enough armies available)
+				if (defendAmount > defend->getArmyCount() - 1 || defendAmount < 1 || defendAmount > 2)
+					cout << "\nInvalid input" << endl;
+				else
+					break;
+			}
+
+			// STEP 2.3: Attack with dice roll
+			attackerTroopsLost = 0;		//TEMPORARY
+			defenderTroopsLost = 0;		//TEMPORARY
+
+			attack->setArmyCount(attack->getArmyCount() - attackerTroopsLost);  // decrement troops
+			defend->setArmyCount(defend->getArmyCount() - defenderTroopsLost);  // decrement troops
+
+																				// STEP 2.4: If country has no more troops, take it over
+			if (defend->getArmyCount() == 0)
+			{
+				player->takeOver(attack, defend, attackAmount, attackerTroopsLost);
+
+				if (alreadyHasCard == false)
+				{
+					player->getCard();
+					alreadyHasCard = true;
+				}
+			}
+		}
+	}
+	else
+		handle->print(player->getPlayerName() + " chose to randomly not attack!!!", player->getColor());
 }
