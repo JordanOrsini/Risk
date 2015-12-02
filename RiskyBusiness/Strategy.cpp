@@ -544,6 +544,7 @@ void AggressiveStrategy::attack(Player* player)
 	int attackerTroopsLost = 0;
 	int defenderTroopsLost = 0; 
 	bool alreadyHasCard = false;
+	vector<int> resultsOfBattle; 
 
 
 	//loop until no more countries fit attack description
@@ -595,8 +596,11 @@ void AggressiveStrategy::attack(Player* player)
 			}
 			
 			// STEP 2.3: Attack with dice roll
-			attackerTroopsLost = 0;		//TEMPORARY
-			defenderTroopsLost = 0;		//TEMPORARY
+			//roll the dice
+			resultsOfBattle.clear(); //initialize vector in case player wants to attack again
+			resultsOfBattle = rolldice(attackAmount, defendAmount, player, defend->owner);
+			attackerTroopsLost = resultsOfBattle.at(0);
+			defenderTroopsLost = resultsOfBattle.at(1);
 			
 			attack->setArmyCount(attack->getArmyCount() - attackerTroopsLost);  // decrement troops
 			defend->setArmyCount(defend->getArmyCount() - defenderTroopsLost);  // decrement troops
@@ -635,6 +639,7 @@ void DefensiveStrategy::attack(Player* player)
 	int defenderTroopsLost = 0;
 	bool alreadyHasCard = false;
 	bool result; 
+	vector<int> resultsOfBattle;
 
 	//loop until no more countries fit attack description
 	while (1) {
@@ -688,8 +693,10 @@ void DefensiveStrategy::attack(Player* player)
 			}
 
 			// STEP 2.3: Attack with dice roll
-			attackerTroopsLost = 0;		//TEMPORARY
-			defenderTroopsLost = 0;		//TEMPORARY
+			resultsOfBattle.clear(); //initialize vector in case player wants to attack again
+			resultsOfBattle = rolldice(attackAmount, defendAmount, player, defend->owner);
+			attackerTroopsLost = resultsOfBattle.at(0);
+			defenderTroopsLost = resultsOfBattle.at(1);
 
 			attack->setArmyCount(attack->getArmyCount() - attackerTroopsLost);  // decrement troops
 			defend->setArmyCount(defend->getArmyCount() - defenderTroopsLost);  // decrement troops
@@ -725,6 +732,7 @@ void RandomStrategy::attack(Player* player)
 	int attackerTroopsLost = 0;
 	int defenderTroopsLost = 0;
 	bool alreadyHasCard = false;
+	vector<int> resultsOfBattle;
 
 	// 50% chance it will attack, 50% chance it will not
 	srand(time(NULL));			// Initialize seed
@@ -780,8 +788,10 @@ void RandomStrategy::attack(Player* player)
 			}
 
 			// STEP 2.3: Attack with dice roll
-			attackerTroopsLost = 0;		//TEMPORARY
-			defenderTroopsLost = 0;		//TEMPORARY
+			resultsOfBattle.clear(); //initialize vector in case player wants to attack again
+			resultsOfBattle = rolldice(attackAmount, defendAmount, player, defend->owner);
+			attackerTroopsLost = resultsOfBattle.at(0);
+			defenderTroopsLost = resultsOfBattle.at(1);
 
 			attack->setArmyCount(attack->getArmyCount() - attackerTroopsLost);  // decrement troops
 			defend->setArmyCount(defend->getArmyCount() - defenderTroopsLost);  // decrement troops
