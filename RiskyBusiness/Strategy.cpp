@@ -2,29 +2,31 @@
 
 void UserStrategy::attack(Player* player)
 {
-	string enterBattle;
-	string attackFrom;
-	bool battleOwnsCountry = false;
-	bool battleHasEnoughTroops = false;
-	int battleCountryIndex = 0;
-	int attackTargetIndex = 0;
-	string attackTo;
-	bool attackTargetValid1 = false;
-	bool attackTargetValid2 = true;
-	int attackAmount = 0;
-	int defendAmount = 0;
-	bool countryTakeover = false;
-	int attackerTroopsLost = 0;
-	int defenderTroopsLost = 0;
-	int countryIndexToErase = 0;
-	int countryTakeOverMoveAmount = 0;
-	
 	Deck* myDeck = new Deck(); //maybe move initialization of this (but where???)
 
 	Player* defendingPlayer;
 
+	bool countryTakeover;
+
 	while (true)
 	{
+		string enterBattle;
+		string attackFrom;
+		bool battleOwnsCountry = false;
+		bool battleHasEnoughTroops = false;
+		int battleCountryIndex = 0;
+		int attackTargetIndex = 0;
+		string attackTo;
+		bool attackTargetValid1 = false;
+		bool attackTargetValid2 = true;
+		int attackAmount = 0;
+		int defendAmount = 0;
+		countryTakeover = false;
+		int attackerTroopsLost = 0;
+		int defenderTroopsLost = 0;
+		int countryIndexToErase = 0;
+		int countryTakeOverMoveAmount = 0;
+		
 		cout << "Player \"";
 		handle->print(player->getPlayerName(), player->getColor());
 		cout << "\", enter attack phase? (y/n) ";
@@ -187,12 +189,12 @@ void UserStrategy::attack(Player* player)
 				}
 
 				else
-					cout << "Invalid action!" << endl;
+					cout << "\nInvalid action!" << endl << endl;
 
 			}
 
 			else
-				cout << "Invalid action!" << endl;
+				cout << "\nInvalid action!" << endl << endl;
 
 		}
 		else
