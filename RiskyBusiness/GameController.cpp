@@ -88,8 +88,10 @@ void GameController::reinforcementPhase(Player* player) {
 */
 void GameController::battlePhase(Player* player)
 {
-	// Check that this phase can be entered, ie. can does the player have country with >1 army adjacent to another player? 
+	char input; 
+	int input2; 
 
+	// Check that this phase can be entered, ie. can does the player have country with >1 army adjacent to another player? 
 	bool check = false;
 
 	for (int i = 0; i < player->countriesOwned.size(); i++)
@@ -107,8 +109,33 @@ void GameController::battlePhase(Player* player)
 		}
 	}
 
-	if (check)
+	if (check) {
+		// Get the current strategy: 
+		handle->print("Current attack strategy is: " + player->getStrategy() + "\nWould you like to change this strategy? Enter 'y' for yes anything else for no:", player->getColor());
+		cin >> input; 
+
+		if (input == 'y' || input == 'Y')
+		{
+			while (1) {
+				handle->print("The strategies are:\n\t1) User defined actions\n\t2) Aggressive AIn\t\3) Defensive AI\n\t4) Random AI\nEnter 1,2,3, or 4:", player->getColor());
+				cin >> input2; 
+
+				if (input2 == 1 || input2 == 2 || input2 == 3 || input2 == 4)
+					break; 
+			}
+
+			switch (input2)
+			{
+			case 1:	player->setStrategy(new UserStrategy); break; 
+			case 2:	player->setStrategy(new AggressiveStrategy); break;
+			case 3:	player->setStrategy(new DefensiveStrategy); break;
+			case 4:	player->setStrategy(new RandomStrategy); break;
+			}
+		}
+
+		// Now attack
 		player->attack();
+	}	
 	else
 	{
 		handle->print(player->getPlayerName() + " does not have a country that it can attack from. Skipping attack phase...\n", player->getColor());

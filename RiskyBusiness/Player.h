@@ -25,7 +25,9 @@ public:
 	bool checkCountryHasNeighborsUOwn(Country* country);
 	Subject* getLogSubject() { return this->logSubject; };
 	vector<Country*> countriesOwned;
-	void attack();
+	void attack();				// attack uses strategy pattern
+	void setStrategy(Strategy* str) { strategy = str; }
+	string getStrategy() { return strategy->name; }; 
 
 	// Victory card
 	vector<Card *> hand; 
@@ -36,4 +38,5 @@ private:
 	string playerName;
 	Subject* logSubject;
 	int color;
+	Strategy* strategy; 
 };
