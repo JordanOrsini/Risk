@@ -88,13 +88,31 @@ void GameController::reinforcementPhase(Player* player) {
 */
 void GameController::battlePhase(Player* player)
 {
+	// Check that this phase can be entered, ie. can does the player have country with >1 army adjacent to another player? 
 
+	bool check = false;
 
+	for (int i = 0; i < player->countriesOwned.size(); i++)
+	{
+		if ((player->countriesOwned[i])->getArmyCount() > 1)
+		{
+			for (int j = 0; j < player->countriesOwned[i]->adjacentCountries.size(); j++)
+			{
+				if (player->countriesOwned[i]->adjacentCountries[j]->owner->getPlayerName != player->getPlayerName())
+				{
+					check = true;
+					break;
+				}
+			}
+		}
+	}
 
-
-
-
-
+	if (check)
+		player->attack();
+	else
+	{
+		handle->print(player->getPlayerName() + " does not have a country that it can attack from. Skipping attack phase...\n", player->getColor());
+	}
 }
 
 
