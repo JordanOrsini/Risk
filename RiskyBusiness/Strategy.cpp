@@ -1,4 +1,4 @@
-#include "Strategy.h"
+#include "Player.h"
 
 void UserStrategy::attack(Player* player)
 {
@@ -235,4 +235,91 @@ void UserStrategy::attack(Player* player)
 	//Ask player if they want to continue battling
 	// - If no, break; 
 
+}
+
+// This strategy will always attack if the player controls a country that has one adjacent enemy country
+// with less armies than it has
+void AggressiveStrategy::attack(Player* player)
+{
+	//loop until no more countries fit attack description
+	while (1) {
+		Country* attack = NULL; // Placeholders
+		Country* defend = NULL; 
+
+		// Find first country that fits description
+		for (int i = 0; i < player->countriesOwned.size(); i++)
+		{
+			attack = player->countriesOwned[i];
+			for (int j = 0; j < player->countriesOwned[i]->adjacentCountries.size(); j++) {
+				//if (player->countriesOwned[i]->adjacentCountries[j]->getArmyCount() < attack->getArmyCount() && attack->getArmyCount > 1)
+				//{
+				//	defend = player->countriesOwned[i]->adjacentCountries[j];
+				//	break; 
+				//}
+			}
+			if (defend != NULL)
+				break; 
+		}
+
+		if (defend != NULL) {
+			// Attack that country 
+			handle->print("Attacking " + defend->getName() + " from " + attack->getName() + "\n", player->getColor());
+
+			// INCOMPLETE
+		}
+		else
+			break; // No countries to attack, end turn
+	}
+
+	handle->print("No more countries to attack. End of attack phase", player->getColor());
+
+}
+
+// This strategy will never attack unless the player controls a country for which
+// all adjacent enemy countries have significantly less armies ie. half or less
+void DefensiveStrategy::attack(Player* player)
+{
+	bool result; 
+
+	//loop until no more countries fit attack description
+	while (1) {
+		Country* attack = NULL; // Placeholders
+		Country* defend = NULL;
+		Country* temp = NULL; 
+
+		// Find first country that fits description
+		for (int i = 0; i < player->countriesOwned.size(); i++)
+		{
+			result = true; 
+			temp = player->countriesOwned[i];
+
+			for (int j = 0; j < player->countriesOwned[i]->adjacentCountries.size(); j++) {
+				if (player->countriesOwned[i]->adjacentCountries[j]->getArmyCount() >= (int)(temp->getArmyCount() / 2))
+					result = false; 
+			}
+			if (result = true)
+			{
+				attack = player->countriesOwned[i];
+				break;
+			}
+		}
+
+		if (attack != NULL) {
+			// Always attack first adjacent country in the list
+			defend = attack->adjacentCountries[0]; 
+			handle->print("Attacking " + defend->getName() + " from " + attack->getName() + "\n", player->getColor());
+
+			// INCOMPLETE
+		}
+		else
+			break; // No countries to attack, end turn
+	}
+
+	handle->print("No more countries to attack. End of attack phase", player->getColor());
+
+}
+
+void RandomStrategy::attack(Player* player)
+{
+	//To do 
 }
