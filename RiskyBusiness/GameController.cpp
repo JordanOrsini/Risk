@@ -225,8 +225,6 @@ void GameController::fortificationPhase(Player* player)
 					cin >> troopsToMove;
 				}
 
-				MC->getMap()->notify();
-
 				cout << "Select an adjacent country to complete the move:" << endl << endl;
 
 				if (cin.peek() == '\n')

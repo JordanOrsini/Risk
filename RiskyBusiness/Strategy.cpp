@@ -53,7 +53,7 @@ vector<int> Strategy::rolldice(int attackAmount, int defendAmount, Player* attac
 	sort(diceRolls.begin(), diceRolls.end()); //sorts the dice rolls from lowest to highest
 	reverse(diceRolls.begin(), diceRolls.end()); //sorts the dice rolls from highest to lowest so as not to get out of bounds error
 
-	if (attackAmount == 2)
+	if (defendAmount == 2)
 	{
 		defenderFirstBest = diceRolls.at(0);
 		defenderSecondBest = diceRolls.at(1);
@@ -78,7 +78,7 @@ vector<int> Strategy::rolldice(int attackAmount, int defendAmount, Player* attac
 		cout << "\", lost 1 army!\n";
 	}
 
-	if (defendAmount == 2)
+	if (defendAmount == 2 && attackAmount >= 2)
 	{
 		if (attackerSecondBest > defenderSecondBest)
 		{
@@ -398,9 +398,6 @@ void UserStrategy::attack(Player* player)
 		if (enterBattle != "y" && enterBattle != "Y")
 			break;
 
-		cout << "\nPlayer \"";
-		handle->print(player->getPlayerName(), player->getColor());
-
 		// Only break out of this loop when we have a country to attack from and a country to attack
 		while (1)
 		{
@@ -412,6 +409,8 @@ void UserStrategy::attack(Player* player)
 			while (1)
 			{
 				// Ask user
+				cout << "\nPlayer \"";
+				handle->print(player->getPlayerName(), player->getColor());
 				cout << "\", select country to attack from: (country must have more than one army)" << endl << endl;
 				if (cin.peek() == '\n')
 				{
@@ -468,11 +467,10 @@ void UserStrategy::attack(Player* player)
 	
 
 		// STEP 3: GET NUMBER OF DICE TO ATTACK WITH
-		cout << "\nPlayer \"";
-		handle->print(player->getPlayerName(), player->getColor());
 		while (1)
 		{
-
+			cout << "\nPlayer \"";
+			handle->print(player->getPlayerName(), player->getColor());
 			cout << "\", select 1-3 armies to attack with: (You have " << attack->getArmyCount() << " total armies, " << attack->getArmyCount() - 1 << " available to attack)" << endl << endl;
 			cin >> attackAmount;
 
@@ -486,11 +484,10 @@ void UserStrategy::attack(Player* player)
 
 
 		// STEP 4: GET NUMBER OF DICE TO DEFEND WITH
-		cout << "\nPlayer \"";
-		handle->print(defend->owner->getPlayerName(), defend->owner->getColor());
 		while (1)
 		{
-
+			cout << "\nPlayer \"";
+			handle->print(defend->owner->getPlayerName(), defend->owner->getColor());
 			cout << "\", select 1-2 armies to attack with: (You have " << defend->getArmyCount() << " total armies)" << endl << endl;
 			cin >> defendAmount;
 
@@ -523,13 +520,13 @@ void UserStrategy::attack(Player* player)
 			player->getCard();
 		}
 
-			if (alreadyHasCard == false)
-			{
-				player->getCard();
-				alreadyHasCard = true; 
-			}	
-		}
+		if (alreadyHasCard == false)
+		{
+			player->getCard();
+			alreadyHasCard = true; 
+		}	
 	}
+}
 
 
 
