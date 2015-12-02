@@ -100,7 +100,7 @@ void GameController::battlePhase(Player* player)
 		{
 			for (int j = 0; j < player->countriesOwned[i]->adjacentCountries.size(); j++)
 			{
-				if (player->countriesOwned[i]->adjacentCountries[j]->owner->getPlayerName != player->getPlayerName())
+				if (player->countriesOwned[i]->adjacentCountries[j]->owner->getPlayerName() != player->getPlayerName())
 				{
 					check = true;
 					break;

@@ -5,9 +5,17 @@
 #include "Map.h"
 #include "Subject.h"
 #include "Deck.h"
-#include "Strategy.h"
+#include "ConsoleHandler.h"
 
 using namespace std;
+
+class Strategy
+{
+public:
+	virtual void attack(Player * player) = 0;
+	ConsoleHandler* handle = ConsoleHandler::getInstance();
+	string name;
+};
 
 class Player {
 public:
@@ -25,7 +33,7 @@ public:
 	bool checkCountryHasNeighborsUOwn(Country* country);
 	Subject* getLogSubject() { return this->logSubject; };
 	vector<Country*> countriesOwned;
-	void attack();				// attack uses strategy pattern
+	void attack() { strategy->attack(this); };				// attack uses strategy pattern
 	void setStrategy(Strategy* str) { strategy = str; }
 	string getStrategy() { return strategy->name; }; 
 
@@ -39,4 +47,33 @@ private:
 	Subject* logSubject;
 	int color;
 	Strategy* strategy; 
+};
+
+
+class UserStrategy : public Strategy
+{
+public:
+	UserStrategy() { name = "User Defined"; };
+	void attack(Player* player);
+};
+
+class AggressiveStrategy : public Strategy
+{
+public:
+	AggressiveStrategy() { name = "Aggressive"; };
+	void attack(Player* player);
+};
+
+class DefensiveStrategy : public Strategy
+{
+public:
+	DefensiveStrategy() { name = "Defensive"; };
+	void attack(Player* player);
+};
+
+class RandomStrategy : public Strategy
+{
+public:
+	RandomStrategy() { name = "Random"; };
+	void attack(Player* player);
 };
