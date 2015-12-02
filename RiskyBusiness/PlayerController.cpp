@@ -40,3 +40,7 @@ Player* PlayerController::nextTurn() {
 	}
 	return playerList.at(whoseTurn);
 }
+
+// need to implement a check to see if player is alive (player bool alive).
+//if dead remove from game loop.
+//need to implement win condition, if only one player remains, he/she is declared the winner!

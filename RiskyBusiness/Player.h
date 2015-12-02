@@ -26,11 +26,14 @@ public:
 	Subject* getLogSubject() { return this->logSubject; };
 	vector<Country*> countriesOwned;
 	void attack();
+	bool alive = true;
 
 	// Victory card
 	vector<Card *> hand; 
 	void getCard(Card* card); 
 	void disCard(int index); 
+
+	void receiveCards(vector<Card*> playerDefeatCards);
 	
 private:
 	string playerName;

@@ -75,6 +75,15 @@ void Player::attack()
 
 }
 
+void Player::receiveCards(vector<Card*> playerDefeatCards)
+{
+	for (int i = 0; i < playerDefeatCards.size(); i++)
+	{
+		hand.push_back(playerDefeatCards.at(i));
+	}
+
+}
+
 
 
 
