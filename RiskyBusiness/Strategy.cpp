@@ -436,19 +436,27 @@ void UserStrategy::attack(Player* player)
 // with less armies than it has
 void AggressiveStrategy::attack(Player* player)
 {
+	// Placeholders
+	Country* attack; 
+	Country* defend;
+	int attackAmount = 0; 
+	int defendAmount = 0; 
+
 	//loop until no more countries fit attack description
 	while (1) {
-		Country* attack = NULL; // Placeholders
-		Country* defend = NULL; 
+		
+		// Initialize
+		attack = NULL; 
+		defend = NULL; 
 
-		// Find first country that fits description
+		// STEP 1: FIND FIRST COUNTRIES THAT FITS ATTACK DESCRIPTION (ATTACKER AND DEFENDER) 
 		for (int i = 0; i < player->countriesOwned.size(); i++)
 		{
 			attack = player->countriesOwned[i];
 			for (int j = 0; j < player->countriesOwned[i]->adjacentCountries.size(); j++) {
-				if (player->countriesOwned[i]->adjacentCountries[j]->getArmyCount() < attack->getArmyCount() && attack->getArmyCount() > 1)
+				if (player->countriesOwned[i]->adjacentCountries[j]->getArmyCount() < attack->getArmyCount() && attack->getArmyCount() >= 2)
 				{
-					defend = player->countriesOwned[i]->adjacentCountries[j];
+					defend = player->countriesOwned[i]->adjacentCountries[j]; // Found an adjacent country with less armies
 					break; 
 				}
 			}
@@ -456,14 +464,21 @@ void AggressiveStrategy::attack(Player* player)
 				break; 
 		}
 
+		// STEP 2: IF WE HAVE A COUNTRY TO ATTACK FROM AND A COUNTRY TO ATTACK, THEN ATTACK
 		if (defend != NULL) {
-			// Attack that country 
 			handle->print("Attacking " + defend->getName() + " from " + attack->getName() + "\n", player->getColor());
+			
+			// STEP 2.1: Get attacker army count (Attacker will always use highest number of dice available)
+			attackAmount = attack->getArmyCount() - 1; 
+			if (attackAmount > 3)
+				attackAmount = 3; 
 
-			// INCOMPLETE
+			// STEP 2.2: Get defender army count
+
+			
 		}
 		else
-			break; // No countries to attack, end turn
+			break; // NO MORE COUNTRIES TO ATTACK
 	}
 
 	handle->print("No more countries to attack. End of attack phase", player->getColor());
