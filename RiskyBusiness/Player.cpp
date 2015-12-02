@@ -8,6 +8,7 @@ Player::Player() {
 Player::Player(string playerName) {
 	this->playerName = playerName;
 	this->logSubject = new Subject();
+	this->setStrategy(new UserStrategy());
 }
 
 Player::~Player() {

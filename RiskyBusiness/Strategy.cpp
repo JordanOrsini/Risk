@@ -143,8 +143,13 @@ void UserStrategy::attack(Player* player)
 
 				}
 
+				else
+					cout << "Invalid action!" << endl;
 
 			}
+
+			else
+				cout << "Invalid action!" << endl;
 
 		}
 		else

@@ -117,7 +117,7 @@ void GameController::battlePhase(Player* player)
 		if (input == 'y' || input == 'Y')
 		{
 			while (1) {
-				handle->print("The strategies are:\n\t1) User defined actions\n\t2) Aggressive AIn\t\3) Defensive AI\n\t4) Random AI\nEnter 1,2,3, or 4:", player->getColor());
+				handle->print("The strategies are:\n\t1) User defined actions\n\t2) Aggressive AI\n\t3) Defensive AI\n\t4) Random AI\nEnter 1,2,3, or 4:", player->getColor());
 				cin >> input2; 
 
 				if (input2 == 1 || input2 == 2 || input2 == 3 || input2 == 4)
