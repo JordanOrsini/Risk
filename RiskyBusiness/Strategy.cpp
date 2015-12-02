@@ -477,8 +477,7 @@ void AggressiveStrategy::attack(Player* player)
 			if (attackAmount > 3)
 				attackAmount = 3; 
 			cout << "\nPlayer \"";
-			handle->print(attack->owner->getPlayerName() + " chooses to attack with " + attackAmount + " armies.", attack->owner->getColor());
-
+			cout << attack->owner->getPlayerName() << " chooses to attack with " << attackAmount << " armies.";
 			// STEP 2.2: Get defender army count
 			cout << "\nPlayer \"";
 			handle->print(defend->owner->getPlayerName(), defend->owner->getColor());
@@ -570,7 +569,7 @@ void DefensiveStrategy::attack(Player* player)
 			if (attackAmount > 3)
 				attackAmount = 3;
 			cout << "\nPlayer \"";
-			handle->print(attack->owner->getPlayerName() + " chooses to attack with " + attackAmount + " armies.", attack->owner->getColor());
+			cout << attack->owner->getPlayerName() << " chooses to attack with " << attackAmount << " armies.";
 
 			// STEP 2.2: Get defender army count
 			cout << "\nPlayer \"";
