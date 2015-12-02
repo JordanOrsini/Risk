@@ -80,8 +80,27 @@ void Player::receiveCards(vector<Card*> playerDefeatCards)
 
 }
 
-void Player::takeOver(Country* country)
+void Player::takeOver(Country* attack, Country* defend)
 {
+	// Pointer Placeholders
+	Player* defender = defend->owner; 
+	Player* attacker = attack->owner; 
+
+	// STEP 1: ERASE DEFENDING COUNTRY FROM DEFENDER LIST
+	int defendIndex; 
+
+	for (int i = 0; i < defender->countriesOwned.size(); i++)
+	{
+		if (defend->getName() == defender->countriesOwned[i]->getName())
+		{
+			defender->countriesOwned.erase(defender->countriesOwned.begin() + i); 
+			break; 
+		}
+	}
+
+	// STEP 2: SET NEW OWNER
+
+
 
 	/*
 	for (int i = 0; i < defendingPlayer->countriesOwned.size(); i++)
