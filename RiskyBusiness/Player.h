@@ -35,11 +35,12 @@ public:
 	bool checkCountryHasNeighborsUOwn(Country* country);
 	vector<Country*> countriesOwned;
 	bool alive = true;
-	void takeOver(Country* attack, Country* defend);
+	void takeOver(Country* attack, Country* defend, int atkAMT, int atkLOST);
 
 	void attack() { strategy->attack(this); };				// attack uses strategy pattern
 	void setStrategy(Strategy* str) { strategy = str; }
 	string getStrategy() { return strategy->name; }; 
+	ConsoleHandler* handle = ConsoleHandler::getInstance();
 
 
 	// Victory card

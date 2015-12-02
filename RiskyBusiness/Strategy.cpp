@@ -418,7 +418,9 @@ void UserStrategy::attack(Player* player)
 		//checks to see if country is taken over by the attack
 		if (defend->getArmyCount() == 0)
 		{
-			player->takeOver(attack, defend);
+			player->takeOver(attack, defend, attackAmount, attackerTroopsLost);
+			player->getCard();
+		}
 
 			if (alreadyHasCard == false)
 			{
@@ -427,7 +429,7 @@ void UserStrategy::attack(Player* player)
 			}	
 		}
 	}
-}
+
 
 
 // This strategy will always attack if the player controls a country that has one adjacent enemy country

@@ -76,7 +76,7 @@ void Player::receiveCards(vector<Card*> playerDefeatCards)
 
 }
 
-void Player::takeOver(Country* attack, Country* defend)
+void Player::takeOver(Country* attack, Country* defend, int atkAMT, int atkLOST)
 {
 	// Pointer Placeholders
 	Player* defender = defend->owner; 
@@ -87,86 +87,45 @@ void Player::takeOver(Country* attack, Country* defend)
 
 	for (int i = 0; i < defender->countriesOwned.size(); i++)
 	{
-		if (defend->getName() == defender->countriesOwned[i]->getName())
+		if (defend->getName() == defender->countriesOwned.at(i)->getName())
 		{
 			defender->countriesOwned.erase(defender->countriesOwned.begin() + i); 
 			break; 
 		}
 	}
 
-	// STEP 2: SET NEW OWNER
+	// STEP 2: ADD NEW COUNTRY TO ATTACKERS COUNTRY LIST
+	attacker->countriesOwned.push_back(defend);
 
-
-
-	/*
-	for (int i = 0; i < defendingPlayer->countriesOwned.size(); i++)
-	{
-		if (attackTo == defendingPlayer->countriesOwned.at(i)->getName())
-		{
-			countryIndexToErase = i;
-		}
-	}
-	//erases country from defending player's countriesOwned vector
-	defendingPlayer->countriesOwned.erase(defendingPlayer->countriesOwned.begin() + countryIndexToErase);
-
-	//adds country to attacking player's countriesOwned vector
-	player->countriesOwned.push_back(player->countriesOwned.at(battleCountryIndex)->adjacentCountries.at(attackTargetIndex));
-
-	//changes owner of country to be the attacking player
-	player->countriesOwned.at(battleCountryIndex)->adjacentCountries.at(attackTargetIndex)->owner = player;
+	//STEP 3: SET NEW OWNER
+	int countryTakeOverMoveAmount = 0;
+	defend->owner = attacker;
 
 	cout << "Player \"";
-	handle->print(player->getPlayerName(), player->getColor());
-	cout << "\", how many armies would you like to move to your new country \"" << player->countriesOwned.at(battleCountryIndex)->adjacentCountries.at(attackTargetIndex)->getName() << "\"? (" << player->countriesOwned.at(battleCountryIndex)->adjacentCountries.at(attackTargetIndex)->getArmyCount() - 1 << " armies available to move. Must move at least " << attackAmount - attackerTroopsLost << ")" << endl << endl;
-
+	handle->print(attacker->getPlayerName(), attacker->getColor());
+	cout << "\", how many armies would you like to move to your new country \"" << defend->getName() << "\"? (" << attack->getArmyCount() - 1 << " armies available to move. Must move at least " << atkAMT - atkLOST << ")" << endl << endl;
 	cin >> countryTakeOverMoveAmount;
 
-	while (countryTakeOverMoveAmount < (attackAmount - attackerTroopsLost) || countryTakeOverMoveAmount > player->countriesOwned.at(battleCountryIndex)->adjacentCountries.at(attackTargetIndex)->getArmyCount() - 1)
+	while (countryTakeOverMoveAmount < (atkAMT - atkLOST) || countryTakeOverMoveAmount > attack->getArmyCount() - 1)
 	{
-		cout << "Invalid input! Enter amount between " << attackAmount - attackerTroopsLost << " and " << player->countriesOwned.at(battleCountryIndex)->adjacentCountries.at(attackTargetIndex)->getArmyCount() - 1 << ":" << endl << endl;
+		cout << "Invalid input! Enter amount between " << atkAMT - atkLOST << " and " << attack->getArmyCount() - 1 << ":" << endl << endl;
 		cin >> countryTakeOverMoveAmount;
 	}
-
-	//adds armies from attacking country to newly aquired country
-	player->countriesOwned.at(battleCountryIndex)->adjacentCountries.at(attackTargetIndex)->setArmyCount(countryTakeOverMoveAmount);
-
-	//decrements armies from attacking country according to how many were chosen to be moved
-	player->countriesOwned.at(battleCountryIndex)->setArmyCount(player->countriesOwned.at(battleCountryIndex)->getArmyCount() - countryTakeOverMoveAmount);
-
-	//if country takeover results in defeat of defending player, transfer all cards
-	if (defendingPlayer->countriesOwned.size() == 0)
+	
+	//STEP 4: ADD SELECTED TROOPS TO NEW COUNTRY
+	defend->setArmyCount(countryTakeOverMoveAmount);
+	
+	//STEP 5: REMOVE MOVED TROOPS FROM ATTACKING COUNTRY
+	attack->setArmyCount(attack->getArmyCount() - countryTakeOverMoveAmount);
+	
+	//STEP 6: IF DEFENDING PLAYER IS DEAD --> TRANSFER ALL CARDS TO ATTACKING PLAYER, REMOVE DEFENDING PLAYER FROM GAME LOOP, CHECK IF THE GAME IS WON (1 PLAYER REMAINING) 
+	if (defender->countriesOwned.size() == 0)
 	{
-		player->receiveCards(defendingPlayer->hand);
-
+		attacker->receiveCards(defender->hand);
+		defender->alive = false;
 	}
-
+	
 	cout << "Country takeover successful!" << endl << endl;
-}
-
-}
-
-				else
-					cout << "\nInvalid action!" << endl << endl;
-
-			}
-
-			else
-				cout << "\nInvalid action!" << endl << endl;
-
-
-	}
-
-	//if at least one country was taken over by the player this turn a card is awarded to his hand.
-	if (countryTakeover)
-	{
-		player->getCard(myDeck->getCard());
-	}
-
-
-	delete myDeck; //remove this line if myDeck initialisation location has changed.
-
-	myDeck = NULL;//remove this line if myDeck initialisation location has changed.
-	*/
 	
 }
 
