@@ -34,6 +34,7 @@ public:
 	Subject* getLogSubject() { return this->logSubject; };
 	vector<Country*> countriesOwned;
 	bool alive = true;
+	void takeOver(Country* country);
 
 	void attack() { strategy->attack(this); };				// attack uses strategy pattern
 	void setStrategy(Strategy* str) { strategy = str; }
@@ -42,7 +43,7 @@ public:
 
 	// Victory card
 	vector<Card *> hand; 
-	void getCard(Card* card); 
+	void getCard(); 
 	void disCard(int index); 
 
 	void receiveCards(vector<Card*> playerDefeatCards);
@@ -52,6 +53,7 @@ private:
 	Subject* logSubject;
 	int color;
 	Strategy* strategy; 
+	Deck deck; 
 };
 
 
