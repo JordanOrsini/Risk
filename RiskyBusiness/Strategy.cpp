@@ -1,5 +1,6 @@
 #include "Player.h"
 using namespace std; 
+using std::cout; 
 
 /*
 void UserStrategy::attack(Player* player)
@@ -276,14 +277,12 @@ void UserStrategy::attack(Player* player)
 	int attackerTroopsLost;
 	int defenderTroopsLost;
 	bool countryTakeOver;
+	bool alreadyHasCard = false; 
 
 	while (1)
 	{
-		//Initialize
-		attack = NULL;
-		defend = NULL;
+		
 		countryTakeOver = false;
-
 
 		// Ask player if they want to enter attack phase
 		cout << "Player \"";
@@ -296,47 +295,48 @@ void UserStrategy::attack(Player* player)
 		}
 		getline(cin, enterBattle);
 
-		if (enterBattle != "y" || enterBattle != "Y")
+		if (enterBattle != "y" && enterBattle != "Y")
 			break;
 
 		cout << "\nPlayer \"";
 		handle->print(player->getPlayerName(), player->getColor());
 
-
-
-		// STEP 1: GET COUNTRY TO ATTACK FROM 
+		// Only break out of this loop when we have a country to attack from and a country to attack
 		while (1)
 		{
-			// Ask user
-			cout << "\", select country to attack from: (country must have more than one army)" << endl << endl;
-			if (cin.peek() == '\n')
-			{
-				cin.ignore(1, '\n');
-			}
-			std::getline(cin, attackFrom);
+			//Initialize
+			attack = NULL;
+			defend = NULL;
 
-			//Check 1 (player owns attackFrom & the country has enough troops)
-			for (int i = 0; i < player->countriesOwned.size(); i++)
+			// STEP 1: GET COUNTRY TO ATTACK FROM 
+			while (1)
 			{
-				if (attackFrom == player->countriesOwned.at(i)->getName())
+				// Ask user
+				cout << "\", select country to attack from: (country must have more than one army)" << endl << endl;
+				if (cin.peek() == '\n')
 				{
-					attack = player->countriesOwned.at(i);
-					break;
+					cin.ignore(1, '\n');
 				}
+				std::getline(cin, attackFrom);
+
+				//Check 1 (player owns attackFrom & the country has enough troops)
+				for (int i = 0; i < player->countriesOwned.size(); i++)
+				{
+					if (attackFrom == player->countriesOwned.at(i)->getName())
+					{
+						attack = player->countriesOwned.at(i);
+						break;
+					}
+				}
+
+				//Check 2 (country has enough troops)
+				if (attack == NULL || attack->getArmyCount() <= 1)
+					cout << "Error: Either you do not own this country or the country does not have enough armies to attack\n";
+				else
+					break;
 			}
 
-			//Check 2 (country has enough troops)
-			if (attack == NULL || attack->getArmyCount() <= 1)
-				cout << "Error: Either you do not own this country or the country does not have enough armies to attack\n";
-			else
-				break;
-		}
-
-
-
-		// STEP 2: GET A COUNTRY TO ATTACK
-		while (1)
-		{
+			// STEP 2: GET A COUNTRY TO ATTACK
 			// Ask user
 			cout << "\nPlayer \"";
 			handle->print(player->getPlayerName(), player->getColor());
@@ -348,7 +348,7 @@ void UserStrategy::attack(Player* player)
 			}
 			std::getline(cin, attackTo);
 
-			//Check 1 to see if attackTo is adjacent to attackFrom 
+			//Check 1: see if attackTo is adjacent to attackFrom (if yes, set "defend")
 			for (int i = 0; i < attack->adjacentCountries.size(); i++)
 			{
 				//If attack target selected is adjacent to attacking country (attack is valid) 
@@ -359,12 +359,13 @@ void UserStrategy::attack(Player* player)
 				}
 			}
 
-			//Check 2 to make sure defending country isn't owned by attacker
+			//Check 2:make sure defending country isn't owned by attacker
 			if (defend == NULL || defend->owner->getPlayerName() == player->getPlayerName())
-				cout << "Error: Either you own this country or this country is not adjacent to " + attack->getName() + "\n";
+				cout << "Error: Either you own this country or this country is not adjacent to " + attack->getName() + "\nTry again.\n";
+			else
+				break;
 		}
-
-
+	
 
 		// STEP 3: GET NUMBER OF DICE TO ATTACK WITH
 		cout << "\nPlayer \"";
@@ -411,20 +412,23 @@ void UserStrategy::attack(Player* player)
 		//need method to decrement attacker troops lost from battle
 		attack->setArmyCount(attack->getArmyCount() - attackerTroopsLost);
 
-
 		//need method to decrement defender troops lost from battle
 		defend->setArmyCount(defend->getArmyCount() - defenderTroopsLost);
 
 		//checks to see if country is taken over by the attack
 		if (defend->getArmyCount() == 0)
 		{
-			player->takeOver(defend);
-			player->getCard();
+			player->takeOver(attack, defend);
+
+			if (alreadyHasCard == false)
+			{
+				player->getCard();
+				alreadyHasCard = true; 
+			}	
 		}
-
-
 	}
 }
+
 
 // This strategy will always attack if the player controls a country that has one adjacent enemy country
 // with less armies than it has
