@@ -2,6 +2,105 @@
 using namespace std; 
 using std::cout; 
 
+vector<int> Strategy::rolldice(int attackAmount, int defendAmount, Player* attackingPlayer, Player* defendingPlayer)
+{
+	int attackerFirstBest = 0;
+	int attackerSecondBest = 0;
+	int defenderFirstBest = 0;
+	int defenderSecondBest = 0;
+	vector<int> diceRolls;
+	vector<int> results(2, 0);	//stores the result of the battle. Index 0 stores the # troops the attacker lost. Index 1 stores the # troops the defender lost
+								//initilizes 2 ints with the value 0
+
+								//--------------------------------------------------------ATTACKER--------------------------------------------------------
+	cout << "Player \"";
+	handle->print(attackingPlayer->getPlayerName(), attackingPlayer->getColor());
+	cout << "\", rolled:\n";
+
+	for (int i = 0; i < attackAmount; i++)
+	{
+		diceRolls.push_back(rand() % 6 + 1);
+		handle->print(to_string(diceRolls.at(i)), attackingPlayer->getColor());
+		cout << endl;
+	}
+
+	sort(diceRolls.begin(), diceRolls.end()); //sorts the dice rolls from lowest to highest
+	reverse(diceRolls.begin(), diceRolls.end()); //sorts the dice rolls from highest to lowest so as not to get out of bounds error
+
+	if (attackAmount >= 2)
+	{
+		attackerFirstBest = diceRolls.at(0);
+		attackerSecondBest = diceRolls.at(1);
+	}
+
+	else
+		attackerFirstBest = diceRolls.at(0);
+
+	diceRolls.clear();
+
+	//--------------------------------------------------------DEFENDER--------------------------------------------------------
+	cout << "\nPlayer \"";
+	handle->print(defendingPlayer->getPlayerName(), defendingPlayer->getColor());
+	cout << "\", rolled:\n";
+
+	for (int i = 0; i < defendAmount; i++)
+	{
+		diceRolls.push_back(rand() % 6 + 1);
+		handle->print(to_string(diceRolls.at(i)), defendingPlayer->getColor());
+		cout << endl;
+	}
+
+	sort(diceRolls.begin(), diceRolls.end()); //sorts the dice rolls from lowest to highest
+	reverse(diceRolls.begin(), diceRolls.end()); //sorts the dice rolls from highest to lowest so as not to get out of bounds error
+
+	if (attackAmount == 2)
+	{
+		defenderFirstBest = diceRolls.at(0);
+		defenderSecondBest = diceRolls.at(1);
+	}
+
+	else
+		defenderFirstBest = diceRolls.at(0);
+
+
+	if (attackerFirstBest > defenderFirstBest)
+	{
+		results.at(1) += 1; //defender loses 1
+		cout << "Player \"";
+		handle->print(defendingPlayer->getPlayerName(), defendingPlayer->getColor());
+		cout << "\", lost 1 army!\n";
+	}
+	else
+	{
+		results.at(0) += 1; //attacker loses 1
+		cout << "Player \"";
+		handle->print(attackingPlayer->getPlayerName(), attackingPlayer->getColor());
+		cout << "\", lost 1 army!\n";
+	}
+
+	if (defendAmount == 2)
+	{
+		if (attackerSecondBest > defenderSecondBest)
+		{
+			results.at(1) += 1; //defender loses 1
+			cout << "Player \"";
+			handle->print(defendingPlayer->getPlayerName(), defendingPlayer->getColor());
+			cout << "\", lost 1 army!\n";
+		}
+		else
+		{
+			results.at(0) += 1; //attacker loses 1
+			cout << "Player \"";
+			handle->print(attackingPlayer->getPlayerName(), attackingPlayer->getColor());
+			cout << "\", lost 1 army!\n";
+		}
+
+		cout << endl;
+	}
+
+	return results;
+}
+
 /*
 void UserStrategy::attack(Player* player)
 {
@@ -278,6 +377,7 @@ void UserStrategy::attack(Player* player)
 	int defenderTroopsLost;
 	bool countryTakeOver;
 	bool alreadyHasCard = false; 
+	vector<int> resultsOfBattle;
 
 	while (1)
 	{
@@ -401,19 +501,20 @@ void UserStrategy::attack(Player* player)
 				break;
 		}
 
-		//insert dice roll section here
-		//
-		//
-		//
-		//
-		attackerTroopsLost = 0;		//TEMPORARY
-		defenderTroopsLost = 0;		//TEMPORARY
+		//roll the dice
+		resultsOfBattle.clear(); //initialize vector in case player wants to attack again
+		resultsOfBattle = rolldice(attackAmount, defendAmount, player, defend->owner);
+		attackerTroopsLost = resultsOfBattle.at(0);
+		defenderTroopsLost = resultsOfBattle.at(1);
 
 		//need method to decrement attacker troops lost from battle
 		attack->setArmyCount(attack->getArmyCount() - attackerTroopsLost);
 
 		//need method to decrement defender troops lost from battle
 		defend->setArmyCount(defend->getArmyCount() - defenderTroopsLost);
+
+		system("PAUSE");
+		MC->getMap()->notify();
 
 		//checks to see if country is taken over by the attack
 		if (defend->getArmyCount() == 0)

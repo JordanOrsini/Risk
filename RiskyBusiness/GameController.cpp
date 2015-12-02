@@ -18,6 +18,10 @@ GameController::~GameController() {
 
 void GameController::runGame() {
 	PC->addPlayerToGame(this->getNumOfPlayers());
+	for (int i = 0; i < PC->getPlayerList().size(); i++)
+	{
+		PC->getPlayerList().at(i)->setStrategy(new UserStrategy(MC));
+	}
 	startUpPhase();
 
 	Player* currentPlayer;
@@ -127,10 +131,10 @@ void GameController::battlePhase(Player* player)
 
 			switch (input2)
 			{
-			case 1:	player->setStrategy(new UserStrategy); break; 
-			case 2:	player->setStrategy(new AggressiveStrategy); break;
-			case 3:	player->setStrategy(new DefensiveStrategy); break;
-			case 4:	player->setStrategy(new RandomStrategy); break;
+			case 1:	player->setStrategy(new UserStrategy(MC)); break; 
+			case 2:	player->setStrategy(new AggressiveStrategy(MC)); break;
+			case 3:	player->setStrategy(new DefensiveStrategy(MC)); break;
+			case 4:	player->setStrategy(new RandomStrategy(MC)); break;
 			}
 		}
 

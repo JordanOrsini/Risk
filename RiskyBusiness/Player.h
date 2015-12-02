@@ -2,11 +2,13 @@
 // MODEL
 #include <string>
 #include <vector>
+#include <algorithm> // used to sort the dice rolls
 #include "Map.h"
 #include "Subject.h"
 #include "LogDecorator.h"
 #include "Deck.h"
 #include "ConsoleHandler.h"
+#include "MapController.h"
 
 using namespace std;
 
@@ -16,6 +18,9 @@ public:
 	virtual void attack(Player * player) = 0;
 	ConsoleHandler* handle = ConsoleHandler::getInstance();
 	string name;
+	vector<int> rolldice(int attackAmount, int defendAmount, Player* attackingPlayer, Player* defendingPlayer); //used only during attack phase
+protected:
+	MapController* MC;
 };
 
 class Player: public Subject {
@@ -63,27 +68,27 @@ private:
 class UserStrategy : public Strategy
 {
 public:
-	UserStrategy() { name = "User Defined"; };
+	UserStrategy(MapController* MC) { name = "User Defined"; this->MC = MC; };
 	void attack(Player* player);
 };
 
 class AggressiveStrategy : public Strategy
 {
 public:
-	AggressiveStrategy() { name = "Aggressive"; };
+	AggressiveStrategy(MapController* MC) { name = "Aggressive"; this->MC = MC; };
 	void attack(Player* player);
 };
 
 class DefensiveStrategy : public Strategy
 {
 public:
-	DefensiveStrategy() { name = "Defensive"; };
+	DefensiveStrategy(MapController* MC) { name = "Defensive"; this->MC = MC; };
 	void attack(Player* player);
 };
 
 class RandomStrategy : public Strategy
 {
 public:
-	RandomStrategy() { name = "Random"; };
+	RandomStrategy(MapController* MC) { name = "Random"; this->MC = MC; };
 	void attack(Player* player);
 };
