@@ -63,6 +63,7 @@ void GameController::startUpPhase() {
 	for (int i = 0; i < numOfPlayers; i++)
 	{
 		currentPlayer = PC->getPlayerList().at(i);
+		this->getLogger(currentPlayer);
 		int remainingStartupTroops = this->getStartingArmies(currentPlayer->countriesOwned);
 		addTroopsToCountry(currentPlayer, remainingStartupTroops, "remaining");
 
@@ -332,7 +333,7 @@ void GameController::addTroopsToCountry(Player* player, int numOfTroops, string 
 		Country* selectedCountry = this->findCountry(strCountry, player->countriesOwned);
 
 		if (selectedCountry == nullptr) {
-			cout << "\nInvalid country input! No changes will be made." << endl << endl;
+			player->setLogMessage( "Invalid country input! No changes will be made");
 			continue;
 		}
 
@@ -343,7 +344,7 @@ void GameController::addTroopsToCountry(Player* player, int numOfTroops, string 
 		//If troopstoAdd are greater than reinforcements allowed, asks user to reinput.
 		while (troopsToAdd > numOfTroops || troopsToAdd < 1)
 		{
-			cout << "\nInvalid input! Must select a value less than or equal to " << numOfTroops << endl << endl;
+			player->setLogMessage("Invalid input! Must select a value less than or equal to " + to_string(numOfTroops));
 			cin >> troopsToAdd;
 		}
 
@@ -355,7 +356,7 @@ void GameController::addTroopsToCountry(Player* player, int numOfTroops, string 
 
 		MC->getMap()->notify();
 
-		cout << troopsToAdd << " troops were added successfully to " << selectedCountry->getName() << "." << endl << endl;
+		player->setLogMessage(to_string(troopsToAdd) + " troops were added successfully to " + selectedCountry->getName());
 	}
 }
 
@@ -555,7 +556,8 @@ ILog* GameController::getLogger(Player* player) {
 			break;
 		}
 	}
-
+	log = new LogNewLine(log);
+	player->attach(log);
 	return log;
 	
 }

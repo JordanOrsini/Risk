@@ -1,9 +1,9 @@
 #pragma once
 #include "Observer.h"
 #include "Player.h"
-#include "ConsoleHandler.h"
 #include <iostream>
 #include <string>
+#include "ConsoleHandler.h"
 
 /*
 Log decorator interface
@@ -59,5 +59,14 @@ public:
 	~LogPlayerName() {};
 private:
 	ConsoleHandler* handle = ConsoleHandler::getInstance();
+};
+
+class LogNewLine: public LogDecorator 
+{
+public:
+	LogNewLine(ILog* logger) : LogDecorator(logger) {};
+	virtual void displayLog();
+	virtual void update() { this->displayLog(); };
+	~LogNewLine() {};
 };
 

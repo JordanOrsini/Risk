@@ -62,6 +62,5 @@ void ConsoleHandler::print(string str) {
 void ConsoleHandler::print(char chr) {
 	this->setConsoleTextAttribute(10);
 	cout << chr;
-
 }
 

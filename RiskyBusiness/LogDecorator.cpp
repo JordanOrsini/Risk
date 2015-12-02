@@ -21,7 +21,7 @@ LogDecorator::~LogDecorator()
 //--------------------------Logger class--------------------------------
 
 void Logger::displayLog() {
-	cout << "[LOG] - " << this->getPlayer()->logMessage << " - ";
+	cout << "\n[LOG] - " << this->getPlayer()->logMessage << " - ";
 }
 
 //--------------------------LogTimestamp class--------------------------
@@ -45,5 +45,10 @@ string LogTimestamp::getTimestamp() {
 
 void LogPlayerName::displayLog() {
 	LogDecorator::displayLog();
-	handle->print("[" + this->getPlayer()->getPlayerName() + "] ", this->getPlayer()->getColor());
+	this->handle->print("[" + this->getPlayer()->getPlayerName() + "] ", this->getPlayer()->getColor());
+}
+
+void LogNewLine::displayLog() {
+	LogDecorator::displayLog();
+	cout << endl << endl;
 }

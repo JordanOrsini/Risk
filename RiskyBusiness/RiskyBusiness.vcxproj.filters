@@ -35,12 +35,14 @@
     <ClCompile Include="ConsoleHandler.cpp">
       <Filter>VIEWS</Filter>
     </ClCompile>
-    <ClCompile Include="LogDecorator.cpp" />
     <ClCompile Include="Deck.cpp">
       <Filter>MODELS</Filter>
     </ClCompile>
     <ClCompile Include="Strategy.cpp">
       <Filter>MODELS</Filter>
+    </ClCompile>
+    <ClCompile Include="LogDecorator.cpp">
+      <Filter>VIEWS</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -80,12 +82,14 @@
     <ClInclude Include="ConsoleHandler.h">
       <Filter>VIEWS</Filter>
     </ClInclude>
-    <ClInclude Include="LogDecorator.h" />
     <ClInclude Include="Deck.h">
       <Filter>MODELS</Filter>
     </ClInclude>
     <ClInclude Include="Strategy.h">
       <Filter>MODELS</Filter>
+    </ClInclude>
+    <ClInclude Include="LogDecorator.h">
+      <Filter>VIEWS</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
