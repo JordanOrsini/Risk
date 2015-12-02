@@ -494,7 +494,7 @@ void UserStrategy::attack(Player* player)
 			cin >> defendAmount;
 
 			//Error message if invalid armies is input for defender(must be an integer 1-2, provided player has enough armies available)
-			if (defendAmount > defend->getArmyCount() - 1 || defendAmount < 1 || defendAmount > 2)
+			if (defendAmount > defend->getArmyCount() || defendAmount < 1 || defendAmount > 2)
 				cout << "\nInvalid input" << endl;
 			else
 				break;
@@ -519,6 +519,7 @@ void UserStrategy::attack(Player* player)
 		if (defend->getArmyCount() == 0)
 		{
 			player->takeOver(attack, defend, attackAmount, attackerTroopsLost);
+			MC->getMap()->notify();
 			player->getCard();
 		}
 
