@@ -41,6 +41,9 @@
     <ClCompile Include="Deck.cpp">
       <Filter>MODELS</Filter>
     </ClCompile>
+    <ClCompile Include="Strategy.cpp">
+      <Filter>MODELS</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Colors.h">
@@ -84,6 +87,9 @@
     <ClInclude Include="LogDecorator.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="Deck.h">
+      <Filter>MODELS</Filter>
+    </ClInclude>
+    <ClInclude Include="Strategy.h">
       <Filter>MODELS</Filter>
     </ClInclude>
   </ItemGroup>

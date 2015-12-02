@@ -96,6 +96,16 @@ void GameController::battlePhase(Player* player)
 
 
 }
+
+
+/**
+*	Fortification phase. Will give user option to enter the phase.
+*	Will ask user to select a country he owns.
+*	Will ask user how many troops he would like to move. (Must leave at least 1 army on country.
+*	Will ask user to select an adjacent country to complete the move.
+*	Will decrement troops on initial country selected accordingly.
+*	Will increment troops on adjacent country selected if owned by player accordingly.
+*/
 void GameController::fortificationPhase(Player* player) 
 {
 	char yesNo;

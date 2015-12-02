@@ -5,6 +5,7 @@
 #include "Map.h"
 #include "Subject.h"
 #include "Deck.h"
+#include "Strategy.h"
 
 using namespace std;
 
