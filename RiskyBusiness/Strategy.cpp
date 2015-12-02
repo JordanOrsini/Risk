@@ -136,8 +136,17 @@ void UserStrategy::attack(Player* player)
 					//
 
 					//need method to decrement attacker troops lost from battle
+					player->countriesOwned.at(battleCountryIndex)->setArmyCount(player->countriesOwned.at(battleCountryIndex)->getArmyCount() - attackerTroopsLost);
+					
+					
 					//need method to decrement defender troops lost from battle
-
+					player->countriesOwned.at(battleCountryIndex)->adjacentCountries.at(attackTargetIndex)->setArmyCount(player->countriesOwned.at(battleCountryIndex)->adjacentCountries.at(attackTargetIndex)->getArmyCount() - defenderTroopsLost);
+					
+					//checks to see if country is taken over by the attack
+					if (player->countriesOwned.at(battleCountryIndex)->adjacentCountries.at(attackTargetIndex)->getArmyCount() == 0)
+					{
+						countryTakeover = true;
+					}
 
 					//if player successfully takes over country
 					if (countryTakeover) // set to true if country was taken over (no more defenders remaining)
