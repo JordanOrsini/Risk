@@ -527,10 +527,11 @@ void RandomStrategy::attack(Player* player)
 			cout << "\" chooses to attack with " << attackAmount << " armies.";
 			
 			// STEP 2.2: Get defender army count
-			cout << "\nPlayer \"";
-			handle->print(defend->owner->getPlayerName(), defend->owner->getColor());
+			
 			while (1)
 			{
+				cout << "\nPlayer \"";
+				handle->print(defend->owner->getPlayerName(), defend->owner->getColor());
 				cout << "\" select 1-2 armies to defend with: (You have " << defend->getArmyCount() << " total armies)" << endl << endl;
 				cin >> defendAmount;
 
