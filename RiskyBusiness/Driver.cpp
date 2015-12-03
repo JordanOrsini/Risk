@@ -11,6 +11,8 @@ int main() {
 	// Pregame map creation
 	MapView tempView; 
 
+	cout << endl << endl; 
+
 	// Start actual game
 	GameController* GC = new GameController();
 

@@ -42,6 +42,7 @@ int Player::getContinentBonus(Map * map) {
 			bonus += map->allContinents[i]->getBonusValue(); 
 	}
 
+	setLogMessage(getPlayerName() + " gets " + to_string(bonus) + " more armies due to the continent bonus."); 
 	return bonus; 
 }
 
