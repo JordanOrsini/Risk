@@ -318,7 +318,7 @@ void AggressiveStrategy::attack(Player* player)
 			while (1)
 			{
 
-				cout << " select 1-2 armies to attack with: (You have " << defend->getArmyCount() << " total armies)" << endl << endl;
+				cout << "select 1-2 armies to attack with: (You have " << defend->getArmyCount() << " total armies)" << endl << endl;
 				cin >> defendAmount;
 
 				//Error message if invalid armies is input for defender(must be an integer 1-2, provided player has enough armies available)
@@ -339,9 +339,6 @@ void AggressiveStrategy::attack(Player* player)
 			
 			attack->setArmyCount(attack->getArmyCount() - attackerTroopsLost);  // decrement troops
 			defend->setArmyCount(defend->getArmyCount() - defenderTroopsLost);  // decrement troops
-
-			system("PAUSE");
-			MC->getMap()->notify();
 
 			// STEP 2.4: If country has no more troops, take it over
 			if (defend->getArmyCount() == 0)
@@ -430,7 +427,7 @@ void DefensiveStrategy::attack(Player* player)
 			while (1)
 			{
 
-				cout << " select 1-2 armies to attack with: (You have " << defend->getArmyCount() << " total armies)" << endl << endl;
+				cout << "select 1-2 armies to attack with: (You have " << defend->getArmyCount() << " total armies)" << endl << endl;
 				cin >> defendAmount;
 
 				//Error message if invalid armies is input for defender(must be an integer 1-2, provided player has enough armies available)
@@ -450,9 +447,6 @@ void DefensiveStrategy::attack(Player* player)
 
 			attack->setArmyCount(attack->getArmyCount() - attackerTroopsLost);  // decrement troops
 			defend->setArmyCount(defend->getArmyCount() - defenderTroopsLost);  // decrement troops
-
-			system("PAUSE");
-			MC->getMap()->notify();
 
 			// STEP 2.4: If country has no more troops, take it over
 			if (defend->getArmyCount() == 0)
@@ -530,7 +524,7 @@ void RandomStrategy::attack(Player* player)
 			while (1)
 			{
 
-				cout << " select 1-2 armies to attack with: (You have " << defend->getArmyCount() << " total armies)" << endl << endl;
+				cout << "select 1-2 armies to attack with: (You have " << defend->getArmyCount() << " total armies)" << endl << endl;
 				cin >> defendAmount;
 
 				//Error message if invalid armies is input for defender(must be an integer 1-2, provided player has enough armies available)
@@ -550,9 +544,6 @@ void RandomStrategy::attack(Player* player)
 
 			attack->setArmyCount(attack->getArmyCount() - attackerTroopsLost);  // decrement troops
 			defend->setArmyCount(defend->getArmyCount() - defenderTroopsLost);  // decrement troops
-
-			system("PAUSE");
-			MC->getMap()->notify();
 
 																				// STEP 2.4: If country has no more troops, take it over
 			if (defend->getArmyCount() == 0)
