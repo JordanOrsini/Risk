@@ -4,10 +4,10 @@ string Card::getTypeName() {
 	string name;
 
 	switch (type) {
-	case 1: name = "Artillary";
-	case 2: name = "Soldier";
-	case 3: name = "Cavalry";
-	default: name = "Artillary"; // never happens but just in case
+	case 1: name = "Artillary"; break;
+	case 2: name = "Soldier"; break;
+	case 3: name = "Cavalry"; break;
+	default: cout << "No card value " << name << endl; exit(0);  // never happens but just in case
 	}
 
 	return name;
