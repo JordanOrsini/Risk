@@ -71,14 +71,12 @@ vector<int> Strategy::rolldice(int attackAmount, int defendAmount, Player* attac
 		results.at(1) += 1; //defender loses 1
 		cout << "Player \"";
 		handle->print(defendingPlayer->getPlayerName(), defendingPlayer->getColor());
-		cout << "\", lost 1 army!\n";
 	}
 	else
 	{
 		results.at(0) += 1; //attacker loses 1
 		cout << "Player \"";
 		handle->print(attackingPlayer->getPlayerName(), attackingPlayer->getColor());
-		cout << "\", lost 1 army!\n";
 	}
 
 	if (defendAmount == 2 && attackAmount >= 2)
@@ -88,14 +86,12 @@ vector<int> Strategy::rolldice(int attackAmount, int defendAmount, Player* attac
 			results.at(1) += 1; //defender loses 1
 			cout << "Player \"";
 			handle->print(defendingPlayer->getPlayerName(), defendingPlayer->getColor());
-			cout << "\", lost 1 army!\n";
 		}
 		else
 		{
 			results.at(0) += 1; //attacker loses 1
 			cout << "Player \"";
 			handle->print(attackingPlayer->getPlayerName(), attackingPlayer->getColor());
-			cout << "\", lost 1 army!\n";
 		}
 
 		cout << endl;
