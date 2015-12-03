@@ -251,7 +251,8 @@ void GameController::fortificationPhase(Player* player)
 
 						MC->getMap()->notify();
 
-						cout << troopsToMove << " troops successfully moved from the country of " << player->countriesOwned.at(fortCountryIndex)->getName() << " to the country of " << player->countriesOwned.at(i)->getName() << "." << endl;
+						//cout << troopsToMove << " troops successfully moved from the country of " << player->countriesOwned.at(fortCountryIndex)->getName() << " to the country of " << player->countriesOwned.at(i)->getName() << "." << endl;
+						player->setLogMessage(player->getPlayerName() + " successfully moved " + to_string(troopsToMove) + " troops from " + player->countriesOwned.at(fortCountryIndex)->getName() + " to " + player->countriesOwned.at(i)->getName()); 
 						fortifySuccess = true;
 					}
 				}	
