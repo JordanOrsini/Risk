@@ -1,0 +1,73 @@
+--MAP--
+author=Sean O'Connor
+image=world.bmp
+wrap=no
+scroll=horizontal
+warn=yes
+
+--CONTINENT--
+name=North America
+value=5
+Alaska,70,126,Northwest Territory,Alberta,Kamchatka
+Northwest Territory,148,127,Alaska,Alberta,Ontario,Greenland
+Alberta,147,163,Alaska,Northwest Territory,Ontario,Western United States
+Greenland,324,76,Northwest Territory,Ontario,Quebec,Iceland
+Ontario,199,167,Northwest Territory,Alberta,Greenland,Quebec,Western United States,Eastern United States
+Quebec,253,166,Greenland,Ontario,Eastern United States
+Western United States,159,204,Alberta,Ontario,Eastern United States,Central America
+Eastern United States,219,216,Ontario,Quebec,Western United States,Central America
+Central America,183,262,Western United States,Eastern United States,Venezuala
+
+--CONTINENT--
+name=South America
+value=2
+Venezuala,259,303,Central America,Peru,Brazil
+Peru,262,349,Venezuala,Brazil,Argentina
+Argentina,263,407,Peru,Brazil
+Brazil,308,337,Venezuala,Peru,Argentina,North Africa
+
+--CONTINENT--
+name=Africa
+value=3
+North Africa,420,264,Brazil,Western Europe,Southern Europe,Egypt,East Africa,Congo
+Congo,475,318,North Africa,East Africa,South Africa
+South Africa,483,371,Congo,East Africa,Madagascar
+Madagascar,536,361,East Africa,South Africa
+East Africa,517,298,Egypt,Middle East,Congo,North Africa,South Africa,Madagascar
+Egypt,480,249,Southern Europe,North Africa,Middle East,East Africa
+
+--CONTINENT--
+name=Europe
+value=5
+Iceland,380,126,Greenland,Great Britain,Scandinavia
+Great Britain,419,169,Iceland,Scandinavia,Western Europe,Northern Europe
+Western Europe,423,202,Great Britain,Northern Europe,Southern Europe,North Africa
+Scandinavia,463,127,Iceland,Great Britain,Northern Europe,Ukraine
+Northern Europe,460,173,Great Britain,Scandinavia,Ukraine,Southern Europe,Western Europe
+Southern Europe,473,197,Northern Europe,Ukraine,Middle East,Egypt,North Africa,Western Europe
+Ukraine,524,157,Ural,Afghanistan,Middle East,Southern Europe,Northern Europe,Scandinavia
+
+--CONTINENT--
+name=Asia
+value=7
+Middle East,530,234,Ukraine,Afghanistan,India,Southern Europe,Egypt,East Africa
+Ural,613,136,Siberia,China,Afghanistan,Ukraine
+Afghanistan,585,192,Ural,China,India,Middle East,Ukraine
+India,612,249,China,Siam,Afghanistan,Middle East
+Siberia,666,110,Yatusk,Irkutsk,Mongolia,China,Ural
+China,662,217,Ural,Siberia,Mongolia,Siam,India,Afghanistan
+Siam,671,270,China,India,Indonesia
+Mongolia,707,188,Siberia,Irkutsk,Japan,China,Kamchatka
+Irkutsk,698,152,Siberia,Yatusk,Kamchatka,Mongolia
+Yatusk,738,118,Siberia,Irkutsk,Kamchatka
+Kamchatka,806,125,Yatusk,Irkutsk,Japan,Alaska,Mongolia
+Japan,759,220,Kamchatka,Mongolia,Bob
+Bob,2,3,Japan
+
+--CONTINENT--
+name=Australia
+value=2
+Indonesia,698,314,Siam,New Guinea,Western Australia
+New Guinea,768,325,Indonesia,Western Australia,Eastern Australia
+Western Australia,729,373,Indonesia,New Guinea,Eastern Australia
+Eastern Australia,779,381,Western Australia,New Guinea
