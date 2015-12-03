@@ -428,8 +428,8 @@ int GameController::getVictoryCardReinforcements(Player* player) {
 			//		-Check that they exist
 			//		-No duplicates
 			if (card1 >= 0 && card1 < player->hand.size()
-				&& card1 >= 0 && card2 < player->hand.size()
-				&& card1 >= 0 && card1 < player->hand.size()  // Cards are in bounds
+				&& card2 >= 0 && card2 < player->hand.size()
+				&& card3 >= 0 && card3 < player->hand.size()  // Cards are in bounds
 				&& card1 != card2 && card1 != card3
 				&& card2 != card3)							  // No duplicates
 			{
