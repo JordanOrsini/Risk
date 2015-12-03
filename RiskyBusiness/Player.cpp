@@ -111,6 +111,8 @@ void Player::takeOver(Country* attack, Country* defend, int atkAMT, int atkLOST)
 		cin >> countryTakeOverMoveAmount;
 	}
 	
+	setLogMessage(getPlayerName() + " took over " + defend->getName() + " and moved " + to_string(countryTakeOverMoveAmount) + " armies"); 
+
 	//STEP 4: ADD SELECTED TROOPS TO NEW COUNTRY
 	defend->setArmyCount(countryTakeOverMoveAmount);
 	

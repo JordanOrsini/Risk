@@ -26,6 +26,7 @@ vector<int> Strategy::rolldice(int attackAmount, int defendAmount, Player* attac
 		cout << endl;
 	}
 
+
 	sort(diceRolls.begin(), diceRolls.end()); //sorts the dice rolls from lowest to highest
 	reverse(diceRolls.begin(), diceRolls.end()); //sorts the dice rolls from highest to lowest so as not to get out of bounds error
 
@@ -100,6 +101,8 @@ vector<int> Strategy::rolldice(int attackAmount, int defendAmount, Player* attac
 		cout << endl;
 	}
 
+	attackingPlayer->setLogMessage(attackingPlayer->getPlayerName() + " lost " + to_string(results[0]) + " armies");
+	defendingPlayer->setLogMessage(defendingPlayer->getPlayerName() + " lost " + to_string(results[1]) + " armies");
 	return results;
 }
 
@@ -500,6 +503,8 @@ void UserStrategy::attack(Player* player)
 				break;
 		}
 
+		attack->owner->setLogMessage(attack->owner->getPlayerName() + " chose to attack " + defend->owner->getPlayerName() + " from " + attack->getName() + " with " + to_string(attackAmount) + " armies to " + defend->getName() + " with " + to_string(defendAmount) + " armies."); 
+
 		//roll the dice
 		resultsOfBattle.clear(); //initialize vector in case player wants to attack again
 		resultsOfBattle = rolldice(attackAmount, defendAmount, player, defend->owner);
@@ -595,7 +600,9 @@ void AggressiveStrategy::attack(Player* player)
 				else
 					break;
 			}
-			
+
+			attack->owner->setLogMessage(attack->owner->getPlayerName() + " chose to attack " + defend->owner->getPlayerName() + " from " + attack->getName() + " with " + to_string(attackAmount) + " armies to " + defend->getName() + " with " + to_string(defendAmount) + " armies.");
+
 			// STEP 2.3: Attack with dice roll
 			//roll the dice
 			resultsOfBattle.clear(); //initialize vector in case player wants to attack again
@@ -693,6 +700,8 @@ void DefensiveStrategy::attack(Player* player)
 					break;
 			}
 
+			attack->owner->setLogMessage(attack->owner->getPlayerName() + " chose to attack " + defend->owner->getPlayerName() + " from " + attack->getName() + " with " + to_string(attackAmount) + " armies to " + defend->getName() + " with " + to_string(defendAmount) + " armies.");
+
 			// STEP 2.3: Attack with dice roll
 			resultsOfBattle.clear(); //initialize vector in case player wants to attack again
 			resultsOfBattle = rolldice(attackAmount, defendAmount, player, defend->owner);
@@ -787,6 +796,8 @@ void RandomStrategy::attack(Player* player)
 				else
 					break;
 			}
+
+			attack->owner->setLogMessage(attack->owner->getPlayerName() + " chose to attack " + defend->owner->getPlayerName() + " from " + attack->getName() + " with " + to_string(attackAmount) + " armies to " + defend->getName() + " with " + to_string(defendAmount) + " armies.");
 
 			// STEP 2.3: Attack with dice roll
 			resultsOfBattle.clear(); //initialize vector in case player wants to attack again
