@@ -65,7 +65,6 @@ void Player::getCard()
 
 void Player::disCard(int index)
 {
-	index--; 
 	hand.erase(hand.begin() + index); // Erases hand[index+1]
 }
 
