@@ -18,6 +18,7 @@ private:
 
 class GameStats : public IGameStats
 {
+public:
 	GameStats(Player* player) : IGameStats(player) {};
 	virtual void displayStats();
 	virtual void update() { this->displayStats(); };

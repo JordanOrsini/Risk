@@ -4,11 +4,13 @@
 #include "PlayerController.h"
 #include "ConsoleHandler.h"
 #include "LogDecorator.h"
+#include "GameStatsDecorator.h"
 #include "Deck.h"
+#include "Subject.h"
 #include <cstdlib>
 #include <ctime>
 
-class GameController {
+class GameController:public Subject {
 public:
 	GameController();
 	~GameController();
@@ -33,7 +35,8 @@ private:
 	int getVictoryCardReinforcements(Player* player); 
 	Country* findCountry(string country, vector<Country*> countries);
 	ConsoleHandler* handle = ConsoleHandler::getInstance();
-	ILog* getLogger(Player* player);
+	void setLogger(Player* player);
+	void setGameStats(Player* player);
 	ILog* logger;
 	MapController* MC;
 	PlayerController* PC;

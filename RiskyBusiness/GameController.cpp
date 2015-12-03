@@ -35,7 +35,7 @@ void GameController::runGame() {
 		reinforcementPhase(currentPlayer);
 		battlePhase(currentPlayer);
 		fortificationPhase(currentPlayer);
-
+		this->notify(); // update stats
 		cout << "\nQuit game? (y/n)";
 		cin >> quitInput;
 
@@ -43,6 +43,7 @@ void GameController::runGame() {
 		{
 			break;
 		}
+
 		PC->nextTurn();
 	} 
 	cout << "\nThanks for playing!" << endl << endl;
@@ -65,7 +66,8 @@ void GameController::startUpPhase() {
 	for (int i = 0; i < numOfPlayers; i++)
 	{
 		currentPlayer = PC->getPlayerList().at(i);
-		this->getLogger(currentPlayer);
+		this->setLogger(currentPlayer);
+		this->setGameStats(currentPlayer);
 		int remainingStartupTroops = this->getStartingArmies(currentPlayer->countriesOwned);
 		addTroopsToCountry(currentPlayer, remainingStartupTroops, "remaining");
 
@@ -523,7 +525,7 @@ Country* GameController::findCountry(string country, vector<Country*> countries)
 	return nullptr;
 }
 
-ILog* GameController::getLogger(Player* player) {
+void GameController::setLogger(Player* player) {
 	vector<int> choices;
 
 	while (choices.size() < 2) {
@@ -568,6 +570,50 @@ ILog* GameController::getLogger(Player* player) {
 	}
 	log = new LogNewLine(log);
 	player->attach(log);
-	return log;
-	
+}
+
+void GameController::setGameStats(Player* player) {
+	vector<int> choices;
+
+	while (choices.size() < 2) {
+		handle->print(player->getPlayerName(), player->getColor());
+		cout << ", select Game Stats options from the following list: \n";
+		cout << "\t1. See percentage of world ownership\n";
+		cout << "\t2. See number of battles won\n";
+		cout << "\t3. Done\n";
+
+		int choice;
+		cin >> choice;
+
+		if (choice > 3 || choice < 1) {
+			player->setLogMessage("Invalid input. Try again.");
+			continue;
+		}
+
+		if (find(choices.begin(), choices.end(), choice) != choices.end()) {
+			player->setLogMessage("Choice already considered.");
+			continue;
+		}
+
+		if (choice == 3) {
+			break;
+		}
+		choices.push_back(choice);
+		player->setLogMessage( "Choice " + to_string(choice) + " registerd.");
+	}
+
+	sort(choices.begin(), choices.end());
+
+	IGameStats* stats = new GameStats(player);
+	for (int i = 0; i < choices.size(); i++) {
+		switch (choices.at(i)) {
+		case 1:
+			stats = new GameWorldPercentage(stats);
+			break;
+		case 2:
+			stats = new GameBattles(stats);
+			break;
+		}
+	}
+	this->attach(stats);
 }
