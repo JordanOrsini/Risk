@@ -396,7 +396,7 @@ int GameController::getVictoryCardReinforcements(Player* player) {
 
 	// Don't even bother if player has less than three cards
 	if (player->hand.size() < 3) {
-		handle->print(player->getPlayerName() + " does not have enough victory cards to exchange for reinforcements (Only " + player->hand.size() + " cards). Victory card bonus = 0\n", player->getColor());
+		handle->print(player->getPlayerName() + " does not have enough victory cards to exchange for reinforcements (Only " + to_string(player->hand.size()) + " cards). Victory card bonus = 0\n", player->getColor());
 		return 0;
 	}
 		
