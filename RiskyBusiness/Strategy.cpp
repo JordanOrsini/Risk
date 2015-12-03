@@ -221,7 +221,7 @@ void UserStrategy::attack(Player* player)
 		{
 			cout << "\nPlayer \"";
 			handle->print(defend->owner->getPlayerName(), defend->owner->getColor());
-			cout << "\", select 1-2 armies to attack with: (You have " << defend->getArmyCount() << " total armies)" << endl << endl;
+			cout << "\", select 1-2 armies to defend with: (You have " << defend->getArmyCount() << " total armies)" << endl << endl;
 			cin >> defendAmount;
 
 			//Error message if invalid armies is input for defender(must be an integer 1-2, provided player has enough armies available)
@@ -339,7 +339,7 @@ void AggressiveStrategy::attack(Player* player)
 			while (1)
 			{
 
-				cout << " select 1-2 armies to attack with: (You have " << defend->getArmyCount() << " total armies)" << endl << endl;
+				cout << " select 1-2 armies to defend with: (You have " << defend->getArmyCount() << " total armies)" << endl << endl;
 				cin >> defendAmount;
 
 				//Error message if invalid armies is input for defender(must be an integer 1-2, provided player has enough armies available)
@@ -477,7 +477,7 @@ void DefensiveStrategy::attack(Player* player)
 			while (1)
 			{
 
-				cout << " select 1-2 armies to attack with: (You have " << defend->getArmyCount() << " total armies)" << endl << endl;
+				cout << " select 1-2 armies to defend with: (You have " << defend->getArmyCount() << " total armies)" << endl << endl;
 				cin >> defendAmount;
 
 				//Error message if invalid armies is input for defender(must be an integer 1-2, provided player has enough armies available)
