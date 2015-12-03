@@ -368,7 +368,12 @@ int GameController::getStartingArmies(vector<Country*> ownedCountries) {
 	int numOfPlayers = PC->getPlayerList().size();
 	int startingArmies = (int)((allCountries.size() / numOfPlayers) * ARMY_MULTIPLIER);
 
-	return startingArmies - ownedCountries.size();
+	startingArmies -= ownedCountries.size(); 
+
+	if (startingArmies < 1)
+		startingArmies = 1; 
+
+	return startingArmies;
 }
 
 int GameController::getReinforcmentTroops(Player* player) {
