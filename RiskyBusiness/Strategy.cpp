@@ -522,15 +522,16 @@ void RandomStrategy::attack(Player* player)
 			attackAmount = attack->getArmyCount() - 1;
 			if (attackAmount > 3)
 				attackAmount = 3;
-			cout << "\nPlayer ";
-			cout << attack->owner->getPlayerName() << " chooses to attack with " << attackAmount << " armies.";
+			cout << "\nPlayer \"";
+			handle->print(attack->owner->getPlayerName(), attack->owner->getColor());
+			cout << "\" chooses to attack with " << attackAmount << " armies.";
+			
 			// STEP 2.2: Get defender army count
-			cout << "\nPlayer ";
+			cout << "\nPlayer \"";
 			handle->print(defend->owner->getPlayerName(), defend->owner->getColor());
 			while (1)
 			{
-
-				cout << " select 1-2 armies to attack with: (You have " << defend->getArmyCount() << " total armies)" << endl << endl;
+				cout << "\" select 1-2 armies to defend with: (You have " << defend->getArmyCount() << " total armies)" << endl << endl;
 				cin >> defendAmount;
 
 				//Error message if invalid armies is input for defender(must be an integer 1-2, provided player has enough armies available)
