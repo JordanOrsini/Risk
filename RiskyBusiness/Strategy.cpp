@@ -521,14 +521,13 @@ void UserStrategy::attack(Player* player)
 		{
 			player->takeOver(attack, defend, attackAmount, attackerTroopsLost);
 			MC->getMap()->notify();
-			player->getCard();
+			
+			if (alreadyHasCard == false)
+			{
+				player->getCard();
+				alreadyHasCard = true;
+			}
 		}
-
-		if (alreadyHasCard == false)
-		{
-			player->getCard();
-			alreadyHasCard = true; 
-		}	
 	}
 }
 
