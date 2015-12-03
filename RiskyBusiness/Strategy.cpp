@@ -261,6 +261,26 @@ void UserStrategy::attack(Player* player)
 				alreadyHasCard = true;
 			}
 		}
+		// Check that this phase can be entered again, ie. can does the player have country with >1 army adjacent to another player? 
+		bool check = false;
+
+		for (int i = 0; i < player->countriesOwned.size(); i++)
+		{
+			if ((player->countriesOwned[i])->getArmyCount() > 1)
+			{
+				for (int j = 0; j < player->countriesOwned[i]->adjacentCountries.size(); j++)
+				{
+					if (player->countriesOwned[i]->adjacentCountries[j]->owner->getPlayerName() != player->getPlayerName())
+					{
+						check = true;
+						break;
+					}
+				}
+			}
+		}
+
+		if (!check)
+			break;
 	}
 }
 
@@ -360,6 +380,27 @@ void AggressiveStrategy::attack(Player* player)
 		}
 		else
 			break; // NO MORE COUNTRIES TO ATTACK
+
+		// Check that this phase can be entered again, ie. can does the player have country with >1 army adjacent to another player? 
+		bool check = false;
+
+		for (int i = 0; i < player->countriesOwned.size(); i++)
+		{
+			if ((player->countriesOwned[i])->getArmyCount() > 1)
+			{
+				for (int j = 0; j < player->countriesOwned[i]->adjacentCountries.size(); j++)
+				{
+					if (player->countriesOwned[i]->adjacentCountries[j]->owner->getPlayerName() != player->getPlayerName())
+					{
+						check = true;
+						break;
+					}
+				}
+			}
+		}
+
+		if (!check)
+			break;
 	}
 
 	handle->print("No more countries to attack. End of attack phase", player->getColor());
@@ -393,10 +434,12 @@ void DefensiveStrategy::attack(Player* player)
 		{
 			result = true; 
 			temp = player->countriesOwned[i];
-
+			
+			if (temp->getArmyCount() < 2)
+				result = false; 
 
 			for (int j = 0; j < temp->adjacentCountries.size(); j++) {
-				if (temp->adjacentCountries[j]->getArmyCount() >= (int)(temp->getArmyCount() / 2) && player->getPlayerName() != temp->adjacentCountries[j]->owner->getPlayerName())
+				if (temp->adjacentCountries[j]->getArmyCount() >= (temp->getArmyCount() / 2) && player->getPlayerName() != temp->adjacentCountries[j]->owner->getPlayerName())
 					result = false;
 			}
 			if (result = true)
@@ -474,6 +517,27 @@ void DefensiveStrategy::attack(Player* player)
 		}
 		else
 			break; // No countries to attack, end turn
+
+		// Check that this phase can be entered again, ie. can does the player have country with >1 army adjacent to another player? 
+		bool check = false;
+
+		for (int i = 0; i < player->countriesOwned.size(); i++)
+		{
+			if ((player->countriesOwned[i])->getArmyCount() > 1)
+			{
+				for (int j = 0; j < player->countriesOwned[i]->adjacentCountries.size(); j++)
+				{
+					if (player->countriesOwned[i]->adjacentCountries[j]->owner->getPlayerName() != player->getPlayerName())
+					{
+						check = true;
+						break;
+					}
+				}
+			}
+		}
+
+		if (!check)
+			break; 
 	}
 
 	handle->print("No more countries to attack. End of attack phase", player->getColor());
