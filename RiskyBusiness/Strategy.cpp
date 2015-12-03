@@ -252,6 +252,7 @@ void UserStrategy::attack(Player* player)
 		if (defend->getArmyCount() == 0)
 		{
 			player->takeOver(attack, defend, attackAmount, attackerTroopsLost);
+			system("PAUSE"); 
 			MC->getMap()->notify();
 			
 			if (alreadyHasCard == false)
@@ -353,6 +354,8 @@ void AggressiveStrategy::attack(Player* player)
 					player->getCard();
 					alreadyHasCard = true;
 				}
+				system("PAUSE");
+				MC->getMap()->notify();
 			}
 		}
 		else
@@ -391,15 +394,16 @@ void DefensiveStrategy::attack(Player* player)
 			result = true; 
 			temp = player->countriesOwned[i];
 
-			for (int j = 0; j < player->countriesOwned[i]->adjacentCountries.size(); j++) {
-				if (player->countriesOwned[i]->adjacentCountries[j]->getArmyCount() >= (int)(temp->getArmyCount() / 2) && attack->owner->getPlayerName() != player->countriesOwned[i]->adjacentCountries[j]->owner->getPlayerName())
-					result = false; 
+
+			for (int j = 0; j < temp->adjacentCountries.size(); j++) {
+				if (temp->adjacentCountries[j]->getArmyCount() >= (int)(temp->getArmyCount() / 2) && player->getPlayerName() != temp->adjacentCountries[j]->owner->getPlayerName())
+					result = false;
 			}
 			if (result = true)
 			{
 				//check that there at least exists a neighbor that is owned by a different player, if so set it as the defender
 				for (int j = 0; j < player->countriesOwned[i]->adjacentCountries.size(); j++) {
-					if (attack->owner->getPlayerName() != player->countriesOwned[i]->adjacentCountries[j]->owner->getPlayerName())
+					if (player->getPlayerName() != temp->adjacentCountries[j]->owner->getPlayerName())
 					{
 						attack = player->countriesOwned[i];
 						defend = player->countriesOwned[i]->adjacentCountries[j]; 
@@ -464,6 +468,8 @@ void DefensiveStrategy::attack(Player* player)
 					player->getCard();
 					alreadyHasCard = true;
 				}
+				system("PAUSE");
+				MC->getMap()->notify();
 			}
 		}
 		else
@@ -566,6 +572,8 @@ void RandomStrategy::attack(Player* player)
 					player->getCard();
 					alreadyHasCard = true;
 				}
+				system("PAUSE");
+				MC->getMap()->notify();
 			}
 		}
 	}

@@ -56,8 +56,10 @@ bool Player::checkCountryHasNeighborsUOwn(Country* country)
 }
 
 void Player::getCard()
-{
-	hand.push_back(deck.getCard()); 
+{	
+	Card * card = deck.getCard(); 
+	hand.push_back(card); 
+	setLogMessage(getPlayerName() + " recieved an " + card->getTypeName() + " victory card"); 
 }
 
 void Player::disCard(int index)
