@@ -407,12 +407,12 @@ int GameController::getVictoryCardReinforcements(Player* player) {
 	handle->print(player->getPlayerName() + " has the following cards:\n\t", player->getColor());
 	for (int i = 0; i < player->hand.size(); i++)
 	{
-		handle->print(i + ":" + player->hand[i]->getTypeName() + " ", player->getColor());
+		handle->print(to_string(i) + ":" + player->hand[i]->getTypeName() + " ", player->getColor());
 	}
 	cout << endl;
 
 	// Ask player if they want to use cards
-	handle->print("\nWould you like to exchange victory cards for reinforcements?\nEnter 'y' for yes and anything else for no", player->getColor());
+	handle->print("\nWould you like to exchange victory cards for reinforcements?\nEnter 'y' for yes and anything else for no: ", player->getColor());
 
 	cin >> Input;
 	if (Input == 'y' || Input == 'Y')
