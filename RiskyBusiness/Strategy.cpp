@@ -572,7 +572,7 @@ void AggressiveStrategy::attack(Player* player)
 
 		// STEP 2: IF WE HAVE A COUNTRY TO ATTACK FROM AND A COUNTRY TO ATTACK, THEN ATTACK
 		if (defend != NULL) {
-			handle->print("Attacking " + defend->getName() + " from " + attack->getName() + "\n", player->getColor());
+			handle->print("\nAttacking " + defend->getName() + " from " + attack->getName() + "\n", player->getColor());
 			
 			// STEP 2.1: Get attacker army count (Attacker will always use highest number of dice available)
 			attackAmount = attack->getArmyCount() - 1; 
@@ -590,7 +590,7 @@ void AggressiveStrategy::attack(Player* player)
 				cin >> defendAmount;
 
 				//Error message if invalid armies is input for defender(must be an integer 1-2, provided player has enough armies available)
-				if (defendAmount > defend->getArmyCount() - 1 || defendAmount < 1 || defendAmount > 2)
+				if (defendAmount > defend->getArmyCount() || defendAmount < 1 || defendAmount > 2)
 					cout << "\nInvalid input" << endl;
 				else
 					break;
@@ -680,7 +680,7 @@ void DefensiveStrategy::attack(Player* player)
 		// STEP 2: ALWAYS ATTACK FIRST COUNTRY IN ADJACENT LIST (ALL HAVE 1/2 THE ARMIES OR LESS)
 		if (attack != NULL) {
 		
-			handle->print("Attacking " + defend->getName() + " from " + attack->getName() + "\n", player->getColor());
+			handle->print("\nAttacking " + defend->getName() + " from " + attack->getName() + "\n", player->getColor());
 
 			// STEP 2.1: Get attacker army count (Attacker will always use highest number of dice available)
 			attackAmount = attack->getArmyCount() - 1;
@@ -778,7 +778,7 @@ void RandomStrategy::attack(Player* player)
 
 		// STEP 2: IF WE HAVE A COUNTRY TO ATTACK FROM AND A COUNTRY TO ATTACK, THEN ATTACK
 		if (defend != NULL) {
-			handle->print("Attacking " + defend->getName() + " from " + attack->getName() + "\n", player->getColor());
+			handle->print("\nAttacking " + defend->getName() + " from " + attack->getName() + "\n", player->getColor());
 
 			// STEP 2.1: Get attacker army count (Attacker will always use highest number of dice available)
 			attackAmount = attack->getArmyCount() - 1;
