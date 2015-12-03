@@ -38,6 +38,9 @@ public:
 	int getArmyCountByCountry(Country* country);
 	int getContinentBonus(Map* map);
 	bool checkCountryHasNeighborsUOwn(Country* country);
+	void setMap(Map* map) { this->map = map; };
+	Map* getMap() { return this->map; };
+	int getNumOfBattlesWon() { return numOfBattlesWon; };
 	vector<Country*> countriesOwned;
 	bool alive = true;
 	void takeOver(Country* attack, Country* defend, int atkAMT, int atkLOST);
@@ -60,8 +63,10 @@ private:
 	string logMessage;
 	friend class Logger;
 	int color;
+	int numOfBattlesWon = 0;
 	Strategy* strategy; 
 	Deck deck;
+	Map* map;
 };
 
 

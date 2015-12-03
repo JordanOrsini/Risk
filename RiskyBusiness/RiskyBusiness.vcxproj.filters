@@ -44,6 +44,7 @@
     <ClCompile Include="LogDecorator.cpp">
       <Filter>VIEWS</Filter>
     </ClCompile>
+    <ClCompile Include="GameStatsDecorator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Colors.h">
@@ -91,6 +92,7 @@
     <ClInclude Include="LogDecorator.h">
       <Filter>VIEWS</Filter>
     </ClInclude>
+    <ClInclude Include="GameStatsDecorator.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="MODELS">

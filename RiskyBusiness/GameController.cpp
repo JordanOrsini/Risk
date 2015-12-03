@@ -21,6 +21,7 @@ void GameController::runGame() {
 	for (int i = 0; i < PC->getPlayerList().size(); i++)
 	{
 		PC->getPlayerList().at(i)->setStrategy(new UserStrategy(MC));
+		PC->getPlayerList().at(i)->setMap(MC->getMap());
 	}
 	startUpPhase();
 

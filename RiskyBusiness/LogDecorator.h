@@ -19,6 +19,15 @@ private:
 	Player* player;
 };
 
+class Logger : public ILog
+{
+public:
+	Logger(Player* player) : ILog(player) {};
+	virtual void displayLog();
+	virtual void update() { this->displayLog(); };
+	~Logger() {};
+};
+
 class LogDecorator: public ILog
 {
 public:
@@ -28,15 +37,6 @@ public:
 	~LogDecorator();
 private:
 	ILog* logger;
-};
-
-class Logger : public ILog
-{
-public:
-	Logger(Player* player): ILog(player) {};
-	virtual void displayLog();
-	virtual void update() { this->displayLog(); };
-	~Logger() {};
 };
 
 class LogTimestamp: public LogDecorator

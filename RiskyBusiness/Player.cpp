@@ -111,11 +111,11 @@ void Player::takeOver(Country* attack, Country* defend, int atkAMT, int atkLOST)
 
 	while (countryTakeOverMoveAmount < (atkAMT - atkLOST) || countryTakeOverMoveAmount > attack->getArmyCount() - 1)
 	{
-		cout << "Invalid input! Enter amount between " << atkAMT - atkLOST << " and " << attack->getArmyCount() - 1 << ":" << endl << endl;
+		this->setLogMessage("Invalid input! Enter amount between " + to_string(atkAMT - atkLOST) + " and " + to_string(attack->getArmyCount() - 1) + ":");
 		cin >> countryTakeOverMoveAmount;
 	}
 	
-	setLogMessage(getPlayerName() + " took over " + defend->getName() + " and moved " + to_string(countryTakeOverMoveAmount) + " armies from " + attack->getName()); 
+	this->setLogMessage(getPlayerName() + " took over " + defend->getName() + " and moved " + to_string(countryTakeOverMoveAmount) + " armies from " + attack->getName()); 
 
 	//STEP 4: ADD SELECTED TROOPS TO NEW COUNTRY
 	defend->setArmyCount(countryTakeOverMoveAmount);
@@ -131,8 +131,9 @@ void Player::takeOver(Country* attack, Country* defend, int atkAMT, int atkLOST)
 		defender->setLogMessage(defender->getPlayerName() + " DIED"); 
 	}
 	
-	cout << "Country takeover successful!" << endl << endl;
+	this->setLogMessage( "Country takeover successful!");
 	
+	this->numOfBattlesWon++;
 }
 
 
