@@ -189,7 +189,11 @@ void MapController::editMap()
 		if (userInput == "1")
 		{
 			cout << "Enter the name of the new continent: ";
-			cin >> continentName;
+			if (cin.peek() == '\n') {
+				cin.ignore(1, '\n');
+			}
+			getline(cin, continentName);
+
 			cout << "Enter the bonus value of owning the continent: ";
 			cin >> value;
 
@@ -204,15 +208,25 @@ void MapController::editMap()
 		if (userInput == "2")
 		{
 			cout << "Enter the name of the continent to add a new country to: ";
-			cin >> continentName;
+			if (cin.peek() == '\n') {
+				cin.ignore(1, '\n');
+			}
+			getline(cin, continentName);
+			
 			while ((*map).getContinentPointerByName(continentName) == NULL)
 			{
 				cout << "Continent does not exist. Enter the name of the continent to add a new country to: ";
-				cin >> continentName;
+				if (cin.peek() == '\n') {
+					cin.ignore(1, '\n');
+				}
+				getline(cin, continentName);
 			}
 
 			cout << "Enter the name of the new country: ";
-			cin >> name;
+			if (cin.peek() == '\n') {
+				cin.ignore(1, '\n');
+			}
+			getline(cin, name);
 
 			cout << "Enter an x-axis value: ";
 			cin >> x;
@@ -232,18 +246,32 @@ void MapController::editMap()
 		if (userInput == "3")
 		{
 			cout << "Enter the name of the country you wish to add neighbors: ";
-			cin >> name;
+			
+			if (cin.peek() == '\n') {
+				cin.ignore(1, '\n');
+			}
+			getline(cin, name);
+			
 			while ((*map).getCountryPointerByName(name) == NULL)
 			{
 				cout << "Country does not exist. Enter the name of the country to add neighbors to: ";
-				cin >> name;
+				
+				if (cin.peek() == '\n') {
+					cin.ignore(1, '\n');
+				}
+				getline(cin, name);
 			}
 
 			cout << "Please note that you can only add a country as a neighbor if it already exists.\nIf the country does not yet exist, please add it first and then add this country as its neighbor.\nAlso note that the adjacent country will have the opposite operation.\n\n";
 			while (1)
 			{
 				cout << "Enter the name of the neighbor country (or type exit to quit): ";
-				cin >> str;
+				
+				if (cin.peek() == '\n') {
+					cin.ignore(1, '\n');
+				}
+				getline(cin, str);
+				
 				if (str == "exit")
 					break;
 				if ((*map).getCountryPointerByName(str) == NULL)
