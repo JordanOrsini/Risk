@@ -29,6 +29,7 @@ void GameController::runGame() {
 
 	while(true)
 	{
+		PC->checkForWin();
 		currentPlayer = PC->getTurn();
 		reinforcementPhase(currentPlayer);
 		battlePhase(currentPlayer);

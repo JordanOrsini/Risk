@@ -10,6 +10,7 @@ public:
 	~PlayerController();
 	void addPlayerToGame(int numberOfPlayers);
 	bool removePlayerFromGame(Player* player);
+	void checkForWin();
 	Player* nextTurn();
 	Player* getTurn();
 	vector<Player*> getPlayerList() { return playerList; };
