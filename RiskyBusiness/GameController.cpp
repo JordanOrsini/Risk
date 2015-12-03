@@ -276,7 +276,7 @@ int GameController::getNumOfPlayers() {
 	int numOfPlayers;
 	while (true)
 	{
-		cout << "\n\nHow many players will be playing?" << endl;
+		cout << "\n\nHow many players will be playing? (2 to 5)" << endl;
 		cin >> numOfPlayers;
 		if (numOfPlayers > 5 || cin.fail() || numOfPlayers <= 1)
 		{
