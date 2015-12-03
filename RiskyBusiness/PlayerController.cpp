@@ -70,14 +70,10 @@ void PlayerController::checkForWin()
 	if (playerList.size() == 1)
 	{
 		cout << "GAME OVER!" << endl << endl;
-		cout << "Player \"" << playerList.at(0)->getPlayerName() << "\" is the game winner!" << endl << endl;
+		playerList.at(0)->setLogMessage("Player \"" + playerList.at(0)->getPlayerName() + "\" is the winner!");
 		cout << "Thank you for playing!" << endl;
 		system("pause");
 		system("exit");
 	}
 
 }
-
-// need to implement a check to see if player is alive (player bool alive).
-//if dead remove from game loop.
-//need to implement win condition, if only one player remains, he/she is declared the winner!

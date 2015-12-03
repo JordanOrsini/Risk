@@ -102,7 +102,11 @@ void Player::takeOver(Country* attack, Country* defend, int atkAMT, int atkLOST)
 
 	cout << "Player \"";
 	handle->print(attacker->getPlayerName(), attacker->getColor());
-	cout << "\", how many armies would you like to move to your new country \"" << defend->getName() << "\"? (" << attack->getArmyCount() - 1 << " armies available to move. Must move at least " << atkAMT - atkLOST << ")" << endl << endl;
+	cout << "\", how many armies would you like to move from \"";
+	handle->print(attack->getName(), attacker->getColor());
+	cout << "\" to your new country \"";
+	handle->print(defend->getName(), attacker->getColor());
+	cout << "\"? (" << attack->getArmyCount() - 1 << " armies available to move. Must move at least " << atkAMT - atkLOST << ")" << endl << endl;
 	cin >> countryTakeOverMoveAmount;
 
 	while (countryTakeOverMoveAmount < (atkAMT - atkLOST) || countryTakeOverMoveAmount > attack->getArmyCount() - 1)
