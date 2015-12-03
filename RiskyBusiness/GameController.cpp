@@ -529,7 +529,7 @@ void GameController::setLogger(Player* player) {
 	vector<int> choices;
 
 	while (choices.size() < 2) {
-		handle->print(player->getPlayerName(), player->getColor());
+		handle->print("\n" + player->getPlayerName(), player->getColor());
 		cout << ", select logging options from the following list: \n";
 		cout << "\t1. Timestamped logs\n";
 		cout << "\t2. Player name\n";
@@ -576,8 +576,8 @@ void GameController::setGameStats(Player* player) {
 	vector<int> choices;
 
 	while (choices.size() < 2) {
-		handle->print(player->getPlayerName(), player->getColor());
-		cout << ", select Game Stats options from the following list: \n";
+		handle->print("\n" + player->getPlayerName(), player->getColor());
+		cout << ", select game stats options from the following list: \n";
 		cout << "\t1. See percentage of world ownership\n";
 		cout << "\t2. See number of battles won\n";
 		cout << "\t3. Done\n";
