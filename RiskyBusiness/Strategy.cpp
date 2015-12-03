@@ -560,7 +560,7 @@ void AggressiveStrategy::attack(Player* player)
 		{
 			attack = player->countriesOwned[i];
 			for (int j = 0; j < player->countriesOwned[i]->adjacentCountries.size(); j++) {
-				if (player->countriesOwned[i]->adjacentCountries[j]->getArmyCount() < attack->getArmyCount() && attack->getArmyCount() >= 2)
+				if (player->countriesOwned[i]->adjacentCountries[j]->getArmyCount() < attack->getArmyCount() && attack->getArmyCount() >= 2 && attack->owner->getPlayerName() != player->countriesOwned[i]->adjacentCountries[j]->owner->getPlayerName())
 				{
 					defend = player->countriesOwned[i]->adjacentCountries[j]; // Found an adjacent country with less armies
 					break; 
@@ -578,10 +578,10 @@ void AggressiveStrategy::attack(Player* player)
 			attackAmount = attack->getArmyCount() - 1; 
 			if (attackAmount > 3)
 				attackAmount = 3; 
-			cout << "\nPlayer \"";
+			cout << "\nPlayer ";
 			cout << attack->owner->getPlayerName() << " chooses to attack with " << attackAmount << " armies.";
 			// STEP 2.2: Get defender army count
-			cout << "\nPlayer \"";
+			cout << "\nPlayer ";
 			handle->print(defend->owner->getPlayerName(), defend->owner->getColor());
 			while (1)
 			{
@@ -657,30 +657,40 @@ void DefensiveStrategy::attack(Player* player)
 			temp = player->countriesOwned[i];
 
 			for (int j = 0; j < player->countriesOwned[i]->adjacentCountries.size(); j++) {
-				if (player->countriesOwned[i]->adjacentCountries[j]->getArmyCount() >= (int)(temp->getArmyCount() / 2))
+				if (player->countriesOwned[i]->adjacentCountries[j]->getArmyCount() >= (int)(temp->getArmyCount() / 2) && attack->owner->getPlayerName() != player->countriesOwned[i]->adjacentCountries[j]->owner->getPlayerName())
 					result = false; 
 			}
 			if (result = true)
 			{
-				attack = player->countriesOwned[i];
-				break;
+				//check that there at least exists a neighbor that is owned by a different player, if so set it as the defender
+				for (int j = 0; j < player->countriesOwned[i]->adjacentCountries.size(); j++) {
+					if (attack->owner->getPlayerName() != player->countriesOwned[i]->adjacentCountries[j]->owner->getPlayerName())
+					{
+						attack = player->countriesOwned[i];
+						defend = player->countriesOwned[i]->adjacentCountries[j]; 
+					}
+						
+				}
+				
+				if(attack != NULL)
+					break;
 			}
 		}
 
+		// STEP 2: ALWAYS ATTACK FIRST COUNTRY IN ADJACENT LIST (ALL HAVE 1/2 THE ARMIES OR LESS)
 		if (attack != NULL) {
-			// STEP 2: ALWAYS ATTACK FIRST COUNTRY IN ADJACENT LIST (ALL HAVE 1/2 THE ARMIES OR LESS)
-			defend = attack->adjacentCountries[0]; 
+		
 			handle->print("Attacking " + defend->getName() + " from " + attack->getName() + "\n", player->getColor());
 
 			// STEP 2.1: Get attacker army count (Attacker will always use highest number of dice available)
 			attackAmount = attack->getArmyCount() - 1;
 			if (attackAmount > 3)
 				attackAmount = 3;
-			cout << "\nPlayer \"";
+			cout << "\nPlayer ";
 			cout << attack->owner->getPlayerName() << " chooses to attack with " << attackAmount << " armies.";
 
 			// STEP 2.2: Get defender army count
-			cout << "\nPlayer \"";
+			cout << "\nPlayer ";
 			handle->print(defend->owner->getPlayerName(), defend->owner->getColor());
 			while (1)
 			{
@@ -756,7 +766,7 @@ void RandomStrategy::attack(Player* player)
 		{
 			attack = player->countriesOwned[i];
 			for (int j = 0; j < player->countriesOwned[i]->adjacentCountries.size(); j++) {
-				if (player->countriesOwned[i]->adjacentCountries[j]->getArmyCount() < attack->getArmyCount() && attack->getArmyCount() >= 2)
+				if (player->countriesOwned[i]->adjacentCountries[j]->getArmyCount() < attack->getArmyCount() && attack->getArmyCount() >= 2 && attack->owner->getPlayerName() != player->countriesOwned[i]->adjacentCountries[j]->owner->getPlayerName())
 				{
 					defend = player->countriesOwned[i]->adjacentCountries[j]; // Found an adjacent country with less armies
 					break;
@@ -774,10 +784,10 @@ void RandomStrategy::attack(Player* player)
 			attackAmount = attack->getArmyCount() - 1;
 			if (attackAmount > 3)
 				attackAmount = 3;
-			cout << "\nPlayer \"";
+			cout << "\nPlayer ";
 			cout << attack->owner->getPlayerName() << " chooses to attack with " << attackAmount << " armies.";
 			// STEP 2.2: Get defender army count
-			cout << "\nPlayer \"";
+			cout << "\nPlayer ";
 			handle->print(defend->owner->getPlayerName(), defend->owner->getColor());
 			while (1)
 			{

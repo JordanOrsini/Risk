@@ -124,6 +124,7 @@ void Player::takeOver(Country* attack, Country* defend, int atkAMT, int atkLOST)
 	{
 		attacker->receiveCards(defender->hand);
 		defender->alive = false;
+		defender->setLogMessage(defender->getPlayerName() + " DIED"); 
 	}
 	
 	cout << "Country takeover successful!" << endl << endl;

@@ -480,6 +480,8 @@ int GameController::getVictoryCardReinforcements(Player* player) {
 							break;
 						}
 					}
+
+					player->setLogMessage(player->getPlayerName() + " exchanged three victory cards for 5 extra reinforcements."); 
 					return 5;
 				}
 				else
